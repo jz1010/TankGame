@@ -300,7 +300,6 @@ public class PaintProgram implements ActionListener {
                 drawing(x,y, "Rectangle");
             }
 
-
         }
 
         public void mouseDragged(MouseEvent e) {
