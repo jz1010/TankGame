@@ -6,8 +6,9 @@ import java.awt.event.MouseEvent;
 public class DrawPanel extends JPanel{
     private final int WIDTH = 600;
     private final int HEIGHT = 600;
-    private boolean[][] isPainted = new boolean[WIDTH][HEIGHT];
+    private int[][] isPainted = new int[WIDTH][HEIGHT];
     private Color[][] colors = new Color[WIDTH][HEIGHT];
+
     private String mode = "Pencil";
     private Color color = Color.BLACK;
 
@@ -22,7 +23,7 @@ public class DrawPanel extends JPanel{
     public void clear(){
             for(int i=0;i<isPainted.length;i++){
             for(int j=0;j<isPainted[0].length;j++){
-            isPainted[i][j]=false;
+            isPainted[i][j]=0;
             repaint();
             }
             }
@@ -39,7 +40,7 @@ public class DrawPanel extends JPanel{
             // Loop through the 2D array and draw a 1x1 rectangle on each pixel that is currently painted
             for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
-            if (isPainted[x][y]) {
+            if (isPainted[x][y] == 1) {
 
 
             g.setColor(colors[x][y]);
@@ -67,16 +68,15 @@ public class DrawPanel extends JPanel{
     public void mouseReleased(MouseEvent e) {
             repaint();
             }
-    public void drawTank(Tank t){
+    public void drawTank(Tank t, Color c){
         //draw a rectangle where the tank should be in the grid
         for(int i = t.getX(); i < t.getX() + t.getW(); i++){
             for(int j = t.getY(); j < t.getY() + t.getH(); j++){
-                isPainted[i][j] = true;
-                colors[i][j] = t.getTankColor();
+                isPainted[i][j] = 1;
+                colors[i][j] = c;
             }
         }
         repaint();
     }
-
 
 }
