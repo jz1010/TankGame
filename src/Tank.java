@@ -6,20 +6,17 @@ public class Tank {
     private int ammo = 100;
     private Color tankColor = Color.RED;
     private int speed = 2;
-    public Tank(int X, int Y, int W, int H){
+    private String direction;
+    public Tank(int X, int Y, int W, int H, String direction){
         this.x = X;
         this.y = Y;
         this.w = W;
         this.h = H;
+        this.direction=direction;
     }
-
-    public void moveLeft(){
-        this.x -= this.speed;
-    }
-    public void moveRight(){
-        this.x += this.speed;
-    }
-
+    
+    
+    
     public int getX() {
         return x;
     }
