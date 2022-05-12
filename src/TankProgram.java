@@ -18,10 +18,9 @@ public class TankProgram implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainPanel = new DrawPanel();
-        frame.add(mainPanel, BorderLayout.CENTER);
         mainPanel.drawTank(p1, p1.getTankColor());
         mainPanel.drawTank(p2, p2.getTankColor());
-        mainPanel.addKeyListener(new KeyListener() {
+        frame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
 
@@ -29,14 +28,22 @@ public class TankProgram implements ActionListener {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == 39){
+                if(e.getKeyCode() == 37){
                     p1.moveLeft();
                 }
-                else if (e.getKeyCode() == 37){
+                else if (e.getKeyCode() == 39){
                     p1.moveRight();
                 }
+                else if (e.getKeyCode() == 38){
+                    p1.moveUp();
+                }
+                else if (e.getKeyCode() == 40){
+                    p1.moveDown();
+                }
+                mainPanel.clear();
                 mainPanel.drawTank(p1, p1.getTankColor());
-                System.out.println(p1.getX());
+                mainPanel.drawTank(p2, p2.getTankColor());
+
             }
 
             @Override
@@ -44,6 +51,7 @@ public class TankProgram implements ActionListener {
 
             }
         });
+        frame.add(mainPanel, BorderLayout.CENTER);
 
         frame.pack();
         frame.setVisible(true);
