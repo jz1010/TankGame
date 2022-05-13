@@ -19,7 +19,6 @@ public class TankProgram implements ActionListener {
 
         mainPanel = new DrawPanel();
         mainPanel.drawTank(p1, Color.BLUE);
-        //mainPanel.drawTank(p2, Color.RED);
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.addKeyListener(new KeyListener() {
             @Override
@@ -42,22 +41,9 @@ public class TankProgram implements ActionListener {
                     p1.moveTank("d");
                 }
 
-                /*if (e.getKeyCode() == 65){
-                    p2.moveTank("l");
-                }
-                else if (e.getKeyCode() == 83){
-                    p2.moveTank("d");
-                }
-                else if (e.getKeyCode() == 68){
-                    p2.moveTank("r");
-                }
-                else if (e.getKeyCode() == 87){
-                    p2.moveTank("u");
-                }*/
 
                 mainPanel.clear();
                 mainPanel.drawTank(p1, Color.BLUE);
-                //mainPanel.drawTank(p2, Color.RED);
 
             }
             @Override
