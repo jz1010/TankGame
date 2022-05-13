@@ -28,15 +28,12 @@ public class DrawPanel extends JPanel{
 
             // Loop through the 2D array and draw a 1x1 rectangle on each pixel that is currently painted
             for (int x = 0; x < WIDTH; x++) {
-            for (int y = 0; y < HEIGHT; y++) {
-            if (isPainted[x][y] != 0) {
-
-
-            g.setColor(colors[x][y]);
-            g.fillRect(x, y, 1, 1);
-
-            }
-            }
+                for (int y = 0; y < HEIGHT; y++) {
+                    if (isPainted[x][y] != 0) {
+                    g.setColor(colors[x][y]);
+                    g.fillRect(x, y, 1, 1);
+                    }
+                }
             }
     }
 
@@ -44,7 +41,7 @@ public class DrawPanel extends JPanel{
         System.out.println(t.getDirection());
         //draw a rectangle where the tank should be in the grid
         if (t.getDirection().equals("r")){
-            if(t.getX()<WIDTH-10){
+            if(t.getX()<WIDTH-50){
                 for(int i=t.getX()-t.getW()/2;i<t.getX()+t.getW()/2;i++){
                     for(int j=t.getY()-t.getH()/2;j<t.getY()+t.getH()/2;j++){
                         isPainted[i][j] = 1;
@@ -83,7 +80,7 @@ public class DrawPanel extends JPanel{
                         colors[i][j] = c;
                     }
                 }
-                for(int i = t.getX()-t.getW();i<t.getX();i++){
+                for(int i = t.getX()-t.getW();i<=t.getX();i++){
                     for(int j = t.getY()-3; j<=t.getY()+3;j++){
                         isPainted[i][j] = 1;
                         colors[i][j] = Color.GREEN;
