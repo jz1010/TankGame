@@ -26,7 +26,7 @@ public class DrawPanel extends JPanel{
             super.paintComponent(g);
 
             // Loop through the 2D array and draw a 1x1 rectangle on each pixel that is currently painted
-            for (int x = 0; x < WIDTH; x++) {
+            /*for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
             if (isPainted[x][y] != 0) {
 
@@ -36,29 +36,77 @@ public class DrawPanel extends JPanel{
 
             }
             }
-            }
+            }*/
     }
 
     public void drawTank(Tank t, Color c){
         //draw a rectangle where the tank should be in the grid
-        for(int i = t.getHull()[0]; i < t.getHull()[0] + t.getHull()[2]; i++){
-            for(int j = t.getHull()[1]; j < t.getHull()[1] + t.getHull()[3]; j++){
-                isPainted[i][j] = 1;
-                if (Math.abs(i - t.getCenter().get(0)) < 3 && Math.abs(j - t.getCenter().get(1)) < 3){
-                    colors[i][j] = Color.BLACK;
+        if (t.getDirection().equals("r")){
+            System.out.println("moving right");
+            if(t.getX()<WIDTH-10){
+                for(int i=t.getX()-t.getW()/2;i<t.getX()+t.getW()/2;i++){
+                    for(int j=t.getY()-t.getH()/2;j<t.getY()+t.getH()/2;j++){
+                        isPainted[i][j] = 1;
+                        colors[i][j] = c;
+                    }
                 }
-                else{
-                    colors[i][j] = c;
+                for(int i = t.getX();i<t.getX()+t.getW();i++){
+                    for(int j = t.getY()-3; j<=t.getY()+3;j++){
+                        isPainted[i][j] = 1;
+                        colors[i][j] = Color.GREEN;
+                    }
                 }
+            }
+        }
+        if (t.getDirection().equals("u")){
+            if(t.getY()>50){
+                for(int i=t.getX()-t.getH()/2;i<t.getX()+t.getH()/2;i++){
+                    for(int j=t.getY()-t.getW()/2;j<t.getY()+t.getW()/2;j++){
+                        isPainted[i][j] = 1;
+                        colors[i][j] = c;
+                    }
+                }
+                for(int i = t.getX()-3;i<=t.getX()+3;i++){
+                    for(int j = t.getY()+t.getW(); j<=t.getY();j++){
+                        isPainted[i][j] = 1;
+                        colors[i][j] = Color.GREEN;
+                    }
+                }
+            }
+        }
+        if (t.getDirection().equals("l")){
+            if(t.getX()>50){
+                for(int i=t.getX()-t.getW()/2;i<t.getX()+t.getW()/2;i++){
+                    for(int j=t.getY()-t.getH()/2;j<t.getY()+t.getH()/2;j++){
+                        isPainted[i][j] = 1;
+                        colors[i][j] = c;
+                    }
+                }
+                for(int i = t.getX()-t.getW();i<t.getX();i++){
+                    for(int j = t.getY()-3; j<=t.getY()+3;j++){
+                        isPainted[i][j] = 1;
+                        colors[i][j] = Color.GREEN;
+                    }
+                }
+            }
+        }
+        if (t.getRotation()==90){
+            if(t.getX()<WIDTH-10){
+                for(int i=t.getX()-t.getW()/2;i<t.getX()+t.getW()/2;i++){
+                    for(int j=t.getY()-t.getH()/2;j<t.getY()+t.getH()/2;j++){
+                        isPainted[i][j] = 1;
+                        colors[i][j] = c;
+                    }
+                }
+                for(int i = t.getX();i<t.getX()+t.getW();i++){
+                    for(int j = t.getY()-3; j<=t.getY()+3;j++){
+                        isPainted[i][j] = 1;
+                        colors[i][j] = Color.GREEN;
+                    }
+                }
+            }
+        }
 
-            }
-        }
-        for(int i = t.getCannon()[0];i<t.getCannon()[0] + t.getCannon()[2];i++){
-            for(int j = t.getCannon()[1]; j<t.getCannon()[1]+t.getCannon()[3];j++){
-                isPainted[i][j] = 2;
-                colors[i][j] = Color.GREEN;
-            }
-        }
     }
     public void update(){
         repaint();

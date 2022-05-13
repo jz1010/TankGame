@@ -11,13 +11,10 @@ public class Tank{
     private int ammo = 100;
     private Color tankColor = Color.RED;
     private int speed = 6;
-    private String direction;
+    private String direction="r";
     private ArrayList<Integer> center = new ArrayList<>();
     private int rotation = 90;
-    private int[] DEFAULT_RECT;
-    private int[] DEFAULT_CANNON;
-    private int[] hull;
-    private int[] cannon;
+
 
 
     public Tank(int X, int Y, int W, int H){
@@ -25,14 +22,6 @@ public class Tank{
         this.y = Y;
         this.w = W;
         this.h = H;
-        center.add((2*x + w)/2);
-        center.add((2*y + h)/2);
-        center.add(3);
-        center.add(3);
-        DEFAULT_RECT = new int[]{x, y, w, h};
-        DEFAULT_CANNON = new int[]{x + (4*w/6) - 2, y+h/2,4*w/6,h/6};
-        hull = new int[]{x, y, w, h};
-        cannon = new int[]{x + (4*w/6), y+h/2 - 2,4*w/6,h/6};
 
     }
 
@@ -40,39 +29,30 @@ public class Tank{
         this.direction = direction;
         if(direction.equals("r")){
             //rotate tank
+
             this.x += speed;
-            this.center.set(0, (2*x + hull[2]) /2);
-            rotateTank(90);
+
         }
         else if(direction.equals("l")){
             this.x -= speed;
-            this.center.set(0, (2*x + hull[2]) /2);
 
-            rotateTank(270);
+
         }
         else if(direction.equals("u")){
             this.y -= speed;
-            this.center.set(1, (2*y + hull[3]) /2);
 
-            rotateTank(0);
+
         }
         else if(direction.equals("d")){
             this.y += speed;
-            this.center.set(1, (2*y + hull[3]) /2);
 
-            rotateTank(180);
+
         }
-        DEFAULT_RECT[0] = x;
-        DEFAULT_RECT[1] = y;
-        DEFAULT_CANNON[0] = x + (4*w/6);
-        DEFAULT_CANNON[1] = y + h/2;
 
-        this.center.set(0, (2*hull[0] + hull[2]) /2);
-        this.center.set(1, (2*hull[1] + hull[3]) /2);
 
 
     }
-    public void rotateTank(int r){
+    /*public void rotateTank(int r){
         this.rotation = r;
         if(this.rotation == 90){
             //looking to the right, pretty standard
@@ -115,12 +95,9 @@ public class Tank{
             cannon[3] = DEFAULT_CANNON[2];
         }
 
-    }
+    }*/
 
-    public int[] getHull(){return this.hull;}
-    public int[] getCannon() {
-        return cannon;
-    }
+
     public Color getTankColor() {
         return tankColor;
     }
@@ -134,5 +111,11 @@ public class Tank{
     public void setY(int y) {
         this.y = y;
     }
+    public int getRotation(){return rotation;}
+    public int getX(){return this.x;}
+    public int getY(){return this.y;}
+    public int getW(){return this.w;}
+    public int getH(){return this.h;}
+    public String getDirection(){return this.direction;}
 
 }

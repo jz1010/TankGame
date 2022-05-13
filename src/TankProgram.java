@@ -19,7 +19,7 @@ public class TankProgram implements ActionListener {
 
         mainPanel = new DrawPanel();
         mainPanel.drawTank(p1, Color.BLUE);
-        mainPanel.drawTank(p2, Color.RED);
+        //mainPanel.drawTank(p2, Color.RED);
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.addKeyListener(new KeyListener() {
             @Override
@@ -42,7 +42,7 @@ public class TankProgram implements ActionListener {
                     p1.moveTank("d");
                 }
 
-                if (e.getKeyCode() == 65){
+                /*if (e.getKeyCode() == 65){
                     p2.moveTank("l");
                 }
                 else if (e.getKeyCode() == 83){
@@ -53,11 +53,11 @@ public class TankProgram implements ActionListener {
                 }
                 else if (e.getKeyCode() == 87){
                     p2.moveTank("u");
-                }
+                }*/
 
                 mainPanel.clear();
                 mainPanel.drawTank(p1, Color.BLUE);
-                mainPanel.drawTank(p2, Color.RED);
+                //mainPanel.drawTank(p2, Color.RED);
 
             }
             @Override
@@ -76,8 +76,9 @@ public class TankProgram implements ActionListener {
     }
 
     public void init(){
+        //System.out.println("Initializing...");
         p1 = new Tank(125, 500, 50, 30);
-        p2 = new Tank(425, 500, 50, 30);
+        //p2 = new Tank(425, 500, 50, 30);
     }
     public static void main(String[] args) {
         TankProgram x = new TankProgram();
