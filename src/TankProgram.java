@@ -76,8 +76,11 @@ public class TankProgram implements ActionListener {
                 bullets.remove(counter);
                 counter--;
             }
+            else{
+                mainPanel.drawBullet(bullet);
+
+            }
             counter ++;
-            mainPanel.drawBullet(bullet);
         }
 
         System.out.println(timer.getDelay());
