@@ -31,8 +31,7 @@ public class TankProgram implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == 16){
-                    Bullet bullet=new Bullet(1,2,3,4);
-                    bullets.add(bullet);
+                    addBullet();
                 }
                 if(e.getKeyCode() == 39){
                     p1.moveTank("r");
@@ -71,7 +70,26 @@ public class TankProgram implements ActionListener {
         //System.out.println("Initializing...");
         p1 = new Tank(125, 500, 50, 30);
         ArrayList<Bullet>bullets= new ArrayList<Bullet>();
-        //p2 = new Tank(425, 500, 50, 30);
+    }
+    public void addBullet(){
+        int bH = Bullet.BULLET_H;
+        int bW = Bullet.BULLET_W;
+        if(p1.getDirection().equals("r")){
+            bullets.add(new Bullet(p1.getX() + p1.getW()/2, p1.getY()+p1.getH()/2, bW,bH, p1.getDirection()));
+        }
+        else if(p1.getDirection().equals("l")){
+            bullets.add(new Bullet(p1.getX() - p1.getW()/2, p1.getY()-p1.getH()/2, bW,bH, p1.getDirection()));
+
+        }
+        else if(p1.getDirection().equals("u")){
+            bullets.add(new Bullet(p1.getX() - p1.getH()/2, p1.getY()-p1.getW()/2, bH,bW, p1.getDirection()));
+
+        }
+        else if(p1.getDirection().equals("d")){
+            bullets.add(new Bullet(p1.getX() + p1.getH()/2, p1.getY()+p1.getW()/2, bH,bW, p1.getDirection()));
+
+        }
+
     }
     public static void main(String[] args) {
         TankProgram x = new TankProgram();

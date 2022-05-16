@@ -7,54 +7,31 @@ import java.util.Arrays;
 
 public class Bullet{
     private int x, y, w, h;
-    private int health = 100;
-    private int ammo = 100;
-    private Color tankColor = Color.RED;
+    public static final int BULLET_W = 4;
+    public static final int BULLET_H = 2;
+    private Color bulletColor = Color.BLACK;
     private int speed = 6;
-    private String direction="r";
+    private final String direction;
     private ArrayList<Integer> center = new ArrayList<>();
     private int rotation = 90;
 
 
 
-    public Bullet(int X, int Y, int W, int H){
+    public Bullet(int X, int Y, int W, int H, String dir){
         this.x = X;
         this.y = Y;
         this.w = W;
         this.h = H;
+        this.direction = dir;
 
     }
 
     public void moveTank(String direction){
-        this.direction = direction;
-        if(direction.equals("r")){
-            //rotate tank
-
-            this.x += speed;
-
-        }
-        else if(direction.equals("l")){
-            this.x -= speed;
-
-
-        }
-        else if(direction.equals("u")){
-            this.y -= speed;
-
-
-        }
-        else if(direction.equals("d")){
-            this.y += speed;
-
-
-        }
-
-
 
     }
 
-    public Color getTankColor() {
-        return tankColor;
+    public Color getBulletColor() {
+        return bulletColor;
     }
     public ArrayList<Integer> getCenter() {
         return center;

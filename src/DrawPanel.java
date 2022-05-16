@@ -25,7 +25,7 @@ public class DrawPanel extends JPanel{
             }
     protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-
+            
             // Loop through the 2D array and draw a 1x1 rectangle on each pixel that is currently painted
             for (int x = 0; x < WIDTH; x++) {
                 for (int y = 0; y < HEIGHT; y++) {
