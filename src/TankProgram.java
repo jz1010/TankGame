@@ -102,18 +102,18 @@ public class TankProgram implements ActionListener {
         int bH = Bullet.BULLET_H;
         int bW = Bullet.BULLET_W;
         if(p1.getDirection().equals("r")){
-            bullets.add(new Bullet(p1.getX() + p1.getW()/2, p1.getY()+p1.getH()/2, bW,bH, p1.getDirection()));
+            bullets.add(new Bullet(p1.getX() + p1.getW(), p1.getY(), bW,bH, p1.getDirection()));
         }
         else if(p1.getDirection().equals("l")){
-            bullets.add(new Bullet(p1.getX() - p1.getW()/2, p1.getY()-p1.getH()/2, bW,bH, p1.getDirection()));
+            bullets.add(new Bullet(p1.getX() - p1.getW(), p1.getY(), bW,bH, p1.getDirection()));
 
         }
         else if(p1.getDirection().equals("u")){
-            bullets.add(new Bullet(p1.getX() - p1.getH()/2, p1.getY()-p1.getW()/2, bH,bW, p1.getDirection()));
+            bullets.add(new Bullet(p1.getX(), p1.getY() - p1.getW(), bH,bW, p1.getDirection()));
 
         }
         else if(p1.getDirection().equals("d")){
-            bullets.add(new Bullet(p1.getX() + p1.getH()/2, p1.getY()+p1.getW()/2, bH,bW, p1.getDirection()));
+            bullets.add(new Bullet(p1.getX(), p1.getY()+p1.getW(), bH,bW, p1.getDirection()));
 
         }
 
