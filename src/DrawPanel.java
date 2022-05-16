@@ -107,7 +107,13 @@ public class DrawPanel extends JPanel{
         repaint();
 
     }
-    public void update(){
+    public void drawBullet(Bullet b){
+        for(int i = b.getX();i<b.getX()+b.getW();i++){
+            for(int j = b.getY();j<b.getY()+b.getH();j++){
+                isPainted[i][j] = 2;
+                colors[i][j] = b.getBulletColor();
+            }
+        }
         repaint();
     }
 

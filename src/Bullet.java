@@ -26,7 +26,19 @@ public class Bullet{
 
     }
 
-    public void moveTank(String direction){
+    public void update(){
+        if(getDirection().equals("r")){
+            this.x += this.speed;
+        }
+        else if(getDirection().equals("l")){
+            this.x -= this.speed;
+        }
+        else if(getDirection().equals("u")){
+            this.y -= this.speed;
+        }
+        else if(getDirection().equals("d")){
+            this.y += this.speed;
+        }
 
     }
 

@@ -10,16 +10,18 @@ public class TankProgram implements ActionListener {
     Tank p1, p2;
     AffineTransform tx = new AffineTransform();
     ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+    Timer timer;
+
     // This is the PaintProgram constructor which sets up the JFrame and all other components and containers
 
     public TankProgram() {
         init();
 
+
         frame = new JFrame("Tank Program");
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        mainPanel = new DrawPanel();
         mainPanel.drawTank(p1, Color.BLUE);
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.addKeyListener(new KeyListener() {
@@ -47,8 +49,6 @@ public class TankProgram implements ActionListener {
                 }
 
 
-                mainPanel.clear();
-                mainPanel.drawTank(p1, Color.BLUE);
 
             }
             @Override
@@ -56,6 +56,9 @@ public class TankProgram implements ActionListener {
 
             }
         });
+
+        //update cycle
+        System.out.println(timer.getDelay());
         frame.pack();
         frame.setVisible(true);
 
@@ -63,6 +66,22 @@ public class TankProgram implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent ae) {
+        mainPanel.clear();
+        mainPanel.drawTank(p1, Color.BLUE);
+        int counter = 0;
+        while(counter < bullets.size()){
+            Bullet bullet = bullets.get(counter);
+            bullet.update();
+            if((bullet.getX() + bullet.getW() > 600) || (bullet.getX() <0) ||(bullet.getY() < 0) || (bullet.getY() +bullet.getH()>600)){
+                bullets.remove(counter);
+                counter--;
+            }
+            counter ++;
+            mainPanel.drawBullet(bullet);
+        }
+
+        System.out.println(timer.getDelay());
+
 
     }
 
@@ -70,6 +89,11 @@ public class TankProgram implements ActionListener {
         //System.out.println("Initializing...");
         p1 = new Tank(125, 500, 50, 30);
         ArrayList<Bullet>bullets= new ArrayList<Bullet>();
+        mainPanel = new DrawPanel();
+        timer = new Timer(10, this);
+        timer.setInitialDelay(0);
+        timer.start();
+
     }
     public void addBullet(){
         int bH = Bullet.BULLET_H;
