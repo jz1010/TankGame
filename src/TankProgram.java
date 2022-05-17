@@ -7,8 +7,15 @@ import java.util.ArrayList;
 public class TankProgram implements ActionListener {
     JFrame frame;
     DrawPanel mainPanel;
-    Tank p1, p2;
-    AffineTransform tx = new AffineTransform();
+    JPanel sidePanel;
+
+    Tank p1;
+    JLabel healthBar, ammoCount;
+    private boolean secReloading = false;
+
+    int reloadTimer;
+
+
     ArrayList<Bullet> bullets = new ArrayList<Bullet>();
     Timer timer;
 
@@ -19,11 +26,16 @@ public class TankProgram implements ActionListener {
 
 
         frame = new JFrame("Tank Program");
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
         mainPanel.drawTank(p1, Color.BLUE);
+        sidePanel.add(healthBar);
+        sidePanel.add(ammoCount);
+
         frame.add(mainPanel, BorderLayout.CENTER);
+        frame.add(sidePanel, BorderLayout.EAST);
+
         frame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -32,19 +44,22 @@ public class TankProgram implements ActionListener {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == 16){
+                if(e.getKeyCode() == 32 && !(ammoCount.getText().equals("Reloading"))){ // space bar to fire
                     addBullet();
+                    p1.decAmmo();
                 }
-                if(e.getKeyCode() == 39){
+
+                //lets do wasd
+                if(e.getKeyCode() == 39){ // right arrow
                     p1.moveTank("r");
                 }
-                else if (e.getKeyCode() == 37){
+                else if (e.getKeyCode() == 37){ // left arrow
                     p1.moveTank("l");
                 }
-                else if (e.getKeyCode() == 38){
+                else if (e.getKeyCode() == 38){ // up arrow
                     p1.moveTank("u");
                 }
-                else if (e.getKeyCode() == 40){
+                else if (e.getKeyCode() == 40){ // down arrow
                     p1.moveTank("d");
                 }
 
@@ -68,6 +83,7 @@ public class TankProgram implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         mainPanel.clear();
         mainPanel.drawTank(p1, Color.BLUE);
+
         int counter = 0;
         while(counter < bullets.size()){
             Bullet bullet = bullets.get(counter);
@@ -83,16 +99,39 @@ public class TankProgram implements ActionListener {
             counter ++;
         }
 
-        System.out.println(timer.getDelay());
+        healthBar.setText(String.valueOf(p1.getHealth()));
+        if(p1.getAmmo() <= 0 && !secReloading){
+            ammoCount.setText("Reloading");
+            reloadTimer = 0;
+            secReloading = true;
+        }
+        else if (!secReloading){
+            ammoCount.setText(String.valueOf(p1.getAmmo()));
+        }
+        if(secReloading && reloadTimer >= 300) {  // num seconds * 100
+            p1.setAmmo(100);
+            secReloading = false;
+        }
+        else if(secReloading){
+            reloadTimer ++;
+        }
 
 
     }
 
     public void init(){
-        //System.out.println("Initializing...");
+        mainPanel = new DrawPanel();
+        sidePanel = new JPanel();
+
         p1 = new Tank(125, 500, 50, 30);
         ArrayList<Bullet>bullets= new ArrayList<Bullet>();
-        mainPanel = new DrawPanel();
+
+        healthBar = new JLabel();
+        healthBar.setText(String.valueOf(p1.getHealth()));
+        ammoCount = new JLabel();
+        ammoCount.setText(String.valueOf(p1.getAmmo()));
+
+
         timer = new Timer(10, this);
         timer.setInitialDelay(0);
         timer.start();

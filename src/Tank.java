@@ -1,19 +1,16 @@
-import org.w3c.dom.css.Rect;
-
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Tank{
-    private int x, y, w, h;
+    private int x;
+    private int y;
+    private final int w;
+    private final int h;
     private int health = 100;
     private int ammo = 100;
-    private Color tankColor = Color.RED;
-    private int speed = 6;
+    private final Color tankColor = Color.RED;
+    private final int speed = 6;
     private String direction="r";
-    private ArrayList<Integer> center = new ArrayList<>();
-    private int rotation = 90;
 
 
 
@@ -56,21 +53,20 @@ public class Tank{
     public Color getTankColor() {
         return tankColor;
     }
-    public ArrayList<Integer> getCenter() {
-        return center;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-    public void setY(int y) {
-        this.y = y;
-    }
-    public int getRotation(){return rotation;}
     public int getX(){return this.x;}
     public int getY(){return this.y;}
     public int getW(){return this.w;}
     public int getH(){return this.h;}
     public String getDirection(){return this.direction;}
+    public int getHealth() {
+        return health;
+    }
+    public int getAmmo() {
+        return ammo;
+    }
 
+    public void decAmmo(){this.ammo -= 1;}
+    public void setAmmo(int ammo) {
+        this.ammo = ammo;
+    }
 }

@@ -38,8 +38,6 @@ public class DrawPanel extends JPanel{
     }
 
     public void drawTank(Tank t, Color c){
-        System.out.println(t.getDirection());
-        //draw a rectangle where the tank should be in the grid
         if (t.getDirection().equals("r")){
             if(t.getX()<WIDTH-50){
                 for(int i=t.getX()-t.getW()/2;i<t.getX()+t.getW()/2;i++){
