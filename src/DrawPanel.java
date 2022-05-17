@@ -7,6 +7,7 @@ public class DrawPanel extends JPanel{
     private final int WIDTH = 600;
     private final int HEIGHT = 600;
     private int[][] isPainted = new int[WIDTH][HEIGHT];
+    //1 is tank + cannon, 2 is bullet, 3 is border
     private Color[][] colors = new Color[WIDTH][HEIGHT];
 
     public void clear(){
@@ -94,7 +95,7 @@ public class DrawPanel extends JPanel{
                 }
                 if(t.getBarrelDirection().equals("r")) {
                     for (int i = t.getX(); i < t.getX() + t.getW(); i++) {
-                        for (int j = t.getY() - 3; j <= t.getY() + 3; j++) {
+                        for (int j = t.getY() - 3; j < t.getY() + 3; j++) {
                             isPainted[i][j] = 1;
                             colors[i][j] = Color.GREEN;
                         }
@@ -233,6 +234,33 @@ public class DrawPanel extends JPanel{
             }
         }
         repaint();
+    }
+    public void drawBorder(){
+        //top
+        for(int i = 0; i < 30; i++){
+            for(int j = 0; j < 600; j++){
+                isPainted[i][j] = 3;
+                colors[i][j] = Color.GRAY;
+            }
+        }
+        for(int i = 0; i < 600; i++){
+            for(int j = 0; j < 30; j++){
+                isPainted[i][j] = 3;
+                colors[i][j] = Color.GRAY;
+            }
+        }
+        for(int i = 570; i < 600; i++){
+            for(int j = 0; j<600;j++){
+                isPainted[i][j] = 3;
+                colors[i][j] = Color.GRAY;
+            }
+        }
+        for(int i = 0; i<600;i++){
+            for(int j = 570;j<600;j++){
+                isPainted[i][j]=3;
+                colors[i][j]=Color.GRAY;
+            }
+        }
     }
 
 }

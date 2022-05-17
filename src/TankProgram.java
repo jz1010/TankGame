@@ -26,10 +26,6 @@ public class TankProgram implements ActionListener {
         init();
 
 
-        frame = new JFrame("Tank Program");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
         mainPanel.drawTank(p1, Color.BLUE);
         sidePanel.add(healthBar);
         sidePanel.add(ammoCount);
@@ -96,7 +92,27 @@ public class TankProgram implements ActionListener {
 
     public void actionPerformed(ActionEvent ae) {
         mainPanel.clear();
+        mainPanel.drawBorder();
         mainPanel.drawTank(p1, Color.BLUE);
+
+        Point mousePoint = mainPanel.getMousePosition();
+        if(mousePoint != null){
+            double mX = mousePoint.getX();
+            double mY = mousePoint.getY();
+            if(mX - p1.getX() > p1.getW()){
+                p1.moveBarrel("r");
+            }
+            else if(mX - p1.getX() < -2*p1.getW()){
+                p1.moveBarrel("l");
+            }
+            else if(mY - p1.getY() > 2*p1.getH()){
+                p1.moveBarrel("d");
+            }
+            else if(mY - p1.getY() < -2*p1.getH()){
+                p1.moveBarrel("u");
+            }
+        }
+
 
         int counter = 0;
         while(counter < bullets.size()){
@@ -140,6 +156,10 @@ public class TankProgram implements ActionListener {
         p1 = new Tank(125, 500, 50, 30);
         ArrayList<Bullet>bullets= new ArrayList<Bullet>();
 
+        frame = new JFrame("Tank Program");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
         healthBar = new JLabel();
         healthBar.setText(String.valueOf(p1.getHealth()));
         ammoCount = new JLabel();
@@ -178,6 +198,25 @@ public class TankProgram implements ActionListener {
         int eX = (int)(Math.random()*600);
         int eY = (int)(Math.random()*600);
         enemies.add(new Enemy(eX, eY, eW, eH));
+    }
+    public static double calcDist(double[] a, double[] b){
+        double x = a[0] - b[0];
+        double y = a[1] - b[1];
+        return Math.sqrt((x * x) + (y * y));
+    }
+    public String getClosestPoint(double[] mP){
+        //Right,left,up,down,rightUp,leftUp,rightDown,leftDown
+        double[] pointDist = new double[8];
+        //Right
+        pointDist[0] = calcDist(mP, new double[]{p1.getX() + p1.getW()/2, p1.getX()});
+        //Left
+        //Up
+        //Down
+        //RightUp
+        //leftUp
+        //rightDown
+        //leftDown
+        return "";
     }
     public static void main(String[] args) {
         TankProgram x = new TankProgram();
