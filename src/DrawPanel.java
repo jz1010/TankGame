@@ -11,9 +11,9 @@ public class DrawPanel extends JPanel{
 
     public void clear(){
             for(int i=0;i<isPainted.length;i++){
-            for(int j=0;j<isPainted[0].length;j++){
-            isPainted[i][j] = 0;
-            }
+                for(int j=0;j<isPainted[0].length;j++){
+                isPainted[i][j] = 0;
+                }
             }
         repaint();
 
@@ -30,8 +30,8 @@ public class DrawPanel extends JPanel{
             for (int x = 0; x < WIDTH; x++) {
                 for (int y = 0; y < HEIGHT; y++) {
                     if (isPainted[x][y] != 0) {
-                    g.setColor(colors[x][y]);
-                    g.fillRect(x, y, 1, 1);
+                        g.setColor(colors[x][y]);
+                        g.fillRect(x, y, 1, 1);
                     }
                 }
             }
@@ -46,12 +46,42 @@ public class DrawPanel extends JPanel{
                         colors[i][j] = c;
                     }
                 }
-                for(int i = t.getX();i<t.getX()+t.getW();i++){
-                    for(int j = t.getY()-3; j<=t.getY()+3;j++){
-                        isPainted[i][j] = 1;
-                        colors[i][j] = Color.GREEN;
+                if(t.getBarrelDirection().equals("r")) {
+                    for (int i = t.getX(); i < t.getX() + t.getW(); i++) {
+                        for (int j = t.getY() - 3; j <= t.getY() + 3; j++) {
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
                     }
                 }
+                else if(t.getBarrelDirection().equals("u")){
+                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
+                        for(int j = t.getY()-t.getW(); j<=t.getY();j++){
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
+                    }
+                }
+                else if(t.getBarrelDirection().equals("l")){
+                    for(int i = t.getX()-t.getW();i<=t.getX();i++){
+                        for(int j = t.getY()-3; j<=t.getY()+3;j++){
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
+                    }
+                }
+                else if(t.getBarrelDirection().equals("d")){
+                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
+                        for(int j = t.getY(); j<=t.getY()+t.getW();j++){
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
+                    }
+                }
+            }
+            else{
+                t.returnTank("r");
+                drawTank(t,c);
             }
         }
         else if (t.getDirection().equals("u")){
@@ -62,12 +92,42 @@ public class DrawPanel extends JPanel{
                         colors[i][j] = c;
                     }
                 }
-                for(int i = t.getX()-3;i<=t.getX()+3;i++){
-                    for(int j = t.getY()-t.getW(); j<=t.getY();j++){
-                        isPainted[i][j] = 1;
-                        colors[i][j] = Color.GREEN;
+                if(t.getBarrelDirection().equals("r")) {
+                    for (int i = t.getX(); i < t.getX() + t.getW(); i++) {
+                        for (int j = t.getY() - 3; j <= t.getY() + 3; j++) {
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
                     }
                 }
+                else if(t.getBarrelDirection().equals("u")){
+                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
+                        for(int j = t.getY()-t.getW(); j<=t.getY();j++){
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
+                    }
+                }
+                else if(t.getBarrelDirection().equals("l")){
+                    for(int i = t.getX()-t.getW();i<=t.getX();i++){
+                        for(int j = t.getY()-3; j<=t.getY()+3;j++){
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
+                    }
+                }
+                else if(t.getBarrelDirection().equals("d")){
+                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
+                        for(int j = t.getY(); j<=t.getY()+t.getW();j++){
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
+                    }
+                }
+            }
+            else{
+                t.returnTank("u");
+                drawTank(t,c);
             }
         }
         else if (t.getDirection().equals("l")){
@@ -78,12 +138,42 @@ public class DrawPanel extends JPanel{
                         colors[i][j] = c;
                     }
                 }
-                for(int i = t.getX()-t.getW();i<=t.getX();i++){
-                    for(int j = t.getY()-3; j<=t.getY()+3;j++){
-                        isPainted[i][j] = 1;
-                        colors[i][j] = Color.GREEN;
+                if(t.getBarrelDirection().equals("r")) {
+                    for (int i = t.getX(); i < t.getX() + t.getW(); i++) {
+                        for (int j = t.getY() - 3; j <= t.getY() + 3; j++) {
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
                     }
                 }
+                else if(t.getBarrelDirection().equals("u")){
+                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
+                        for(int j = t.getY()-t.getW(); j<=t.getY();j++){
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
+                    }
+                }
+                else if(t.getBarrelDirection().equals("l")){
+                    for(int i = t.getX()-t.getW();i<=t.getX();i++){
+                        for(int j = t.getY()-3; j<=t.getY()+3;j++){
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
+                    }
+                }
+                else if(t.getBarrelDirection().equals("d")){
+                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
+                        for(int j = t.getY(); j<=t.getY()+t.getW();j++){
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
+                    }
+                }
+            }
+            else{
+                t.returnTank("l");
+                drawTank(t,c);
             }
         }
         else if (t.getDirection().equals("d")){
@@ -94,12 +184,42 @@ public class DrawPanel extends JPanel{
                         colors[i][j] = c;
                     }
                 }
-                for(int i = t.getX()-3;i<=t.getX()+3;i++){
-                    for(int j = t.getY(); j<=t.getY()+t.getW();j++){
-                        isPainted[i][j] = 1;
-                        colors[i][j] = Color.GREEN;
+                if(t.getBarrelDirection().equals("r")) {
+                    for (int i = t.getX(); i < t.getX() + t.getW(); i++) {
+                        for (int j = t.getY() - 3; j <= t.getY() + 3; j++) {
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
                     }
                 }
+                else if(t.getBarrelDirection().equals("u")){
+                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
+                        for(int j = t.getY()-t.getW(); j<=t.getY();j++){
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
+                    }
+                }
+                else if(t.getBarrelDirection().equals("l")){
+                    for(int i = t.getX()-t.getW();i<=t.getX();i++){
+                        for(int j = t.getY()-3; j<=t.getY()+3;j++){
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
+                    }
+                }
+                else if(t.getBarrelDirection().equals("d")){
+                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
+                        for(int j = t.getY(); j<=t.getY()+t.getW();j++){
+                            isPainted[i][j] = 1;
+                            colors[i][j] = Color.GREEN;
+                        }
+                    }
+                }
+            }
+            else{
+                t.returnTank("d");
+                drawTank(t,c);
             }
         }
         repaint();

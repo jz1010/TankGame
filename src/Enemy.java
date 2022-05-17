@@ -1,21 +1,20 @@
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Tank{
+public class Enemy{
     private int x;
     private int y;
     private final int w;
     private final int h;
     private int health = 100;
     private int ammo = 30;
-    private final Color tankColor = Color.RED;
+    private final Color enemyColor = Color.RED;
     private final int speed = 14;
     private String direction="r";
-    private String barrelDirection="r";
 
 
 
-    public Tank(int X, int Y, int W, int H){
+    public Enemy(int X, int Y, int W, int H){
         this.x = X;
         this.y = Y;
         this.w = W;
@@ -23,7 +22,7 @@ public class Tank{
 
     }
 
-    public void moveTank(String direction){
+    public void moveEnemy(String direction){
         this.direction = direction;
         if(direction.equals("r")){
             //rotate tank
@@ -50,7 +49,7 @@ public class Tank{
 
 
     }
-    public void returnTank(String direction) {
+    public void returnEnemy(String direction) {
         this.direction = direction;
         if (direction.equals("r")) {
             this.x -= speed;
@@ -62,19 +61,15 @@ public class Tank{
             this.y -= speed;
         }
     }
-    public void moveBarrel(String direction) {
-        this.barrelDirection = direction;
-    }
 
-    public Color getTankColor() {
-        return tankColor;
+    public Color getEnemyColor() {
+        return enemyColor;
     }
     public int getX(){return this.x;}
     public int getY(){return this.y;}
     public int getW(){return this.w;}
     public int getH(){return this.h;}
     public String getDirection(){return this.direction;}
-    public String getBarrelDirection(){return this.barrelDirection;}
     public int getHealth() {
         return health;
     }
