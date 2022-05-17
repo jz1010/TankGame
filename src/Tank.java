@@ -7,9 +7,9 @@ public class Tank{
     private final int w;
     private final int h;
     private int health = 100;
-    private int ammo = 100;
+    private int ammo = 30;
     private final Color tankColor = Color.RED;
-    private final int speed = 6;
+    private final int speed = 14;
     private String direction="r";
 
 

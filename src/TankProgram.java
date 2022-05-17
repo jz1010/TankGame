@@ -109,7 +109,7 @@ public class TankProgram implements ActionListener {
             ammoCount.setText(String.valueOf(p1.getAmmo()));
         }
         if(secReloading && reloadTimer >= 300) {  // num seconds * 100
-            p1.setAmmo(100);
+            p1.setAmmo(30);
             secReloading = false;
         }
         else if(secReloading){
