@@ -4,11 +4,12 @@ import java.util.ArrayList;
 public class Tank{
     private int x;
     private int y;
-    private final int w;
-    private final int h;
-    private int health = 100;
-    private int ammo = 30;
-    private final Color tankColor = Color.RED;
+    private int w;
+    private int h;
+    private final int BASE_W;
+    private final int BASE_H;
+    private int health = Settings.PLAYER_STARTING_HEALTH;
+    private int ammo = Settings.BASE_SECOND_AMMO;
     private final int speed = 14;
     private String direction="r";
     private String barrelDirection="r";
@@ -20,6 +21,8 @@ public class Tank{
         this.y = Y;
         this.w = W;
         this.h = H;
+        this.BASE_W = w;
+        this.BASE_H = h;
 
     }
 
@@ -65,14 +68,16 @@ public class Tank{
     public void moveBarrel(String direction) {
         this.barrelDirection = direction;
     }
-
-    public Color getTankColor() {
-        return tankColor;
-    }
     public int getX(){return this.x;}
     public int getY(){return this.y;}
     public int getW(){return this.w;}
     public int getH(){return this.h;}
+    public int getBASE_H() {
+        return BASE_H;
+    }
+    public int getBASE_W() {
+        return BASE_W;
+    }
     public String getDirection(){return this.direction;}
     public String getBarrelDirection(){return this.barrelDirection;}
     public int getHealth() {
@@ -86,4 +91,8 @@ public class Tank{
     public void setAmmo(int ammo) {
         this.ammo = ammo;
     }
+    public void setH(int h) {
+        this.h = h;
+    }
+    public void setW(int w){this.w = w;}
 }

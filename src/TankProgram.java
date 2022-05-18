@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class TankProgram implements ActionListener {
     JFrame frame;
@@ -26,7 +27,7 @@ public class TankProgram implements ActionListener {
         init();
 
 
-        mainPanel.drawTank(p1, Color.BLUE);
+        mainPanel.drawTank(p1);
         sidePanel.add(healthBar);
         sidePanel.add(ammoCount);
 
@@ -42,37 +43,24 @@ public class TankProgram implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 //System.out.println(e.getKeyCode());
-                if(e.getKeyCode() == 32 && !(ammoCount.getText().equals("Reloading"))){ // space bar to fire
+                if(e.getKeyCode() == Settings.SECONDARY_FIRE && !(ammoCount.getText().equals("Reloading"))){ // space bar to fire
                     addBullet();
                     p1.decAmmo();
                 }
 
                 //lets do wasd
-                if(e.getKeyCode() == 68){ // right arrow
+                if(e.getKeyCode() == Settings.PLAYER_MOVE_RIGHT){ // right arrow
                     p1.moveTank("r");
                 }
-                else if (e.getKeyCode() == 65){ // left arrow
+                else if (e.getKeyCode() == Settings.PLAYER_MOVE_LEFT){ // left arrow
                     p1.moveTank("l");
                 }
-                else if (e.getKeyCode() == 87){ // up arrow
+                else if (e.getKeyCode() == Settings.PLAYER_MOVE_UP){ // up arrow
                     p1.moveTank("u");
                 }
-                else if (e.getKeyCode() == 83){ // down arrow
+                else if (e.getKeyCode() == Settings.PLAYER_MOVE_DOWN){ // down arrow
                     p1.moveTank("d");
                 }
-                if(e.getKeyCode() == 39){ // right arrow
-                    p1.moveBarrel("r");
-                }
-                else if (e.getKeyCode() == 37){ // left arrow
-                    p1.moveBarrel("l");
-                }
-                else if (e.getKeyCode() == 38){ // up arrow
-                    p1.moveBarrel("u");
-                }
-                else if (e.getKeyCode() == 40){ // down arrow
-                    p1.moveBarrel("d");
-                }
-
 
 
             }
@@ -82,8 +70,6 @@ public class TankProgram implements ActionListener {
             }
         });
 
-        //update cycle
-        System.out.println(timer.getDelay());
         frame.pack();
         frame.setVisible(true);
 
@@ -93,24 +79,15 @@ public class TankProgram implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         mainPanel.clear();
         mainPanel.drawBorder();
-        mainPanel.drawTank(p1, Color.BLUE);
+        mainPanel.drawTank(p1);
 
         Point mousePoint = mainPanel.getMousePosition();
         if(mousePoint != null){
             double mX = mousePoint.getX();
             double mY = mousePoint.getY();
-            if(mX - p1.getX() > p1.getW()){
-                p1.moveBarrel("r");
-            }
-            else if(mX - p1.getX() < -2*p1.getW()){
-                p1.moveBarrel("l");
-            }
-            else if(mY - p1.getY() > 2*p1.getH()){
-                p1.moveBarrel("d");
-            }
-            else if(mY - p1.getY() < -2*p1.getH()){
-                p1.moveBarrel("u");
-            }
+            p1.moveBarrel(getClosestPoint(new double[]{mX, mY}));
+            System.out.println(getClosestPoint(new double[]{mX, mY}));
+
         }
 
 
@@ -138,8 +115,8 @@ public class TankProgram implements ActionListener {
         else if (!secReloading){
             ammoCount.setText(String.valueOf(p1.getAmmo()));
         }
-        if(secReloading && reloadTimer >= 300) {  // num seconds * 100
-            p1.setAmmo(30);
+        if(secReloading && reloadTimer >= 100 * Settings.RELOAD_TIME_SECONDS) {  // num seconds * 100
+            p1.setAmmo(Settings.BASE_SECOND_AMMO);
             secReloading = false;
         }
         else if(secReloading){
@@ -208,15 +185,60 @@ public class TankProgram implements ActionListener {
         //Right,left,up,down,rightUp,leftUp,rightDown,leftDown
         double[] pointDist = new double[8];
         //Right
-        pointDist[0] = calcDist(mP, new double[]{p1.getX() + p1.getW()/2, p1.getX()});
+        pointDist[0] = calcDist(mP, new double[]{p1.getX() + (double) p1.getW()/2, p1.getY()});
         //Left
+        pointDist[1] = calcDist(mP, new double[]{p1.getX() - (double) p1.getW()/2, p1.getY()});
         //Up
+        pointDist[2] = calcDist(mP, new double[]{p1.getX(), p1.getY() - (double) p1.getH()/2});
         //Down
+        pointDist[3] = calcDist(mP, new double[]{p1.getX(), p1.getY() + (double) p1.getH()/2});
         //RightUp
+        pointDist[4] = calcDist(mP, new double[]{p1.getX() + (double) p1.getW()/2, p1.getY() - (double) p1.getH()/2});
         //leftUp
+        pointDist[5] = calcDist(mP, new double[]{p1.getX() - (double) p1.getW()/2, p1.getY() - (double) p1.getH()/2});
         //rightDown
+        pointDist[6] = calcDist(mP, new double[]{p1.getX() + (double) p1.getW()/2, p1.getY() + (double) p1.getH()/2});
         //leftDown
-        return "";
+        pointDist[7] = calcDist(mP, new double[]{p1.getX() - (double) p1.getW()/2, p1.getY() + (double) p1.getH()/2});
+
+        int bestPoint = getIndexofMin(pointDist);
+        if(bestPoint == 0) {//R
+            return "r";
+        }
+        else if(bestPoint == 1) {//L
+            return "l";
+        }
+        else if(bestPoint == 2) {//U
+            return "u";
+        }
+        else if(bestPoint == 3) {//D
+            return "d";
+        }
+        else if(bestPoint == 4) {//RU
+            return "ru";
+        }else if(bestPoint == 5) {//LU
+            return "lu";
+        }
+        else if(bestPoint == 6) {//RD
+            return "rd";
+        }
+        else if(bestPoint == 7) {//LD
+            return "ld";
+        }
+
+        return "r";
+    }
+
+    public static int getIndexofMin(double[] list){
+        int bestIndex = 0;
+        double lowestVal = 10000;
+        for(int i = 0; i < list.length; i++){
+            if(list[i] < lowestVal){
+                bestIndex = i;
+                lowestVal = list[i];
+            }
+        }
+        return bestIndex;
     }
     public static void main(String[] args) {
         TankProgram x = new TankProgram();
