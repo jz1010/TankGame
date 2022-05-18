@@ -11,6 +11,8 @@ public class Bullet{
     public static final int BULLET_H = 2;
     private Color bulletColor = Color.BLACK;
     private int speed = 6;
+    private int xSpeed = 5;
+    private int ySpeed = 3;
     private final String direction;
     private ArrayList<Integer> center = new ArrayList<>();
     private int rotation = 90;
@@ -38,6 +40,22 @@ public class Bullet{
         }
         else if(getDirection().equals("d")){
             this.y += this.speed;
+        }
+        else if(getDirection().equals("ru")){
+            this.x += this.xSpeed;
+            this.y -= this.ySpeed;
+        }
+        else if(getDirection().equals("lu")){
+            this.x -= this.xSpeed;
+            this.y -= this.ySpeed;
+        }
+        else if(getDirection().equals("rd")){
+            this.x += this.xSpeed;
+            this.y += this.ySpeed;
+        }
+        else if(getDirection().equals("ld")){
+            this.x -= this.xSpeed;
+            this.y += this.ySpeed;
         }
 
     }

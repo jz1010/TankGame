@@ -166,6 +166,9 @@ public class TankProgram implements ActionListener {
             bullets.add(new Bullet(p1.getX(), p1.getY()+p1.getW(), bH,bW, p1.getBarrelDirection()));
 
         }
+        else if (p1.getBarrelDirection().equals("ru")){
+            bullets.add(new Bullet(p1.getX() + p1.getW()/2, p1.getY() - p1.getH()/2, bH, bW, p1.getBarrelDirection()));
+        }
 
     }
     public void addEnemy(){
