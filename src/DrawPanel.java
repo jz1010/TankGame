@@ -43,119 +43,11 @@ public class DrawPanel extends JPanel{
             t.setH(t.getBASE_H());
             t.setW(t.getBASE_W());
 
-            if(t.getX()<WIDTH-50){
-                for(int i=t.getX()-t.getW()/2;i<t.getX()+t.getW()/2;i++){
-                    for(int j=t.getY()-t.getH()/2;j<t.getY()+t.getH()/2;j++){
+            if(t.getX()<WIDTH-50) {
+                for (int i = t.getX() - t.getW() / 2; i < t.getX() + t.getW() / 2; i++) {
+                    for (int j = t.getY() - t.getH() / 2; j < t.getY() + t.getH() / 2; j++) {
                         isPainted[i][j] = 1;
                         colors[i][j] = Settings.PLAYER_COLOR;
-                    }
-                }
-                if(t.getBarrelDirection().equals("r")) {
-                    for (int i = t.getX(); i < t.getX() + t.getW(); i++) {
-                        for (int j = t.getY() - 3; j <= t.getY() + 3; j++) {
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("u")){
-                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
-                        for(int j = t.getY()-t.getW(); j<=t.getY();j++){
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("l")){
-                    for(int i = t.getX()-t.getW();i<=t.getX();i++){
-                        for(int j = t.getY()-3; j<=t.getY()+3;j++){
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("d")){
-                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
-                        for(int j = t.getY(); j<=t.getY()+t.getW();j++){
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("ru")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) 2 * t.getW(); x++){
-                        int j = t.getY();
-                        for(int i = t.getX(); i < t.getX() + t.getW();i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j-=2;
-                            }
-                        }
-                }
-                }
-                else if(t.getBarrelDirection().equals("lu")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) t.getW(); x++){
-                        int j = t.getY() - t.getH();
-                        for(int i = t.getX() - t.getW(); i < t.getX();i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j+=2;
-                            }
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("rd")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) 2 * t.getW(); x++){
-                        int j = t.getY();
-                        for(int i = t.getX(); i < t.getX() + t.getW();i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j+=2;
-                            }
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("ld")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) t.getW(); x++){
-                        int j = t.getY() + t.getH();
-                        for(int i = t.getX() - t.getW(); i < t.getX();i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j-=2;
-                            }
-                        }
                     }
                 }
             }
@@ -174,114 +66,7 @@ public class DrawPanel extends JPanel{
                         colors[i][j] = Settings.PLAYER_COLOR;
                     }
                 }
-                if(t.getBarrelDirection().equals("r")) {
-                    for (int i = t.getX(); i < t.getX() + t.getH(); i++) {
-                        for (int j = t.getY() - 3; j <= t.getY() + 3; j++) {
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("u")){
-                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
-                        for(int j = t.getY()-t.getH(); j<=t.getY();j++){
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("l")){
-                    for(int i = t.getX()-t.getH();i<=t.getX();i++){
-                        for(int j = t.getY()-3; j<=t.getY()+3;j++){
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("d")){
-                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
-                        for(int j = t.getY(); j<=t.getY()+t.getH();j++){
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("ru")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) t.getX(); x++){
-                        int j = t.getY();
-                        for(int i = t.getX(); i < t.getX() + t.getH()/2;i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j-=4;
-                            }
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("lu")){
-                    int counter = 0;
-                    for(int x = 0; x < (int)  t.getH(); x++){
-                        int j = t.getY() - t.getW();
-                        for(int i = t.getX() - t.getH()/2; i < t.getX();i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j+=4;
-                            }
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("rd")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) t.getH(); x++){
-                        int j = t.getY();
-                        for(int i = t.getX(); i < t.getX() + t.getH()/2;i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j+=4;
-                            }
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("ld")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) t.getH(); x++){
-                        int j = t.getY() + t.getW();
-                        for(int i = t.getX() - t.getH()/2; i < t.getX();i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j-=4;
-                            }
-                        }
-                    }
-                }
+
             }
             else{
                 t.returnTank("u");
@@ -299,114 +84,8 @@ public class DrawPanel extends JPanel{
                         colors[i][j] = Settings.PLAYER_COLOR;
                     }
                 }
-                if(t.getBarrelDirection().equals("r")) {
-                    for (int i = t.getX(); i < t.getX() + t.getW(); i++) {
-                        for (int j = t.getY() - 3; j <= t.getY() + 3; j++) {
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("u")){
-                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
-                        for(int j = t.getY()-t.getW(); j<=t.getY();j++){
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("l")){
-                    for(int i = t.getX()-t.getW();i<=t.getX();i++){
-                        for(int j = t.getY()-3; j<=t.getY()+3;j++){
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("d")){
-                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
-                        for(int j = t.getY(); j<=t.getY()+t.getW();j++){
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("ru")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) 2 * t.getW(); x++){
-                        int j = t.getY();
-                        for(int i = t.getX(); i < t.getX() + t.getW();i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j-=2;
-                            }
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("lu")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) t.getW(); x++){
-                        int j = t.getY() - t.getH();
-                        for(int i = t.getX() - t.getW(); i < t.getX();i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j+=2;
-                            }
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("rd")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) 2 * t.getW(); x++){
-                        int j = t.getY();
-                        for(int i = t.getX(); i < t.getX() + t.getW();i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j+=2;
-                            }
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("ld")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) t.getW(); x++){
-                        int j = t.getY() + t.getH();
-                        for(int i = t.getX() - t.getW(); i < t.getX();i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j-=2;
-                            }
-                        }
-                    }
-                }
+
+
             }
             else{
                 t.returnTank("l");
@@ -424,121 +103,87 @@ public class DrawPanel extends JPanel{
                         colors[i][j] = Settings.PLAYER_COLOR;
                     }
                 }
-                if(t.getBarrelDirection().equals("r")) {
-                    for (int i = t.getX(); i < t.getX() + t.getH(); i++) {
-                        for (int j = t.getY() - 3; j <= t.getY() + 3; j++) {
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("u")){
-                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
-                        for(int j = t.getY()-t.getH(); j<=t.getY();j++){
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("l")){
-                    for(int i = t.getX()-t.getH();i<=t.getX();i++){
-                        for(int j = t.getY()-3; j<=t.getY()+3;j++){
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("d")){
-                    for(int i = t.getX()-3;i<=t.getX()+3;i++){
-                        for(int j = t.getY(); j<=t.getY()+t.getH();j++){
-                            isPainted[i][j] = 1;
-                            colors[i][j] = Settings.CANNON_COLOR;
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("ru")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) t.getX(); x++){
-                        int j = t.getY();
-                        for(int i = t.getX(); i < t.getX() + t.getH()/2;i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j-=4;
-                            }
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("lu")){
-                    int counter = 0;
-                    for(int x = 0; x < (int)  t.getH(); x++){
-                        int j = t.getY() - t.getW();
-                        for(int i = t.getX() - t.getH()/2; i < t.getX();i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j+=4;
-                            }
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("rd")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) t.getH(); x++){
-                        int j = t.getY();
-                        for(int i = t.getX(); i < t.getX() + t.getH()/2;i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j+=4;
-                            }
-                        }
-                    }
-                }
-                else if(t.getBarrelDirection().equals("ld")){
-                    int counter = 0;
-                    for(int x = 0; x < (int) t.getH(); x++){
-                        int j = t.getY() + t.getW();
-                        for(int i = t.getX() - t.getH()/2; i < t.getX();i++){
-                            //Draw square
-                            for(int k = i - 3; k < i + 3; k++){
-                                for(int l = j - 3; l < j + 3; l++){
-                                    isPainted[k][l] = 1;
-                                    colors[k][l] = Settings.CANNON_COLOR;
-                                }
-                            }
-                            counter++;
-                            if(counter%3 == 0 && counter!=0){
-                                j-=4;
-                            }
-                        }
-                    }
-                }
+
             }
             else{
                 t.returnTank("d");
                 drawTank(t);
             }
         }
-                if(Settings.SHOW_CORNERS){
+        if(t.getBarrelDirection().equals("r")) {
+            for (int i = t.getX(); i < t.getX() + t.getW(); i++) {
+                for (int j = t.getY() - 3; j <= t.getY() + 3; j++) {
+                    isPainted[i][j] = 1;
+                    colors[i][j] = Settings.CANNON_COLOR;
+                }
+            }
+        }
+        else if(t.getBarrelDirection().equals("u")){
+            for(int i = t.getX()-3;i<=t.getX()+3;i++){
+                for(int j = t.getY()-t.getW(); j<=t.getY();j++){
+                    isPainted[i][j] = 1;
+                    colors[i][j] = Settings.CANNON_COLOR;
+                }
+            }
+        }
+        else if(t.getBarrelDirection().equals("l")){
+            for(int i = t.getX()-t.getW();i<=t.getX();i++){
+                for(int j = t.getY()-3; j<=t.getY()+3;j++){
+                    isPainted[i][j] = 1;
+                    colors[i][j] = Settings.CANNON_COLOR;
+                }
+            }
+        }
+        else if(t.getBarrelDirection().equals("d")){
+            for(int i = t.getX()-3;i<=t.getX()+3;i++){
+                for(int j = t.getY(); j<=t.getY()+t.getW();j++){
+                    isPainted[i][j] = 1;
+                    colors[i][j] = Settings.CANNON_COLOR;
+                }
+            }
+        }
+        else if(t.getBarrelDirection().equals("ru")){
+            for(int i=0;i<(int)(t.getW()/1.4);i++){
+                for(int k = t.getX()+i-3; k < t.getX()+i+3; k++){
+                    for(int l = t.getY()-i - 3; l < t.getY()-i+3; l++){
+                        isPainted[k][l] = 1;
+                        colors[k][l] = Settings.CANNON_COLOR;
+                    }
+                }
+            }
+        }
+        else if(t.getBarrelDirection().equals("lu")){
+            for(int i=0;i<(int)(t.getW()/1.4);i++){
+                for(int k = t.getX()-i-3; k < t.getX()-i+3; k++){
+                    for(int l = t.getY()-i - 3; l < t.getY()-i+3; l++){
+                        isPainted[k][l] = 1;
+                        colors[k][l] = Settings.CANNON_COLOR;
+                    }
+                }
+            }
+        }
+        else if(t.getBarrelDirection().equals("rd")){
+            for(int i=0;i<(int)(t.getW()/1.4);i++){
+                for(int k = t.getX()+i-3; k < t.getX()+i+3; k++){
+                    for(int l = t.getY()+i - 3; l < t.getY()+i+3; l++){
+                        isPainted[k][l] = 1;
+                        colors[k][l] = Settings.CANNON_COLOR;
+                    }
+                }
+            }
+        }
+        else if(t.getBarrelDirection().equals("ld")){
+            for(int i=0;i<(int)(t.getW()/1.4);i++){
+                for(int k = t.getX()-i-3; k < t.getX()-i+3; k++){
+                    for(int l = t.getY()+i - 3; l < t.getY()+i+3; l++){
+                        isPainted[k][l] = 1;
+                        colors[k][l] = Settings.CANNON_COLOR;
+                    }
+                }
+            }
+        }
+
+        if(Settings.SHOW_CORNERS){
             drawCorners(t);
         }
         repaint();
@@ -548,14 +193,14 @@ public class DrawPanel extends JPanel{
     }
     public void drawCorners(Tank t){
         //R
-        for(int i = (t.getX() + t.getW()/2) - 3; i < t.getX() + t.getW()/2;i++){
+        for(int i = (t.getX() + t.getD()/2) - 3; i < t.getX() + t.getD()/2;i++){
             for(int j = (t.getY()); j < (t.getY()) + 3;j++){
                 isPainted[i][j] = 4;
                 colors[i][j] = Settings.PLAYER_CORNER_COLOR;
             }
         }
         //L
-        for(int i = (t.getX() - t.getW()/2); i < (t.getX() - t.getW()/2) + 3;i++){
+        for(int i = (t.getX() - t.getD()/2); i < (t.getX() - t.getD()/2) + 3;i++){
             for(int j = (t.getY()); j < (t.getY()) + 3;j++){
                 isPainted[i][j] = 4;
                 colors[i][j] = Settings.PLAYER_CORNER_COLOR;
@@ -563,46 +208,47 @@ public class DrawPanel extends JPanel{
         }
         //U
         for(int i = (t.getX())-2; i < (t.getX())+2;i++){
-            for(int j = (t.getY() - t.getH()/2); j < (t.getY() - t.getH()/2) + 3;j++){
+            for(int j = (t.getY() - t.getD()/2); j < (t.getY() - t.getD()/2) + 3;j++){
                 isPainted[i][j] = 4;
                 colors[i][j] = Settings.PLAYER_CORNER_COLOR;
             }
         }
         //D
         for(int i = (t.getX())-2; i < (t.getX()) + 2;i++){
-            for(int j = (t.getY() + t.getH()/2)-3; j < (t.getY() + t.getH()/2);j++){
+            for(int j = (t.getY() + t.getD()/2)-3; j < (t.getY() + t.getD()/2);j++){
                 isPainted[i][j] = 4;
                 colors[i][j] = Settings.PLAYER_CORNER_COLOR;
             }
         }
         //RU
-        for(int i = (t.getX() + t.getW()/2) - 3; i < t.getX() + t.getW()/2;i++){
-            for(int j = (t.getY() - t.getH()/2); j < (t.getY()-t.getH()/2) + 3;j++){
-                isPainted[i][j] = 4;
-                colors[i][j] = Settings.PLAYER_CORNER_COLOR;
+        for(double i = (t.getX() + t.getD()/2/1.4) - 3; i < t.getX() + t.getD()/2/1.4;i++){
+            for(double j = (t.getY() - t.getD()/2/1.4); j < (t.getY()-t.getD()/2/1.4) + 3;j++){
+                isPainted[(int)i][(int)j] = 4;
+                colors[(int) i][(int) j] = Settings.PLAYER_CORNER_COLOR;
             }
         }
         //LU
-        for(int i = (t.getX() - t.getW()/2); i < (t.getX() - t.getW()/2) + 3;i++){
-            for(int j = (t.getY() - t.getH()/2); j < (t.getY()-t.getH()/2) + 3;j++){
-                isPainted[i][j] = 4;
-                colors[i][j] = Settings.PLAYER_CORNER_COLOR;
+        for(double i = (t.getX() - t.getD()/2/1.4) - 3; i < t.getX() - t.getD()/2/1.4;i++){
+            for(double j = (t.getY() - t.getD()/2/1.4); j < (t.getY()-t.getD()/2/1.4) + 3;j++){
+                isPainted[(int)i][(int)j] = 4;
+                colors[(int) i][(int) j] = Settings.PLAYER_CORNER_COLOR;
             }
         }
         //RD
-        for(int i = (t.getX() + t.getW()/2) - 3; i < t.getX() + t.getW()/2;i++){
-            for(int j = (t.getY() + t.getH()/2)-3; j < (t.getY()+t.getH()/2);j++){
-                isPainted[i][j] = 4;
-                colors[i][j] = Settings.PLAYER_CORNER_COLOR;
+        for(double i = (t.getX() + t.getD()/2/1.4) - 3; i < t.getX() + t.getD()/2/1.4;i++){
+            for(double j = (t.getY() + t.getD()/2/1.4); j < (t.getY()+t.getD()/2/1.4) + 3;j++){
+                isPainted[(int)i][(int)j] = 4;
+                colors[(int) i][(int) j] = Settings.PLAYER_CORNER_COLOR;
             }
         }
         //LD
-        for(int i = (t.getX() - t.getW()/2); i < (t.getX() - t.getW()/2)+3;i++){
-            for(int j = (t.getY() + t.getH()/2)-3; j < (t.getY()+t.getH()/2);j++){
-                isPainted[i][j] = 4;
-                colors[i][j] = Settings.PLAYER_CORNER_COLOR;
+        for(double i = (t.getX() - t.getD()/2/1.4) - 3; i < t.getX() - t.getD()/2/1.4;i++){
+            for(double j = (t.getY() + t.getD()/2/1.4); j < (t.getY()+t.getD()/2/1.4) + 3;j++){
+                isPainted[(int)i][(int)j] = 4;
+                colors[(int) i][(int) j] = Settings.PLAYER_CORNER_COLOR;
             }
         }
+
 
         repaint();
     }

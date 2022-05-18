@@ -42,7 +42,7 @@ public class TankProgram implements ActionListener {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                //System.out.println(e.getKeyCode());
+                // System.out.println(e.getKeyCode());
                 if(e.getKeyCode() == Settings.SECONDARY_FIRE && !(ammoCount.getText().equals("Reloading"))){ // space bar to fire
                     addBullet();
                     p1.decAmmo();
@@ -130,7 +130,7 @@ public class TankProgram implements ActionListener {
         mainPanel = new DrawPanel();
         sidePanel = new JPanel();
 
-        p1 = new Tank(125, 500, 50, 30);
+        p1 = new Tank(125, 500, 30, 30, 50);
         ArrayList<Bullet>bullets= new ArrayList<Bullet>();
 
         frame = new JFrame("Tank Program");
@@ -167,7 +167,7 @@ public class TankProgram implements ActionListener {
 
         }
         else if (p1.getBarrelDirection().equals("ru")){
-            bullets.add(new Bullet(p1.getX() + p1.getW()/2, p1.getY() - p1.getH()/2, bH, bW, p1.getBarrelDirection()));
+            bullets.add(new Bullet(p1.getX() + (int)(p1.getW()/2/1.4), p1.getY() - (int)(p1.getW()/2/1.4), bH, bW, p1.getBarrelDirection()));
         }
 
     }
@@ -188,21 +188,21 @@ public class TankProgram implements ActionListener {
         //Right,left,up,down,rightUp,leftUp,rightDown,leftDown
         double[] pointDist = new double[8];
         //Right
-        pointDist[0] = calcDist(mP, new double[]{p1.getX() + (double) p1.getW()/2, p1.getY()});
+        pointDist[0] = calcDist(mP, new double[]{p1.getX() + (double) p1.getH()/2, p1.getY()});
         //Left
-        pointDist[1] = calcDist(mP, new double[]{p1.getX() - (double) p1.getW()/2, p1.getY()});
+        pointDist[1] = calcDist(mP, new double[]{p1.getX() - (double) p1.getH()/2, p1.getY()});
         //Up
         pointDist[2] = calcDist(mP, new double[]{p1.getX(), p1.getY() - (double) p1.getH()/2});
         //Down
         pointDist[3] = calcDist(mP, new double[]{p1.getX(), p1.getY() + (double) p1.getH()/2});
         //RightUp
-        pointDist[4] = calcDist(mP, new double[]{p1.getX() + (double) p1.getW()/2, p1.getY() - (double) p1.getH()/2});
+        pointDist[4] = calcDist(mP, new double[]{p1.getX() + (double) p1.getH()/2/1.4, p1.getY() - (double) p1.getH()/2/1.4});
         //leftUp
-        pointDist[5] = calcDist(mP, new double[]{p1.getX() - (double) p1.getW()/2, p1.getY() - (double) p1.getH()/2});
+        pointDist[5] = calcDist(mP, new double[]{p1.getX() - (double) p1.getH()/2/1.4, p1.getY() - (double) p1.getH()/2/1.4});
         //rightDown
-        pointDist[6] = calcDist(mP, new double[]{p1.getX() + (double) p1.getW()/2, p1.getY() + (double) p1.getH()/2});
+        pointDist[6] = calcDist(mP, new double[]{p1.getX() + (double) p1.getH()/2/1.4, p1.getY() + (double) p1.getH()/2/1.4});
         //leftDown
-        pointDist[7] = calcDist(mP, new double[]{p1.getX() - (double) p1.getW()/2, p1.getY() + (double) p1.getH()/2});
+        pointDist[7] = calcDist(mP, new double[]{p1.getX() - (double) p1.getH()/2/1.4, p1.getY() + (double) p1.getH()/2/1.4});
 
         int bestPoint = getIndexofMin(pointDist);
         if(bestPoint == 0) {//R

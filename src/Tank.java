@@ -6,6 +6,7 @@ public class Tank{
     private int y;
     private int w;
     private int h;
+    private int d;
     private final int BASE_W;
     private final int BASE_H;
     private int health = Settings.PLAYER_STARTING_HEALTH;
@@ -16,11 +17,12 @@ public class Tank{
 
 
 
-    public Tank(int X, int Y, int W, int H){
+    public Tank(int X, int Y, int W, int H, int D){
         this.x = X;
         this.y = Y;
         this.w = W;
         this.h = H;
+        this.d=D;
         this.BASE_W = w;
         this.BASE_H = h;
 
@@ -72,6 +74,7 @@ public class Tank{
     public int getY(){return this.y;}
     public int getW(){return this.w;}
     public int getH(){return this.h;}
+    public int getD(){return this.d;}
     public int getBASE_H() {
         return BASE_H;
     }
