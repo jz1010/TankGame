@@ -10,6 +10,12 @@ public class Settings {
     * 4-Big Bullet
     * 5-Enemy
     *
+    *
+    * ------ MATS -------
+    * tankMat - 1 is tank + cannon
+    * bulletMat - 1 is bullet, 2 is big bullet
+    * enemyMat - 1 is enemy
+    *
     * */
 
     public static final Color BORDER_COLOR = Color.GRAY;
