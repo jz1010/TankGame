@@ -11,20 +11,24 @@ public class Bullet{
     public static final int BULLET_H = 2;
     private Color bulletColor = Color.BLACK;
     private int speed = 6;
-    private int xSpeed = 5;
-    private int ySpeed = 3;
+    private int vXSpeed = 3;
+    private int vYSpeed = 5;
+    private int hXSpeed = 5;
+    private int hYSpeed = 3;
     private final String direction;
     private ArrayList<Integer> center = new ArrayList<>();
     private int rotation = 90;
+    private boolean shotVertically = false;
 
 
 
-    public Bullet(int X, int Y, int W, int H, String dir){
+    public Bullet(int X, int Y, int W, int H, String dir, boolean shotVertically){
         this.x = X;
         this.y = Y;
         this.w = W;
         this.h = H;
         this.direction = dir;
+        this.shotVertically = shotVertically;
 
     }
 
@@ -42,20 +46,44 @@ public class Bullet{
             this.y += this.speed;
         }
         else if(getDirection().equals("ru")){
-            this.x += this.xSpeed;
-            this.y -= this.ySpeed;
+            if(shotVertically){
+                this.x += this.vXSpeed;
+                this.y -= this.vYSpeed;
+            }
+            else{
+                this.x += this.hXSpeed;
+                this.y -= this.hYSpeed;
+            }
         }
         else if(getDirection().equals("lu")){
-            this.x -= this.xSpeed;
-            this.y -= this.ySpeed;
+            if(shotVertically){
+                this.x -= this.vXSpeed;
+                this.y -= this.vYSpeed;
+            }
+            else{
+                this.x -= this.hXSpeed;
+                this.y -= this.hYSpeed;
+            }
         }
         else if(getDirection().equals("rd")){
-            this.x += this.xSpeed;
-            this.y += this.ySpeed;
+            if(shotVertically){
+                this.x += this.vXSpeed;
+                this.y += this.vYSpeed;
+            }
+            else{
+                this.x += this.hXSpeed;
+                this.y += this.hYSpeed;
+            }
         }
         else if(getDirection().equals("ld")){
-            this.x -= this.xSpeed;
-            this.y += this.ySpeed;
+            if(shotVertically){
+                this.x -= this.vXSpeed;
+                this.y += this.vYSpeed;
+            }
+            else{
+                this.x -= this.hXSpeed;
+                this.y += this.hYSpeed;
+            }
         }
 
     }

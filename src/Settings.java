@@ -28,6 +28,8 @@ public class Settings {
     public static final int BASE_SECOND_AMMO = 30;
     public static final int RELOAD_TIME_SECONDS = 3;
     public static final int PLAYER_STARTING_HEALTH = 100;
+    public static final int BIG_BULLET_DAMAGE_RADIUS = 10;
+    public static final Color BIG_BULLET_COLOR = Color.ORANGE;
 
 
 }

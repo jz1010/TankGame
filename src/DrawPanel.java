@@ -193,14 +193,14 @@ public class DrawPanel extends JPanel{
     }
     public void drawCorners(Tank t){
         //R
-        for(int i = (t.getX() + t.getD()/2) - 3; i < t.getX() + t.getD()/2;i++){
+        for(int i = (t.getX() + t.getW()/2) - 3; i < t.getX() + t.getW()/2;i++){
             for(int j = (t.getY()); j < (t.getY()) + 3;j++){
                 isPainted[i][j] = 4;
                 colors[i][j] = Settings.PLAYER_CORNER_COLOR;
             }
         }
         //L
-        for(int i = (t.getX() - t.getD()/2); i < (t.getX() - t.getD()/2) + 3;i++){
+        for(int i = (t.getX() - t.getW()/2); i < (t.getX() - t.getW()/2) + 3;i++){
             for(int j = (t.getY()); j < (t.getY()) + 3;j++){
                 isPainted[i][j] = 4;
                 colors[i][j] = Settings.PLAYER_CORNER_COLOR;
@@ -208,42 +208,42 @@ public class DrawPanel extends JPanel{
         }
         //U
         for(int i = (t.getX())-2; i < (t.getX())+2;i++){
-            for(int j = (t.getY() - t.getD()/2); j < (t.getY() - t.getD()/2) + 3;j++){
+            for(int j = (t.getY() - t.getH()/2); j < (t.getY() - t.getH()/2) + 3;j++){
                 isPainted[i][j] = 4;
                 colors[i][j] = Settings.PLAYER_CORNER_COLOR;
             }
         }
         //D
         for(int i = (t.getX())-2; i < (t.getX()) + 2;i++){
-            for(int j = (t.getY() + t.getD()/2)-3; j < (t.getY() + t.getD()/2);j++){
+            for(int j = (t.getY() + t.getH()/2)-3; j < (t.getY() + t.getH()/2);j++){
                 isPainted[i][j] = 4;
                 colors[i][j] = Settings.PLAYER_CORNER_COLOR;
             }
         }
         //RU
-        for(double i = (t.getX() + t.getD()/2/1.4) - 3; i < t.getX() + t.getD()/2/1.4;i++){
-            for(double j = (t.getY() - t.getD()/2/1.4); j < (t.getY()-t.getD()/2/1.4) + 3;j++){
+        for(double i = (t.getX() + t.getW()/2) - 3; i < t.getX() + t.getW()/2;i++){
+            for(double j = (t.getY() - t.getH()/2); j < (t.getY()-t.getH()/2) + 3;j++){
                 isPainted[(int)i][(int)j] = 4;
                 colors[(int) i][(int) j] = Settings.PLAYER_CORNER_COLOR;
             }
         }
         //LU
-        for(double i = (t.getX() - t.getD()/2/1.4) - 3; i < t.getX() - t.getD()/2/1.4;i++){
-            for(double j = (t.getY() - t.getD()/2/1.4); j < (t.getY()-t.getD()/2/1.4) + 3;j++){
+        for(double i = (t.getX() - t.getW()/2); i < (t.getX() - t.getW()/2) + 3;i++){
+            for(double j = (t.getY() - t.getH()/2); j < (t.getY()-t.getH()/2) + 3;j++){
                 isPainted[(int)i][(int)j] = 4;
                 colors[(int) i][(int) j] = Settings.PLAYER_CORNER_COLOR;
             }
         }
         //RD
-        for(double i = (t.getX() + t.getD()/2/1.4) - 3; i < t.getX() + t.getD()/2/1.4;i++){
-            for(double j = (t.getY() + t.getD()/2/1.4); j < (t.getY()+t.getD()/2/1.4) + 3;j++){
+        for(double i = (t.getX() + t.getW()/2) - 3; i < t.getX() + t.getH()/2;i++){
+            for(double j = (t.getY() + t.getH()/2) - 3; j < (t.getY()+t.getH()/2);j++){
                 isPainted[(int)i][(int)j] = 4;
                 colors[(int) i][(int) j] = Settings.PLAYER_CORNER_COLOR;
             }
         }
         //LD
-        for(double i = (t.getX() - t.getD()/2/1.4) - 3; i < t.getX() - t.getD()/2/1.4;i++){
-            for(double j = (t.getY() + t.getD()/2/1.4); j < (t.getY()+t.getD()/2/1.4) + 3;j++){
+        for(double i = (t.getX() - t.getW()/2); i < (t.getX() - t.getW()/2)+3;i++){
+            for(double j = (t.getY() + t.getH()/2)-3; j < (t.getY()+t.getH()/2);j++){
                 isPainted[(int)i][(int)j] = 4;
                 colors[(int) i][(int) j] = Settings.PLAYER_CORNER_COLOR;
             }

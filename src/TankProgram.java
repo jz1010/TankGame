@@ -95,7 +95,7 @@ public class TankProgram implements ActionListener {
         while(counter < bullets.size()){
             Bullet bullet = bullets.get(counter);
             bullet.update();
-            if((bullet.getX() + bullet.getW() > 600) || (bullet.getX() <0) ||(bullet.getY() < 0) || (bullet.getY() +bullet.getH()>600)){
+            if((bullet.getX() + bullet.getW() >= 600) || (bullet.getX() <=0) ||(bullet.getY() <= 0) || (bullet.getY() +bullet.getH()>=600) || bullet.getX() - bullet.getW() <= 0 || bullet.getY() - bullet.getH() <= 0){
                 bullets.remove(counter);
                 counter--;
             }
@@ -152,22 +152,68 @@ public class TankProgram implements ActionListener {
         int bH = Bullet.BULLET_H;
         int bW = Bullet.BULLET_W;
         if(p1.getBarrelDirection().equals("r")){
-            bullets.add(new Bullet(p1.getX() + p1.getW(), p1.getY(), bW,bH, p1.getBarrelDirection()));
+            if(p1.getDirection().equals("u") || p1.getDirection().equals("d")){
+                bullets.add(new Bullet(p1.getX() + p1.getW(), p1.getY(), bW,bH, p1.getBarrelDirection(), true));
+            }
+            else{
+                bullets.add(new Bullet(p1.getX() + p1.getW(), p1.getY(), bW,bH, p1.getBarrelDirection(), false));
+            }
         }
         else if(p1.getBarrelDirection().equals("l")){
-            bullets.add(new Bullet(p1.getX() - p1.getW(), p1.getY(), bW,bH, p1.getBarrelDirection()));
-
+            if(p1.getDirection().equals("u") || p1.getDirection().equals("d")){
+                bullets.add(new Bullet(p1.getX() - p1.getW(), p1.getY(), bW,bH, p1.getBarrelDirection(), true));
+            }
+            else{
+                bullets.add(new Bullet(p1.getX() - p1.getW(), p1.getY(), bW,bH, p1.getBarrelDirection(), true));
+            }
         }
         else if(p1.getBarrelDirection().equals("u")){
-            bullets.add(new Bullet(p1.getX(), p1.getY() - p1.getW(), bH,bW, p1.getBarrelDirection()));
-
+            if(p1.getDirection().equals("u") || p1.getDirection().equals("d")){
+                bullets.add(new Bullet(p1.getX(), p1.getY() - p1.getW(), bH,bW, p1.getBarrelDirection(), true));
+            }
+            else{
+                bullets.add(new Bullet(p1.getX(), p1.getY() - p1.getW(), bH,bW, p1.getBarrelDirection(), false));
+            }
         }
         else if(p1.getBarrelDirection().equals("d")){
-            bullets.add(new Bullet(p1.getX(), p1.getY()+p1.getW(), bH,bW, p1.getBarrelDirection()));
-
+            if(p1.getDirection().equals("u") || p1.getDirection().equals("d")){
+                bullets.add(new Bullet(p1.getX(), p1.getY()+p1.getW(), bH,bW, p1.getBarrelDirection(), true));
+            }
+            else{
+                bullets.add(new Bullet(p1.getX(), p1.getY()+p1.getW(), bH,bW, p1.getBarrelDirection(), false));
+            }
         }
         else if (p1.getBarrelDirection().equals("ru")){
-            bullets.add(new Bullet(p1.getX() + (int)(p1.getW()/2/1.4), p1.getY() - (int)(p1.getW()/2/1.4), bH, bW, p1.getBarrelDirection()));
+            if(p1.getDirection().equals("u") || p1.getDirection().equals("d")){
+                bullets.add(new Bullet(p1.getX() + (int)(p1.getW()/2), p1.getY() - (int)(p1.getW()/2), bH, bW, p1.getBarrelDirection(), true));
+            }
+            else{
+                bullets.add(new Bullet(p1.getX() + (int)(p1.getW()/2), p1.getY() - (int)(p1.getW()/2), bH, bW, p1.getBarrelDirection(), false));
+            }
+        }
+        else if (p1.getBarrelDirection().equals("lu")){
+            if(p1.getDirection().equals("u") || p1.getDirection().equals("d")){
+                bullets.add(new Bullet(p1.getX() - (int)(p1.getW()/2), p1.getY() - (int)(p1.getW()/2), bH, bW, p1.getBarrelDirection(), true));
+            }
+            else{
+                bullets.add(new Bullet(p1.getX() - (int)(p1.getW()/2), p1.getY() - (int)(p1.getW()/2), bH, bW, p1.getBarrelDirection(), false));
+            }
+        }
+        else if (p1.getBarrelDirection().equals("rd")){
+            if(p1.getDirection().equals("u") || p1.getDirection().equals("d")){
+                bullets.add(new Bullet(p1.getX() + (int)(p1.getW()/2), p1.getY() + (int)(p1.getW()/2), bH, bW, p1.getBarrelDirection(), true));
+            }
+            else{
+                bullets.add(new Bullet(p1.getX() + (int)(p1.getW()/2), p1.getY() + (int)(p1.getW()/2), bH, bW, p1.getBarrelDirection(), false));
+            }
+        }
+        else if (p1.getBarrelDirection().equals("ld")){
+            if(p1.getDirection().equals("u") || p1.getDirection().equals("d")){
+                bullets.add(new Bullet(p1.getX() - (int)(p1.getW()/2), p1.getY() + (int)(p1.getW()/2), bH, bW, p1.getBarrelDirection(), true));
+            }
+            else{
+                bullets.add(new Bullet(p1.getX() - (int)(p1.getW()/2), p1.getY() + (int)(p1.getW()/2), bH, bW, p1.getBarrelDirection(), false));
+            }
         }
 
     }
