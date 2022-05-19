@@ -7,6 +7,8 @@ public class Settings {
     * 1-Tank + Cannon
     * 2-Bullet
     * 3-Border
+    * 4-Big Bullet
+    * 5-Enemy
     *
     * */
 
@@ -26,7 +28,7 @@ public class Settings {
     public static final int PLAYER_MOVE_UP = 87;
     public static final int PLAYER_MOVE_DOWN = 83;
 
-    public static final int BASE_SECOND_AMMO = 30;
+    public static final int BASE_SECOND_AMMO = 80;
     public static final int RELOAD_TIME_SECONDS = 3;
     public static final int MAIN_RELOAD_TIME_SECONDS = 5;
     public static final int PLAYER_STARTING_HEALTH = 100;

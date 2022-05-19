@@ -4,8 +4,8 @@ import java.util.ArrayList;
 public class Enemy{
     private int x;
     private int y;
-    private final int w;
-    private final int h;
+    public static final int w = 30;
+    public static final int h = 30;
     private int health = 100;
     private int ammo = 30;
     private final Color enemyColor = Color.RED;
@@ -14,11 +14,9 @@ public class Enemy{
 
 
 
-    public Enemy(int X, int Y, int W, int H){
+    public Enemy(int X, int Y){
         this.x = X;
         this.y = Y;
-        this.w = W;
-        this.h = H;
 
     }
 

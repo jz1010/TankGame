@@ -169,6 +169,13 @@ public class TankProgram implements ActionListener {
         }
         reloadMain();
 
+        if(getRandRange(1, 100) < 10){
+            addEnemy();
+        }
+        for (Enemy enemy:enemies){
+            mainPanel.drawEnemy(enemy);
+        }
+
 
     }
 
@@ -315,14 +322,13 @@ public class TankProgram implements ActionListener {
         else{
             mainAmmo.setText("Ready to Fire!");
         }
+
+
     }
     public void addEnemy(){
-        Enemy enemy=new Enemy(0,0,50,50);
-        int eH = enemy.getH();
-        int eW = enemy.getW();
-        int eX = (int)(Math.random()*600);
-        int eY = (int)(Math.random()*600);
-        enemies.add(new Enemy(eX, eY, eW, eH));
+        int eX = getRandRange(Enemy.w, 600 - Enemy.w);
+        int eY = getRandRange(Enemy.h, 600 - Enemy.h);
+        enemies.add(new Enemy(eX, eY));
     }
     public static double calcDist(double[] a, double[] b){
         double x = a[0] - b[0];
@@ -377,6 +383,9 @@ public class TankProgram implements ActionListener {
         return "r";
     }
 
+    public static int getRandRange(int min, int max){
+        return (int) ((Math.random() * (max - min)) + min);
+    }
     public static int getIndexofMin(double[] list){
         int bestIndex = 0;
         double lowestVal = 10000;

@@ -37,7 +37,6 @@ public class DrawPanel extends JPanel{
                 }
             }
     }
-
     public void drawTank(Tank t){
 
         if (t.getDirection().equals("r")){
@@ -192,6 +191,14 @@ public class DrawPanel extends JPanel{
 
 
     }
+    public void drawEnemy(Enemy e){
+        for(int i = e.getX() - e.getW()/2; i < e.getX() + e.getW()/2; i++){
+            for(int j = e.getY()- e.getH()/2; j < e.getY() + e.getH()/2; j++){
+                isPainted[i][j] = 5;
+                colors[i][j] = e.getEnemyColor();
+            }
+        }
+    }
     public void drawCorners(Tank t){
         //R
         for(int i = (t.getX() + t.getW()/2) - 3; i < t.getX() + t.getW()/2;i++){
@@ -345,7 +352,7 @@ public class DrawPanel extends JPanel{
         if(b.getDirection().equals("d") || b.getDirection().equals("l") || b.getDirection().equals("u") || b.getDirection().equals("r")){
             for(int i = b.getX();i<b.getX()+b.getW();i++){
                 for(int j = b.getY();j<b.getY()+b.getH();j++){
-                    isPainted[i][j] = 2;
+                    isPainted[i][j] = 4;
                     colors[i][j] = Settings.BIG_BULLET_COLOR;
                 }
             }
@@ -358,7 +365,7 @@ public class DrawPanel extends JPanel{
                     //Draw square
                     for(int k = i - 3; k < i + 3; k++){
                         for(int l = j - 3; l < j + 3; l++){
-                            isPainted[k][l] = 2;
+                            isPainted[k][l] = 4;
                             colors[k][l] = Settings.BIG_BULLET_COLOR;
                         }
                     }
@@ -378,7 +385,7 @@ public class DrawPanel extends JPanel{
                     //Draw square
                     for(int k = i - 3; k < i + 3; k++){
                         for(int l = j - 3; l < j + 3; l++){
-                            isPainted[k][l] = 2;
+                            isPainted[k][l] = 4;
                             colors[k][l] = Settings.BIG_BULLET_COLOR;
                         }
                     }
@@ -397,7 +404,7 @@ public class DrawPanel extends JPanel{
                     //Draw square
                     for(int k = i - 3; k < i + 3; k++){
                         for(int l = j - 3; l < j + 3; l++){
-                            isPainted[k][l] = 2;
+                            isPainted[k][l] = 4;
                             colors[k][l] = Settings.BIG_BULLET_COLOR;
                         }
                     }
@@ -416,7 +423,7 @@ public class DrawPanel extends JPanel{
                     //Draw square
                     for(int k = i - 3; k < i + 3; k++){
                         for(int l = j - 3; l < j + 3; l++){
-                            isPainted[k][l] = 2;
+                            isPainted[k][l] = 4;
                             colors[k][l] = Settings.BIG_BULLET_COLOR;
                         }
                     }
@@ -456,5 +463,6 @@ public class DrawPanel extends JPanel{
             }
         }
     }
+
 
 }
