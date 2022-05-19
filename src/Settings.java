@@ -14,6 +14,7 @@ public class Settings {
     public static final Color PLAYER_COLOR = Color.BLUE;
     public static final Color CANNON_COLOR = Color.GREEN;
     public static final Color SMALL_BULLET_COLOR = Color.BLACK;
+    public static final Color BIG_BULLET_COLOR = Color.ORANGE;
     public static final Color PLAYER_CORNER_COLOR = Color.RED;//Corners for cannon detection, will only apply is SHOW_CORNERS = true
 
     public static final int DRAW_PANEL_DIMS = 600;
@@ -27,9 +28,9 @@ public class Settings {
 
     public static final int BASE_SECOND_AMMO = 30;
     public static final int RELOAD_TIME_SECONDS = 3;
+    public static final int MAIN_RELOAD_TIME_SECONDS = 5;
     public static final int PLAYER_STARTING_HEALTH = 100;
     public static final int BIG_BULLET_DAMAGE_RADIUS = 10;
-    public static final Color BIG_BULLET_COLOR = Color.ORANGE;
 
 
 }

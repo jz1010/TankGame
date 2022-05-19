@@ -1,9 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
-import java.util.Set;
 
 public class TankProgram implements ActionListener {
     JFrame frame;
@@ -11,13 +9,17 @@ public class TankProgram implements ActionListener {
     JPanel sidePanel;
 
     Tank p1;
-    JLabel healthBar, ammoCount;
+    JLabel healthBar, ammoCount, mainAmmo;
     private boolean secReloading = false;
+    private boolean mainReloading = false;
+    private boolean alreadyReloading = false;
 
-    int reloadTimer;
+    int secReloadTimer;
+    int mainReloadTimer;
 
 
     ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+    ArrayList<BigBullet> bigBullets = new ArrayList<BigBullet>();
     ArrayList<Enemy> enemies=new ArrayList<Enemy>();
     Timer timer;
 
@@ -30,10 +32,41 @@ public class TankProgram implements ActionListener {
         mainPanel.drawTank(p1);
         sidePanel.add(healthBar);
         sidePanel.add(ammoCount);
+        sidePanel.add(mainAmmo);
 
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.add(sidePanel, BorderLayout.EAST);
 
+
+        frame.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(!mainReloading){
+                    addBigBullet();
+                    mainReloading = true;
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         frame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -86,10 +119,7 @@ public class TankProgram implements ActionListener {
             double mX = mousePoint.getX();
             double mY = mousePoint.getY();
             p1.moveBarrel(getClosestPoint(new double[]{mX, mY}));
-            System.out.println(getClosestPoint(new double[]{mX, mY}));
-
         }
-
 
         int counter = 0;
         while(counter < bullets.size()){
@@ -106,22 +136,38 @@ public class TankProgram implements ActionListener {
             counter ++;
         }
 
+        counter = 0;
+        while(counter < bigBullets.size()){
+            BigBullet bullet = bigBullets.get(counter);
+            bullet.update();
+            if((bullet.getX() + bullet.getW() >= 600) || (bullet.getX() <=0) ||(bullet.getY() <= 0) || (bullet.getY() +bullet.getH()>=600) || bullet.getX() - bullet.getW() <= 0 || bullet.getY() - bullet.getH() <= 0){
+                bigBullets.remove(counter);
+                counter--;
+            }
+            else{
+                mainPanel.drawBigBullet(bullet);
+
+            }
+            counter ++;
+        }
+
         healthBar.setText(String.valueOf(p1.getHealth()));
         if(p1.getAmmo() <= 0 && !secReloading){
             ammoCount.setText("Reloading");
-            reloadTimer = 0;
+            secReloadTimer = 0;
             secReloading = true;
         }
         else if (!secReloading){
             ammoCount.setText(String.valueOf(p1.getAmmo()));
         }
-        if(secReloading && reloadTimer >= 100 * Settings.RELOAD_TIME_SECONDS) {  // num seconds * 100
+        if(secReloading && secReloadTimer >= 100 * Settings.RELOAD_TIME_SECONDS) {  // num seconds * 100
             p1.setAmmo(Settings.BASE_SECOND_AMMO);
             secReloading = false;
         }
         else if(secReloading){
-            reloadTimer ++;
+            secReloadTimer++;
         }
+        reloadMain();
 
 
     }
@@ -130,8 +176,9 @@ public class TankProgram implements ActionListener {
         mainPanel = new DrawPanel();
         sidePanel = new JPanel();
 
-        p1 = new Tank(125, 500, 30, 30, 50);
+        p1 = new Tank(300, 300, 30, 30, 50);
         ArrayList<Bullet>bullets= new ArrayList<Bullet>();
+        ArrayList<BigBullet> bigBullets = new ArrayList<>();
 
         frame = new JFrame("Tank Program");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -141,6 +188,8 @@ public class TankProgram implements ActionListener {
         healthBar.setText(String.valueOf(p1.getHealth()));
         ammoCount = new JLabel();
         ammoCount.setText(String.valueOf(p1.getAmmo()));
+        mainAmmo = new JLabel();
+        mainAmmo.setText("Ready to Fire!");
 
 
         timer = new Timer(10, this);
@@ -216,6 +265,56 @@ public class TankProgram implements ActionListener {
             }
         }
 
+    }
+    public void addBigBullet(){
+        int bH = BigBullet.BULLET_H;
+        int bW = BigBullet.BULLET_W;
+        if(p1.getBarrelDirection().equals("r")){
+            bigBullets.add(new BigBullet(p1.getX() + p1.getW()/2, p1.getY(), p1.getBarrelDirection()));
+        }
+        else if(p1.getBarrelDirection().equals("l")){
+            bigBullets.add(new BigBullet(p1.getX() - p1.getW()/2, p1.getY(), p1.getBarrelDirection()));
+        }
+        else if(p1.getBarrelDirection().equals("u")){
+            bigBullets.add(new BigBullet(p1.getX(), p1.getY() - p1.getH()/2, p1.getBarrelDirection()));
+
+        }
+        else if(p1.getBarrelDirection().equals("d")){
+            bigBullets.add(new BigBullet(p1.getX(), p1.getY() + p1.getH()/2, p1.getBarrelDirection()));
+        }
+        else if (p1.getBarrelDirection().equals("ru")){
+            bigBullets.add(new BigBullet(p1.getX() + p1.getW()/2, p1.getY() - p1.getH()/2, p1.getBarrelDirection()));
+        }
+        else if (p1.getBarrelDirection().equals("lu")){
+            bigBullets.add(new BigBullet(p1.getX() - p1.getW()/2, p1.getY() - p1.getH()/2, p1.getBarrelDirection()));
+        }
+        else if (p1.getBarrelDirection().equals("rd")){
+            bigBullets.add(new BigBullet(p1.getX() + p1.getW()/2, p1.getY() + p1.getH()/2, p1.getBarrelDirection()));
+        }
+        else if (p1.getBarrelDirection().equals("ld")){
+            bigBullets.add(new BigBullet(p1.getX() - p1.getW()/2, p1.getY() + p1.getH()/2, p1.getBarrelDirection()));
+        }
+    }
+    public void reloadMain(){
+        if(mainReloading && !alreadyReloading){
+            mainReloadTimer = 0;
+            alreadyReloading=true;
+        }
+        if(mainReloading && alreadyReloading && mainReloadTimer >= 100 * Settings.MAIN_RELOAD_TIME_SECONDS){
+            alreadyReloading = false;
+            mainReloading = false;
+            mainReloadTimer = 0;
+            mainAmmo.setText("Reloading Main!");
+
+        }
+        else if (mainReloading && alreadyReloading){
+            mainReloadTimer +=2;
+            mainAmmo.setText("Reloading Main!");
+
+        }
+        else{
+            mainAmmo.setText("Ready to Fire!");
+        }
     }
     public void addEnemy(){
         Enemy enemy=new Enemy(0,0,50,50);

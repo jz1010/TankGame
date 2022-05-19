@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.util.Set;
 
 
 public class DrawPanel extends JPanel{
@@ -329,6 +330,94 @@ public class DrawPanel extends JPanel{
                         for(int l = j - 1; l < j + 1; l++){
                             isPainted[k][l] = 2;
                             colors[k][l] = Settings.SMALL_BULLET_COLOR;
+                        }
+                    }
+                    counter++;
+                    if(counter%3 == 0 && counter!=0){
+                        j-=2;
+                    }
+                }
+            }
+        }
+        repaint();
+    }
+    public void drawBigBullet(BigBullet b){
+        if(b.getDirection().equals("d") || b.getDirection().equals("l") || b.getDirection().equals("u") || b.getDirection().equals("r")){
+            for(int i = b.getX();i<b.getX()+b.getW();i++){
+                for(int j = b.getY();j<b.getY()+b.getH();j++){
+                    isPainted[i][j] = 2;
+                    colors[i][j] = Settings.BIG_BULLET_COLOR;
+                }
+            }
+        }
+        else if (b.getDirection().equals("ru")){
+            int counter = 0;
+            for(int x = 0; x < (int) b.getH(); x++){
+                int j = b.getY() + b.getW();
+                for(int i = b.getX() - b.getH()/2; i < b.getX();i++){
+                    //Draw square
+                    for(int k = i - 3; k < i + 3; k++){
+                        for(int l = j - 3; l < j + 3; l++){
+                            isPainted[k][l] = 2;
+                            colors[k][l] = Settings.BIG_BULLET_COLOR;
+                        }
+                    }
+                    counter++;
+                    if(counter%3 == 0 && counter!=0){
+                        j-=2;
+                    }
+                }
+            }
+
+        }
+        else if (b.getDirection().equals("lu")){
+            int counter = 0;
+            for(int x = 0; x < (int) b.getH(); x++){
+                int j = b.getY() + b.getW();
+                for(int i = b.getX() - b.getH()/2; i < b.getX();i++){
+                    //Draw square
+                    for(int k = i - 3; k < i + 3; k++){
+                        for(int l = j - 3; l < j + 3; l++){
+                            isPainted[k][l] = 2;
+                            colors[k][l] = Settings.BIG_BULLET_COLOR;
+                        }
+                    }
+                    counter++;
+                    if(counter%3 == 0 && counter!=0){
+                        j-=2;
+                    }
+                }
+            }
+        }
+        else if (b.getDirection().equals("rd")){
+            int counter = 0;
+            for(int x = 0; x < (int) b.getH(); x++){
+                int j = b.getY() + b.getW();
+                for(int i = b.getX() - b.getH()/2; i < b.getX();i++){
+                    //Draw square
+                    for(int k = i - 3; k < i + 3; k++){
+                        for(int l = j - 3; l < j + 3; l++){
+                            isPainted[k][l] = 2;
+                            colors[k][l] = Settings.BIG_BULLET_COLOR;
+                        }
+                    }
+                    counter++;
+                    if(counter%3 == 0 && counter!=0){
+                        j+=2;
+                    }
+                }
+            }
+        }
+        else if (b.getDirection().equals("ld")){
+            int counter = 0;
+            for(int x = 0; x < (int) b.getH(); x++){
+                int j = b.getY() + b.getW();
+                for(int i = b.getX() - b.getH()/2; i < b.getX();i++){
+                    //Draw square
+                    for(int k = i - 3; k < i + 3; k++){
+                        for(int l = j - 3; l < j + 3; l++){
+                            isPainted[k][l] = 2;
+                            colors[k][l] = Settings.BIG_BULLET_COLOR;
                         }
                     }
                     counter++;

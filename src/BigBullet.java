@@ -2,18 +2,22 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class BigBullet{
-    private int x, y, w, h;
+    private int x, y;
     private int damageRadius = Settings.BIG_BULLET_DAMAGE_RADIUS;
     private int speed = 4;
-    private int vXSpeed = 2, vYSpeed = 4, hXSpeed = 4, hYSpeed = 2;
+    private int vXSpeed = 2, vYSpeed = 4, hXSpeed = 3, hYSpeed = 3;
     private String direction = "r";
     private final Color bulletColor = Settings.BIG_BULLET_COLOR;
+    public static final int BULLET_H = 6;
+    public static final int BULLET_W = 4;
+    private int w = BULLET_W;
+    private int h = BULLET_H;
 
-    public BigBullet(int x,int y,int w,int h){
+    public BigBullet(int x,int y, String dir){
         this.x = x;
         this.y = y;
-        this.w = w;
-        this.h = h;
+        this.direction = dir;
+
     }
     public void update(){
         if(getDirection().equals("r")){
