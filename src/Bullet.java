@@ -11,10 +11,10 @@ public class Bullet{
     public static final int BULLET_H = 2;
     private Color bulletColor = Color.BLACK;
     private int speed = 6;
-    private int vXSpeed = 6;
-    private int vYSpeed = 6;
-    private int hXSpeed = 6;
-    private int hYSpeed = 6;
+    private int vXSpeed = (int)(6/1.4);
+    private int vYSpeed = (int)(6/1.4);
+    private int hXSpeed = (int)(6/1.4);
+    private int hYSpeed = (int)(6/1.4);
     private final String direction;
     private ArrayList<Integer> center = new ArrayList<>();
     private int rotation = 90;

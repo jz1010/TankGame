@@ -20,7 +20,7 @@ public class Settings {
     public static final Color PLAYER_CORNER_COLOR = Color.RED;//Corners for cannon detection, will only apply is SHOW_CORNERS = true
 
     public static final int DRAW_PANEL_DIMS = 600;
-    public static final boolean SHOW_CORNERS = true;
+    public static final boolean SHOW_CORNERS = false;
 
     public static final int SECONDARY_FIRE = 32;//Keycode for Space Bar, secondary fire
     public static final int PLAYER_MOVE_RIGHT = 68;//D

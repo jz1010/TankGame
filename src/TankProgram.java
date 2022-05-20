@@ -133,6 +133,7 @@ public class TankProgram implements ActionListener {
                 mainPanel.drawBullet(bullet);
 
             }
+
             counter ++;
         }
 

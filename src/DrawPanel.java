@@ -9,11 +9,16 @@ public class DrawPanel extends JPanel{
     private final int HEIGHT = Settings.DRAW_PANEL_DIMS;
     private int[][] isPainted = new int[WIDTH][HEIGHT];
     private Color[][] colors = new Color[WIDTH][HEIGHT];
+    public int[][] enemies = new int[WIDTH][HEIGHT];
+    public int[][] bullets = new int[WIDTH][HEIGHT];
+
 
     public void clear(){
             for(int i=0;i<isPainted.length;i++){
                 for(int j=0;j<isPainted[0].length;j++){
                 isPainted[i][j] = 0;
+                enemies[i][j] = 0;
+                bullets[i][j] = 0;
                 }
             }
         repaint();
@@ -196,6 +201,7 @@ public class DrawPanel extends JPanel{
             for(int j = e.getY()- e.getH()/2; j < e.getY() + e.getH()/2; j++){
                 isPainted[i][j] = 5;
                 colors[i][j] = e.getEnemyColor();
+                enemies[i][j] = 1;
             }
         }
     }
@@ -266,6 +272,7 @@ public class DrawPanel extends JPanel{
                 for(int j = b.getY();j<b.getY()+b.getH();j++){
                     isPainted[i][j] = 2;
                     colors[i][j] = b.getBulletColor();
+                    bullets[i][j] = 1;
                 }
             }
         }
@@ -279,6 +286,7 @@ public class DrawPanel extends JPanel{
                         for(int l = j - 1; l < j + 1; l++){
                             isPainted[k][l] = 2;
                             colors[k][l] = Settings.SMALL_BULLET_COLOR;
+                            bullets[i][j] = 1;
                         }
                     }
                     counter++;
@@ -299,6 +307,7 @@ public class DrawPanel extends JPanel{
                         for(int l = j - 1; l < j + 1; l++){
                             isPainted[k][l] = 2;
                             colors[k][l] = Settings.SMALL_BULLET_COLOR;
+                            bullets[i][j] = 1;
                         }
                     }
                     counter++;
@@ -318,6 +327,7 @@ public class DrawPanel extends JPanel{
                         for(int l = j - 1; l < j + 1; l++){
                             isPainted[k][l] = 2;
                             colors[k][l] = Settings.SMALL_BULLET_COLOR;
+                            bullets[i][j] = 1;
                         }
                     }
                     counter++;
@@ -337,6 +347,7 @@ public class DrawPanel extends JPanel{
                         for(int l = j - 1; l < j + 1; l++){
                             isPainted[k][l] = 2;
                             colors[k][l] = Settings.SMALL_BULLET_COLOR;
+                            bullets[i][j] = 1;
                         }
                     }
                     counter++;
@@ -354,6 +365,7 @@ public class DrawPanel extends JPanel{
                 for(int j = b.getY();j<b.getY()+b.getH();j++){
                     isPainted[i][j] = 4;
                     colors[i][j] = Settings.BIG_BULLET_COLOR;
+                    bullets[i][j] = 2;
                 }
             }
         }
@@ -367,6 +379,7 @@ public class DrawPanel extends JPanel{
                         for(int l = j - 3; l < j + 3; l++){
                             isPainted[k][l] = 4;
                             colors[k][l] = Settings.BIG_BULLET_COLOR;
+                            bullets[i][j] = 2;
                         }
                     }
                     counter++;
@@ -387,6 +400,7 @@ public class DrawPanel extends JPanel{
                         for(int l = j - 3; l < j + 3; l++){
                             isPainted[k][l] = 4;
                             colors[k][l] = Settings.BIG_BULLET_COLOR;
+                            bullets[i][j] = 2;
                         }
                     }
                     counter++;
@@ -406,6 +420,7 @@ public class DrawPanel extends JPanel{
                         for(int l = j - 3; l < j + 3; l++){
                             isPainted[k][l] = 4;
                             colors[k][l] = Settings.BIG_BULLET_COLOR;
+                            bullets[i][j] = 2;
                         }
                     }
                     counter++;
@@ -425,6 +440,7 @@ public class DrawPanel extends JPanel{
                         for(int l = j - 3; l < j + 3; l++){
                             isPainted[k][l] = 4;
                             colors[k][l] = Settings.BIG_BULLET_COLOR;
+                            bullets[i][j] = 2;
                         }
                     }
                     counter++;
