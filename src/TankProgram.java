@@ -176,6 +176,25 @@ public class TankProgram implements ActionListener {
         for (Enemy enemy:enemies){
             mainPanel.drawEnemy(enemy);
         }
+        for(int z = 0; z < bullets.size();z++){
+            Bullet bullet = bullets.get(z);
+            boolean enemyHit = false;
+            for (int e = 0; e < enemies.size();e++){
+                Enemy cE = enemies.get(e);
+                if(mainPanel.bulletMat[bullet.getX()][bullet.getY()] == mainPanel.enemyMat[cE.getX()][cE.getY()] && mainPanel.bulletMat[bullet.getX()][bullet.getY()]==1){
+                    enemies.remove(e);
+                    e--;
+                    enemyHit = true;
+                }
+                if(enemyHit){
+                    break;
+                }
+            }
+            if(enemyHit){
+                bullets.remove(z);
+                z--;
+            }
+        }
 
 
     }
