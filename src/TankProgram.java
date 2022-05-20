@@ -16,7 +16,7 @@ public class TankProgram implements ActionListener {
 
     int secReloadTimer;
     int mainReloadTimer;
-
+    int enemyNumber = 10;
 
     ArrayList<Bullet> bullets = new ArrayList<Bullet>();
     ArrayList<BigBullet> bigBullets = new ArrayList<BigBullet>();
@@ -169,8 +169,9 @@ public class TankProgram implements ActionListener {
         }
         reloadMain();
 
-        if(getRandRange(1, 100) < 10){
-            addEnemy();
+        if(getRandRange(1, 100) < 5){
+            addEnemy(enemyNumber);
+            enemyNumber++;
         }
         for (Enemy enemy:enemies){
             mainPanel.drawEnemy(enemy);
@@ -180,7 +181,8 @@ public class TankProgram implements ActionListener {
             boolean enemyHit = false;
             for (int e = 0; e < enemies.size();e++){
                 Enemy cE = enemies.get(e);
-                if(mainPanel.bulletMat[bullet.getX()][bullet.getY()] == mainPanel.enemyMat[cE.getX()][cE.getY()] && mainPanel.bulletMat[bullet.getX()][bullet.getY()]==1){
+                //fix this
+                if(mainPanel.enemyMat[bullet.getX()][bullet.getY()] == cE.getNumber()){
                     enemies.remove(e);
                     e--;
                     enemyHit = true;
@@ -192,6 +194,22 @@ public class TankProgram implements ActionListener {
             if(enemyHit){
                 bullets.remove(z);
                 z--;
+            }
+        }
+
+        for(int z = 0; z < bigBullets.size();z++){
+            BigBullet bullet = bigBullets.get(z);
+            boolean enemyHit = false;
+            for (int e = 0; e < enemies.size();e++){
+                Enemy cE = enemies.get(e);
+                //fix this
+                if(mainPanel.enemyMat[bullet.getX()][bullet.getY()] == cE.getNumber()){
+                    bigSplashKill(bullet);
+                    enemyHit = true;
+                }
+                if(enemyHit){
+                    break;
+                }
             }
         }
 
@@ -344,10 +362,77 @@ public class TankProgram implements ActionListener {
 
 
     }
-    public void addEnemy(){
+    public void addEnemy(int num){
         int eX = getRandRange(Enemy.w, 600 - Enemy.w);
         int eY = getRandRange(Enemy.h, 600 - Enemy.h);
-        enemies.add(new Enemy(eX, eY));
+        enemies.add(new Enemy(eX, eY, num));
+    }
+    public void bigSplashKill(BigBullet b){
+        //get bigbullet x, y
+        for(int e = 0; e < enemies.size(); e++){
+            if(b.getX() > 2 * Settings.BIG_BULLET_DAMAGE_RADIUS + 1 && b.getX() < (600 - 2 * Settings.BIG_BULLET_DAMAGE_RADIUS) && b.getY() > 2 * Settings.BIG_BULLET_DAMAGE_RADIUS && b.getY() < (600 - 2 * Settings.BIG_BULLET_DAMAGE_RADIUS)){
+                for(int i = b.getX() - 2 * Settings.BIG_BULLET_DAMAGE_RADIUS; i < b.getX() + 2 * Settings.BIG_BULLET_DAMAGE_RADIUS;i++){
+                    for(int j = b.getY() - 2 * Settings.BIG_BULLET_DAMAGE_RADIUS; j < b.getY() + 2 * Settings.BIG_BULLET_DAMAGE_RADIUS;j++){
+                        if(mainPanel.enemyMat[i][j] == enemies.get(e).getNumber()){
+                            enemies.remove(e);
+                            e--;
+                            bigBullets.remove(b);
+                            break;
+                        }
+                    }
+                }
+
+            }
+            else if(b.getX() < 2 * Settings.BIG_BULLET_DAMAGE_RADIUS){
+                for(int i = 0; i < b.getX() + 2 * Settings.BIG_BULLET_DAMAGE_RADIUS;i++){
+                    for(int j = b.getY() - 2 * Settings.BIG_BULLET_DAMAGE_RADIUS; j < b.getY() + 2 * Settings.BIG_BULLET_DAMAGE_RADIUS;j++){
+                        if(mainPanel.enemyMat[i][j] == enemies.get(e).getNumber()){
+                            enemies.remove(e);
+                            e--;
+                            bigBullets.remove(b);
+                            break;
+                        }
+                    }
+                }
+            }
+            else if (b.getX() > (600 - 2 * Settings.BIG_BULLET_DAMAGE_RADIUS)){
+                for(int i = b.getX() - 2 * Settings.BIG_BULLET_DAMAGE_RADIUS; i < 600;i++){
+                    for(int j = b.getY() - 2 * Settings.BIG_BULLET_DAMAGE_RADIUS; j < b.getY() + 2 * Settings.BIG_BULLET_DAMAGE_RADIUS;j++){
+                        if(mainPanel.enemyMat[i][j] == enemies.get(e).getNumber()){
+                            enemies.remove(e);
+                            e--;
+                            bigBullets.remove(b);
+                            break;
+                        }
+                    }
+                }
+            }
+            else if (b.getY() < 2 * Settings.BIG_BULLET_DAMAGE_RADIUS){
+                for(int i = b.getX() - 2 * Settings.BIG_BULLET_DAMAGE_RADIUS; i < b.getX() + 2 * Settings.BIG_BULLET_DAMAGE_RADIUS;i++){
+                    for(int j = 0; j < b.getY() + 2 * Settings.BIG_BULLET_DAMAGE_RADIUS;j++){
+                        if(mainPanel.enemyMat[i][j] == enemies.get(e).getNumber()){
+                            enemies.remove(e);
+                            e--;
+                            bigBullets.remove(b);
+                            break;
+                        }
+                    }
+                }
+            }
+            else if (b.getY() > (600 - 2 * Settings.BIG_BULLET_DAMAGE_RADIUS)){
+                for(int i = b.getX() - 2 * Settings.BIG_BULLET_DAMAGE_RADIUS; i < b.getX() + 2 * Settings.BIG_BULLET_DAMAGE_RADIUS;i++){
+                    for(int j = b.getY() - 2 * Settings.BIG_BULLET_DAMAGE_RADIUS; j < 600;j++){
+                        if(mainPanel.enemyMat[i][j] == enemies.get(e).getNumber()){
+                            enemies.remove(e);
+                            e--;
+                            bigBullets.remove(b);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
     }
     public static double calcDist(double[] a, double[] b){
         double x = a[0] - b[0];

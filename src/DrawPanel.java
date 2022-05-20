@@ -42,6 +42,11 @@ public class DrawPanel extends JPanel{
                         g.setColor(colors[x][y]);
                         g.fillRect(x, y, 1, 1);
                     }
+                    if(enemyMat[x][y] != 0){
+                        g.setColor(Color.GREEN);
+                        g.fillRect(x, y, 1, 1);
+
+                    }
                 }
             }
     }
@@ -219,7 +224,7 @@ public class DrawPanel extends JPanel{
             for(int j = e.getY()- e.getH()/2; j < e.getY() + e.getH()/2; j++){
                 isPainted[i][j] = 5;
                 colors[i][j] = e.getEnemyColor();
-                enemyMat[i][j] = 1;
+                enemyMat[i][j] = e.getNumber();
 
             }
         }
@@ -297,88 +302,43 @@ public class DrawPanel extends JPanel{
             }
         }
         else if (b.getDirection().equals("ru")){
-            int counter = 0;
-            for(int x = 0; x < (int) b.getH(); x++){
-                int j = b.getY() + b.getW();
-                for(int i = b.getX() - b.getH()/2; i < b.getX();i++){
-                    //Draw square
-                    for(int k = i - 1; k < i + 1; k++){
-                        for(int l = j - 1; l < j + 1; l++){
-                            isPainted[k][l] = 2;
-                            colors[k][l] = Settings.SMALL_BULLET_COLOR;
-                            bulletMat[k][l] = 1;
+            for(int i = b.getX();i<b.getX()+b.getW();i++){
+                for(int j = b.getY();j<b.getY()+b.getH();j++){
+                    isPainted[i][j] = 2;
+                    colors[i][j] = b.getBulletColor();
+                    bulletMat[i][j] = 1;
 
-                        }
-                    }
-                    counter++;
-                    if(counter%3 == 0 && counter!=0){
-                        j-=2;
-                    }
                 }
             }
 
         }
         else if (b.getDirection().equals("lu")){
-            int counter = 0;
-            for(int x = 0; x < (int) b.getH(); x++){
-                int j = b.getY() + b.getW();
-                for(int i = b.getX() - b.getH()/2; i < b.getX();i++){
-                    //Draw square
-                    for(int k = i - 1; k < i + 1; k++){
-                        for(int l = j - 1; l < j + 1; l++){
-                            isPainted[k][l] = 2;
-                            colors[k][l] = Settings.SMALL_BULLET_COLOR;
-                            bulletMat[k][l] = 1;
+            for(int i = b.getX() - b.getW() + 1;i<b.getX() + 1;i++){
+                for(int j = b.getY() - b.getH() + 1;j<b.getY() + 1;j++){
+                    isPainted[i][j] = 2;
+                    colors[i][j] = b.getBulletColor();
+                    bulletMat[i][j] = 1;
 
-
-                        }
-                    }
-                    counter++;
-                    if(counter%3 == 0 && counter!=0){
-                        j-=2;
-                    }
                 }
             }
         }
         else if (b.getDirection().equals("rd")){
-            int counter = 0;
-            for(int x = 0; x < (int) b.getH(); x++){
-                int j = b.getY() + b.getW();
-                for(int i = b.getX() - b.getH()/2; i < b.getX();i++){
-                    //Draw square
-                    for(int k = i - 1; k < i + 1; k++){
-                        for(int l = j - 1; l < j + 1; l++){
-                            isPainted[k][l] = 2;
-                            colors[k][l] = Settings.SMALL_BULLET_COLOR;
-                            bulletMat[k][l] = 1;
+            for(int i = b.getX();i<b.getX() + b.getW();i++){
+                for(int j = b.getY();j<b.getY() + b.getH();j++){
+                    isPainted[i][j] = 2;
+                    colors[i][j] = b.getBulletColor();
+                    bulletMat[i][j] = 1;
 
-                        }
-                    }
-                    counter++;
-                    if(counter%3 == 0 && counter!=0){
-                        j+=2;
-                    }
                 }
             }
         }
         else if (b.getDirection().equals("ld")){
-            int counter = 0;
-            for(int x = 0; x < (int) b.getH(); x++){
-                int j = b.getY() + b.getW();
-                for(int i = b.getX() - b.getH()/2; i < b.getX();i++){
-                    //Draw square
-                    for(int k = i - 1; k < i + 1; k++){
-                        for(int l = j - 1; l < j + 1; l++){
-                            isPainted[k][l] = 2;
-                            colors[k][l] = Settings.SMALL_BULLET_COLOR;
-                            bulletMat[k][l] = 1;
+            for(int i = b.getX() - b.getW() + 1;i<b.getX() + 1;i++){
+                for(int j = b.getY() - b.getH() + 1;j<b.getY() + 1;j++){
+                    isPainted[i][j] = 2;
+                    colors[i][j] = b.getBulletColor();
+                    bulletMat[i][j] = 1;
 
-                        }
-                    }
-                    counter++;
-                    if(counter%3 == 0 && counter!=0){
-                        j-=2;
-                    }
                 }
             }
         }

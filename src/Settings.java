@@ -38,7 +38,7 @@ public class Settings {
     public static final int RELOAD_TIME_SECONDS = 3;
     public static final int MAIN_RELOAD_TIME_SECONDS = 5;
     public static final int PLAYER_STARTING_HEALTH = 100;
-    public static final int BIG_BULLET_DAMAGE_RADIUS = 10;
+    public static final int BIG_BULLET_DAMAGE_RADIUS = 30;
 
 
 }

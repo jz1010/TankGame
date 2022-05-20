@@ -11,12 +11,14 @@ public class Enemy{
     private final Color enemyColor = Color.RED;
     private final int speed = 14;
     private String direction="r";
+    private int number;
 
 
 
-    public Enemy(int X, int Y){
+    public Enemy(int X, int Y, int num){
         this.x = X;
         this.y = Y;
+        this.number = num;
 
     }
 
@@ -73,6 +75,14 @@ public class Enemy{
     }
     public int getAmmo() {
         return ammo;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public void decAmmo(){this.ammo -= 1;}
