@@ -26,7 +26,7 @@ public class Enemy{
     public void update(Tank t){
         this.enemyColor = new Color(Math.abs(255 - Math.abs(3 * getHealth())), Math.abs(3 * getHealth()), 0);
         int randNum = TankProgram.getRandRange(1, 100);
-        if(randNum < (int) (Settings.PROBABILITY_PATHFIND * 10)){
+        if(randNum < (int) (Settings.PROBABILITY_PATHFIND * 100)){
             if(t.getX() > this.x){
                 //move right
                 this.x += this.speed;
