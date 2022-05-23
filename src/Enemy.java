@@ -1,17 +1,19 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class Enemy{
     private int x;
     private int y;
     public static final int w = 30;
     public static final int h = 30;
-    private int health = 100;
-    private int ammo = 30;
-    private final Color enemyColor = Color.RED;
-    private final int speed = 14;
+    private int health = 60;
+    private  Color enemyColor = Settings.ENEMY_COLOR;
+    private final int speed = 2;
     private String direction="r";
     private int number;
+    private int[] randCoords = new int[]{-1, -1};
 
 
 
@@ -21,45 +23,61 @@ public class Enemy{
         this.number = num;
 
     }
-
-    public void moveEnemy(String direction){
-        this.direction = direction;
-        if(direction.equals("r")){
-            //rotate tank
-
-            this.x += speed;
-
-        }
-        else if(direction.equals("l")){
-            this.x -= speed;
-
-
-        }
-        else if(direction.equals("u")){
-            this.y -= speed;
-
-
-        }
-        else if(direction.equals("d")){
-            this.y += speed;
-
+    public void update(Tank t){
+        this.enemyColor = new Color(255 - (4 * getHealth()), 4 * getHealth(), 0);
+        int randNum = TankProgram.getRandRange(1, 100);
+        if(randNum < (int) (Settings.PROBABILITY_PATHFIND * 10)){
+            if(t.getX() > this.x){
+                //move right
+                this.x += this.speed;
+            }
+            else if (t.getX() < this.x){
+                //move left
+                this.x -= this.speed;
+            }
+            if(t.getY() < this.y){
+                //move up
+                this.y -= this.speed;
+            }
+            else if (t.getY() > this.y){
+                //move down
+                this.y += this.speed;
+            }
 
         }
-
-
-
+        else{
+            this.moveRandomDirection();
+        }
     }
-    public void returnEnemy(String direction) {
-        this.direction = direction;
-        if (direction.equals("r")) {
-            this.x -= speed;
-        } else if (direction.equals("l")) {
-            this.x += speed;
-        } else if (direction.equals("u")) {
-            this.y += speed;
-        } else if (direction.equals("d")) {
-            this.y -= speed;
+    public void moveRandomDirection(){
+        if(Arrays.equals(randCoords, new int[]{-1, -1})){
+            randCoords[0] = TankProgram.getRandRange(100, 500);
+            randCoords[1] = TankProgram.getRandRange(100, 500);
         }
+        goToPath();
+    }
+    public void goToPath(){
+        if(randCoords[0] > this.x){
+            //move right
+            this.x += this.speed;
+        }
+        else if (randCoords[0] < this.x){
+            //move left
+            this.x -= this.speed;
+        }
+        if(randCoords[1] < this.y){
+            //move up
+            this.y -= this.speed;
+        }
+        else if (randCoords[1] > this.y){
+            //move down
+            this.y += this.speed;
+        }
+        if(Math.abs(randCoords[0] - getX()) < 10 && Math.abs(randCoords[1] - getY()) < 10){
+            randCoords[0] = -1;
+            randCoords[1] = -1;
+        }
+
     }
 
     public Color getEnemyColor() {
@@ -73,9 +91,6 @@ public class Enemy{
     public int getHealth() {
         return health;
     }
-    public int getAmmo() {
-        return ammo;
-    }
 
     public int getNumber() {
         return number;
@@ -84,9 +99,7 @@ public class Enemy{
     public void setNumber(int number) {
         this.number = number;
     }
-
-    public void decAmmo(){this.ammo -= 1;}
-    public void setAmmo(int ammo) {
-        this.ammo = ammo;
+    public void takeDamage(int dmg){
+        this.health -= dmg;
     }
 }

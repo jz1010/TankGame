@@ -42,11 +42,7 @@ public class DrawPanel extends JPanel{
                         g.setColor(colors[x][y]);
                         g.fillRect(x, y, 1, 1);
                     }
-                    if(enemyMat[x][y] != 0){
-                        g.setColor(Color.GREEN);
-                        g.fillRect(x, y, 1, 1);
 
-                    }
                 }
             }
     }
