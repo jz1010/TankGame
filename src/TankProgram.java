@@ -76,10 +76,6 @@ public class TankProgram implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 // System.out.println(e.getKeyCode());
-                if(e.getKeyCode() == Settings.SECONDARY_FIRE && !(secReloading)){ // space bar to fire
-                    addBullet();
-                    p1.decAmmo();
-                }
 
                 //lets do wasd
                 if(e.getKeyCode() == Settings.PLAYER_MOVE_RIGHT){ // right arrow
@@ -115,6 +111,10 @@ public class TankProgram implements ActionListener {
         mainPanel.drawBorder();
         mainPanel.drawTank(p1);
         sidePanel.drawAmmo(p1);
+        if(!(mainReloading)){
+            sidePanel.drawBigBullet();
+        }
+        addBullet();
 
         Point mousePoint = mainPanel.getMousePosition();
         if(mousePoint != null){
@@ -154,10 +154,10 @@ public class TankProgram implements ActionListener {
             counter ++;
         }
 
-        if(p1.getAmmo() <= 0 && !secReloading){
+        /*if(p1.getAmmo() <= 0 && !secReloading){
             secReloadTimer = 0;
             secReloading = true;
-        }
+        }*/
 
         if(secReloading && secReloadTimer >= 100 * Settings.RELOAD_TIME_SECONDS) {  // num seconds * 100
             p1.setAmmo(Settings.BASE_SECOND_AMMO);
@@ -168,7 +168,7 @@ public class TankProgram implements ActionListener {
         }
         reloadMain();
 
-        if(getRandRange(1, 100) < 3){
+        if(getRandRange(1, 100) < 5){
             addEnemy(enemyNumber);
             enemyNumber++;
         }

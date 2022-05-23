@@ -63,5 +63,19 @@ class SidePanel extends JPanel{
             }
         }
     }
+    public void drawBigBullet(){
+        for(int i = 50;i<100;i+=1){
+            for(int j = 100;j<130;j++){
+                isPainted[i][j] = true;
+                colors[i][j] = Color.ORANGE;
+            }
+        }
+        for(int j = 110;j<120;j++){
+            for(int i = 100;i<120;i++){
+                isPainted[i][j] = true;
+                colors[i][j] = Color.ORANGE;
+            }
+        }
+    }
 
 }

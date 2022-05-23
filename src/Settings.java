@@ -41,7 +41,7 @@ public class Settings {
     public static final int PLAYER_STARTING_HEALTH = 100;
     public static final int BIG_BULLET_DAMAGE_RADIUS = 80;
     public static final int BULLET_DMG = 20;
-    public static final double PROBABILITY_PATHFIND = 0.3;
+    public static final double PROBABILITY_PATHFIND = 1;
 
 
 
