@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class Bullet{
     private int x, y, w, h;
-    public static final int BULLET_W = 4;
+    public static final int BULLET_W = 2;
     public static final int BULLET_H = 2;
     private Color bulletColor = Color.BLACK;
     private int speed = 6;

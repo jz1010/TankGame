@@ -9,7 +9,7 @@ public class BigBullet{
     private String direction = "r";
     private final Color bulletColor = Settings.BIG_BULLET_COLOR;
     public static final int BULLET_H = 6;
-    public static final int BULLET_W = 4;
+    public static final int BULLET_W = 8;
     private int w = BULLET_W;
     private int h = BULLET_H;
 

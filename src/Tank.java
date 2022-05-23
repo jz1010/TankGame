@@ -9,7 +9,6 @@ public class Tank{
     private int d;
     private final int BASE_W;
     private final int BASE_H;
-    private int health = Settings.PLAYER_STARTING_HEALTH;
     private int ammo = Settings.BASE_SECOND_AMMO;
     private final int speed = 14;
     private String direction="r";
@@ -83,9 +82,6 @@ public class Tank{
     }
     public String getDirection(){return this.direction;}
     public String getBarrelDirection(){return this.barrelDirection;}
-    public int getHealth() {
-        return health;
-    }
     public int getAmmo() {
         return ammo;
     }

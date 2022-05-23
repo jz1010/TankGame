@@ -20,6 +20,7 @@ public class Settings {
 
     public static final Color BORDER_COLOR = Color.GRAY;
     public static final Color PLAYER_COLOR = Color.BLUE;
+    public static final Color ENEMY_COLOR = new Color(0, 255, 0);
     public static final Color CANNON_COLOR = Color.GREEN;
     public static final Color SMALL_BULLET_COLOR = Color.BLACK;
     public static final Color BIG_BULLET_COLOR = Color.ORANGE;
@@ -38,7 +39,10 @@ public class Settings {
     public static final int RELOAD_TIME_SECONDS = 3;
     public static final int MAIN_RELOAD_TIME_SECONDS = 5;
     public static final int PLAYER_STARTING_HEALTH = 100;
-    public static final int BIG_BULLET_DAMAGE_RADIUS = 10;
+    public static final int BIG_BULLET_DAMAGE_RADIUS = 80;
+    public static final int BULLET_DMG = 20;
+    public static final double PROBABILITY_PATHFIND = 0.3;
+
 
 
 }

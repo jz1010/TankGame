@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class TankProgram implements ActionListener {
     JFrame frame;
     DrawPanel mainPanel;
-    JPanel sidePanel;
+    SidePanel sidePanel;
 
     Tank p1;
     JLabel healthBar, ammoCount, mainAmmo;
@@ -16,7 +16,7 @@ public class TankProgram implements ActionListener {
 
     int secReloadTimer;
     int mainReloadTimer;
-
+    int enemyNumber = 10;
 
     ArrayList<Bullet> bullets = new ArrayList<Bullet>();
     ArrayList<BigBullet> bigBullets = new ArrayList<BigBullet>();
@@ -30,9 +30,9 @@ public class TankProgram implements ActionListener {
 
 
         mainPanel.drawTank(p1);
-        sidePanel.add(healthBar);
-        sidePanel.add(ammoCount);
-        sidePanel.add(mainAmmo);
+        //sidePanel.add(healthBar);
+        //sidePanel.add(ammoCount);
+        //sidePanel.add(mainAmmo);
 
         frame.add(mainPanel, BorderLayout.CENTER);
         frame.add(sidePanel, BorderLayout.EAST);
@@ -76,7 +76,7 @@ public class TankProgram implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 // System.out.println(e.getKeyCode());
-                if(e.getKeyCode() == Settings.SECONDARY_FIRE && !(ammoCount.getText().equals("Reloading"))){ // space bar to fire
+                if(e.getKeyCode() == Settings.SECONDARY_FIRE && !(secReloading)){ // space bar to fire
                     addBullet();
                     p1.decAmmo();
                 }
@@ -111,8 +111,10 @@ public class TankProgram implements ActionListener {
 
     public void actionPerformed(ActionEvent ae) {
         mainPanel.clear();
+        sidePanel.clear();
         mainPanel.drawBorder();
         mainPanel.drawTank(p1);
+        sidePanel.drawAmmo(p1);
 
         Point mousePoint = mainPanel.getMousePosition();
         if(mousePoint != null){
@@ -141,7 +143,7 @@ public class TankProgram implements ActionListener {
         while(counter < bigBullets.size()){
             BigBullet bullet = bigBullets.get(counter);
             bullet.update();
-            if((bullet.getX() + bullet.getW() >= 600) || (bullet.getX() <=0) ||(bullet.getY() <= 0) || (bullet.getY() +bullet.getH()>=600) || bullet.getX() - bullet.getW() <= 0 || bullet.getY() - bullet.getH() <= 0){
+            if((bullet.getX() + bullet.getW() >= 596) || (bullet.getX() <=5) ||(bullet.getY() <= 5) || (bullet.getY() +bullet.getH()>=595) || bullet.getX() - bullet.getW() <= 5 || bullet.getY() - bullet.getH() <= 5){
                 bigBullets.remove(counter);
                 counter--;
             }
@@ -152,15 +154,11 @@ public class TankProgram implements ActionListener {
             counter ++;
         }
 
-        healthBar.setText(String.valueOf(p1.getHealth()));
         if(p1.getAmmo() <= 0 && !secReloading){
-            ammoCount.setText("Reloading");
             secReloadTimer = 0;
             secReloading = true;
         }
-        else if (!secReloading){
-            ammoCount.setText(String.valueOf(p1.getAmmo()));
-        }
+
         if(secReloading && secReloadTimer >= 100 * Settings.RELOAD_TIME_SECONDS) {  // num seconds * 100
             p1.setAmmo(Settings.BASE_SECOND_AMMO);
             secReloading = false;
@@ -170,19 +168,31 @@ public class TankProgram implements ActionListener {
         }
         reloadMain();
 
-        if(getRandRange(1, 100) < 10){
-            addEnemy();
+        if(getRandRange(1, 100) < 3){
+            addEnemy(enemyNumber);
+            enemyNumber++;
         }
-        for (Enemy enemy:enemies){
-            mainPanel.drawEnemy(enemy);
+        for (int e = 0; e < enemies.size();e++){
+            Enemy enemy = enemies.get(e);
+            enemy.update(p1);
+            if(enemy.getHealth() > 0){
+                mainPanel.drawEnemy(enemy);
+            }
+            else{
+                enemies.remove(e);
+                e--;
+            }
+
+
         }
         for(int z = 0; z < bullets.size();z++){
             Bullet bullet = bullets.get(z);
             boolean enemyHit = false;
             for (int e = 0; e < enemies.size();e++){
                 Enemy cE = enemies.get(e);
-                if(mainPanel.bulletMat[bullet.getX()][bullet.getY()] == mainPanel.enemyMat[cE.getX()][cE.getY()] && mainPanel.bulletMat[bullet.getX()][bullet.getY()]==1){
-                    enemies.remove(e);
+                //fix this
+                if(mainPanel.enemyMat[bullet.getX()][bullet.getY()] == cE.getNumber()){
+                    enemies.get(e).takeDamage(Settings.BULLET_DMG);
                     e--;
                     enemyHit = true;
                 }
@@ -196,12 +206,28 @@ public class TankProgram implements ActionListener {
             }
         }
 
+        for(int z = 0; z < bigBullets.size();z++){
+            BigBullet bullet = bigBullets.get(z);
+            boolean enemyHit = false;
+            for (int e = 0; e < enemies.size();e++){
+                Enemy cE = enemies.get(e);
+                //fix this
+                if(mainPanel.enemyMat[bullet.getX()][bullet.getY()] == cE.getNumber()){
+                    bigSplashKill(bullet);
+                    enemyHit = true;
+                }
+                if(enemyHit){
+                    break;
+                }
+            }
+        }
+
 
     }
 
     public void init(){
         mainPanel = new DrawPanel();
-        sidePanel = new JPanel();
+        sidePanel = new SidePanel();
 
         p1 = new Tank(300, 300, 30, 30, 50);
         ArrayList<Bullet>bullets= new ArrayList<Bullet>();
@@ -211,10 +237,6 @@ public class TankProgram implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-        healthBar = new JLabel();
-        healthBar.setText(String.valueOf(p1.getHealth()));
-        ammoCount = new JLabel();
-        ammoCount.setText(String.valueOf(p1.getAmmo()));
         mainAmmo = new JLabel();
         mainAmmo.setText("Ready to Fire!");
 
@@ -345,10 +367,43 @@ public class TankProgram implements ActionListener {
 
 
     }
-    public void addEnemy(){
-        int eX = getRandRange(Enemy.w, 600 - Enemy.w);
-        int eY = getRandRange(Enemy.h, 600 - Enemy.h);
-        enemies.add(new Enemy(eX, eY));
+    public void addEnemy(int num){
+        //add them in four sections
+        int randSection = getRandRange(1, 4);
+        if(randSection == 1){//top rectangle
+            int eX = getRandRange(Enemy.w, 600 - Enemy.w);
+            int eY = getRandRange(Enemy.h, 60 - Enemy.h);
+            enemies.add(new Enemy(eX, eY, num));
+
+        }
+        else if (randSection == 2){// bottom rectangle
+            int eX = getRandRange(Enemy.w, 600 - Enemy.w);
+            int eY = getRandRange(540 - Enemy.h, 600 - Enemy.h);
+            enemies.add(new Enemy(eX, eY, num));
+
+        }
+        else if (randSection == 3){//left rectangle
+            int eX = getRandRange(Enemy.w, 60 - Enemy.w);
+            int eY = getRandRange(Enemy.h, 600 - Enemy.h);
+            enemies.add(new Enemy(eX, eY, num));
+        }
+        else if (randSection == 4){
+            int eX = getRandRange(540 - Enemy.w, 600 - Enemy.w);
+            int eY = getRandRange(Enemy.h, 600 - Enemy.h);
+            enemies.add(new Enemy(eX, eY, num));
+
+        }
+    }
+    public void bigSplashKill(BigBullet b){
+        //get bigbullet x, y
+        for(int e = 0; e < enemies.size(); e++){
+                if(mainPanel.enemyMat[b.getX()][b.getY()] == enemies.get(e).getNumber()){
+                    enemies.remove(e);
+                    e--;
+                }
+
+        }
+
     }
     public static double calcDist(double[] a, double[] b){
         double x = a[0] - b[0];
@@ -404,7 +459,7 @@ public class TankProgram implements ActionListener {
     }
 
     public static int getRandRange(int min, int max){
-        return (int) ((Math.random() * (max - min)) + min);
+        return (int) ((Math.random() * (max - min)) + min + 1);
     }
     public static int getIndexofMin(double[] list){
         int bestIndex = 0;
