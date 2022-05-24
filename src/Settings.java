@@ -43,9 +43,9 @@ public class Settings {
     public static final int BIG_BULLET_DAMAGE_RADIUS = 80;
     public static final int BULLET_DMG = 20;
     public static final double PROBABILITY_PATHFIND = 1;
-    public static final int BULLET_ADD_RATE = 5;
+    public static final int BULLET_ADD_RATE = 5;//lower means more bullets
     public static final int GAME_SECONDS = 60;
-    public static final int ENEMY_DAMAGE = 10;
+    public static final int ENEMY_DAMAGE = 25;
     public static final boolean DEBUG_NO_ENEMY = false;
 
 
