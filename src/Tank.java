@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Tank{
     private int x;
@@ -10,6 +11,7 @@ public class Tank{
     private final int BASE_W;
     private final int BASE_H;
     private int ammo = Settings.BASE_SECOND_AMMO;
+    private int health = Settings.PLAYER_STARTING_HEALTH;
     private final int speed = 14;
     private String direction="r";
     private String barrelDirection="r";
@@ -80,6 +82,9 @@ public class Tank{
     public int getBASE_W() {
         return BASE_W;
     }
+    public int getHealth() {
+        return health;
+    }
     public String getDirection(){return this.direction;}
     public String getBarrelDirection(){return this.barrelDirection;}
     public int getAmmo() {
@@ -94,4 +99,5 @@ public class Tank{
         this.h = h;
     }
     public void setW(int w){this.w = w;}
+    public void decHealth(){this.health -= Settings.ENEMY_DAMAGE;}
 }

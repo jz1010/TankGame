@@ -116,4 +116,14 @@ public class Enemy{
     public void takeDamage(int dmg){
         this.health -= dmg;
     }
+    public boolean Contains(Tank t){
+        for(int i = t.getX() - t.getW(); i < t.getX() + t.getW();i++){
+            for(int j = t.getY() - t.getH(); j < t.getY() + t.getH();j++){
+                if(this.x == i && this.y == j){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

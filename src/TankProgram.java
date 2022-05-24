@@ -260,7 +260,8 @@ public class TankProgram implements ActionListener {
         }
         score.setText("Score: " + gameScore);
         sidePanel.add(score);
-
+        healthBar.setText("Health Left: " + p1.getHealth());
+        sidePanel.add(healthBar);
 
 
         Point mousePoint = mainPanel.getMousePosition();
@@ -315,21 +316,30 @@ public class TankProgram implements ActionListener {
         }
         reloadMain();
 
-        if(getRandRange(1, 100) < 5){
-            if(getRandRange(1, 8) == 3){
-                addEnemy(enemyNumber, true);
-                enemyNumber++;
-            }
-            else{
-                addEnemy(enemyNumber, false);
-                enemyNumber++;
-            }
+        if(!Settings.DEBUG_NO_ENEMY){
+            if(getRandRange(1, 100) < 5){
+                if(getRandRange(1, 8) == 3){
+                    addEnemy(enemyNumber, true);
+                    enemyNumber++;
+                }
+                else{
+                    addEnemy(enemyNumber, false);
+                    enemyNumber++;
+                }
 
+            }
         }
+
         for (int e = 0; e < enemies.size();e++){
             Enemy enemy = enemies.get(e);
             enemy.update(p1);
-            if(enemy.getHealth() > 0){
+
+            if(enemy.Contains(p1)){
+                enemies.remove(e);
+                e--;
+                p1.decHealth();
+            }
+            else if(enemy.getHealth() > 0){
                 mainPanel.drawEnemy(enemy);
             }
             else{
@@ -402,6 +412,8 @@ public class TankProgram implements ActionListener {
 
         mainAmmo = new JLabel();
         mainAmmo.setText("Ready to Fire!");
+        healthBar = new JLabel();
+        healthBar.setText("Health Left: " + p1.getHealth());
         score = new JLabel();
         score.setText("Score: " + gameScore);
         gameTimerLabel = new JLabel();
