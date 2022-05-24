@@ -56,21 +56,21 @@ class SidePanel extends JPanel{
         }
     }
     public void drawAmmo(Tank t){
-        for(int i = 50;i<(t.getAmmo() * 2) + 50;i+=2){
+        /*for(int i = 50;i<(t.getAmmo() * 2) + 50;i+=2){
             for(int j = 30;j<60;j++){
                 isPainted[i][j] = true;
                 colors[i][j] = Color.BLACK;
             }
-        }
+        }*/
     }
     public void drawBigBullet(){
         for(int i = 50;i<100;i+=1){
-            for(int j = 100;j<130;j++){
+            for(int j = 30;j<60;j++){
                 isPainted[i][j] = true;
                 colors[i][j] = Color.ORANGE;
             }
         }
-        for(int j = 110;j<120;j++){
+        for(int j = 40;j<50;j++){
             for(int i = 100;i<120;i++){
                 isPainted[i][j] = true;
                 colors[i][j] = Color.ORANGE;

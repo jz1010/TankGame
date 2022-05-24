@@ -14,17 +14,27 @@ public class Enemy{
     private String direction="r";
     private int number;
     private int[] randCoords = new int[]{-1, -1};
+    private boolean Mega = false;
 
 
 
-    public Enemy(int X, int Y, int num){
+    public Enemy(int X, int Y, int num, boolean meg){
         this.x = X;
         this.y = Y;
         this.number = num;
+        this.Mega = meg;
+        if(meg){
+            this.health *= 3;
+        }
 
     }
     public void update(Tank t){
-        this.enemyColor = new Color(Math.abs(255 - Math.abs(3 * getHealth())), Math.abs(3 * getHealth()), 0);
+        if(Mega){
+            this.enemyColor = new Color(Math.min(255,Math.abs(255 - Math.abs(3 * getHealth()))), 0, Math.min(255,Math.abs(3 * getHealth())));
+        }
+        else{
+            this.enemyColor = new Color(Math.min(Math.abs(255 - Math.abs(3 * getHealth())),255), Math.min(255,Math.abs(3 * getHealth())), 0);
+        }
         int randNum = TankProgram.getRandRange(1, 100);
         if(randNum < (int) (Settings.PROBABILITY_PATHFIND * 100)){
             if(t.getX() > this.x){
@@ -87,6 +97,10 @@ public class Enemy{
     public int getY(){return this.y;}
     public int getW(){return this.w;}
     public int getH(){return this.h;}
+    public boolean isMega() {
+        return Mega;
+    }
+
     public String getDirection(){return this.direction;}
     public int getHealth() {
         return health;

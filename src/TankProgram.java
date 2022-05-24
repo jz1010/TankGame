@@ -9,7 +9,7 @@ public class TankProgram implements ActionListener {
     SidePanel sidePanel;
 
     Tank p1;
-    JLabel healthBar, ammoCount, mainAmmo, title;
+    JLabel healthBar, ammoCount, mainAmmo, title, score, gameTimerLabel;
     JPanel titlePanel, pausePanel, endPanel;
     JButton startButton;
     private boolean secReloading = false;
@@ -19,6 +19,9 @@ public class TankProgram implements ActionListener {
     int secReloadTimer;
     int mainReloadTimer;
     int enemyNumber = 10;
+    int addBulletTimer = 0;
+    int gameScore = 0;
+    int gameTimer = (100 * Settings.GAME_SECONDS) + 100;
 
     ArrayList<Bullet> bullets = new ArrayList<Bullet>();
     ArrayList<BigBullet> bigBullets = new ArrayList<BigBullet>();
@@ -35,19 +38,19 @@ public class TankProgram implements ActionListener {
         //sidePanel.add(healthBar);
         //sidePanel.add(ammoCount);
         //sidePanel.add(mainAmmo);
-        frame = new JFrame("Swanky Tank");
+        frame = new JFrame("Janky Tank");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
 
         //create new JFrame for title screen with a button to start the game
 
-        titleFrame = new JFrame("Swanky Tank");
+        titleFrame = new JFrame("Janky Tank");
         titleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         titleFrame.setSize(600, 600);
         titleFrame.setLocationRelativeTo(null);
         titleFrame.setLayout(new BorderLayout());
-        title = new JLabel("Swanky Tank");
+        title = new JLabel("Janky Tank");
         title.setFont(new Font("Arial", Font.BOLD, 50));
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setVerticalAlignment(JLabel.CENTER);
@@ -57,14 +60,14 @@ public class TankProgram implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 titleFrame.setVisible(false);
                 init();
+                frame.setSize(1000, 800);
 
                 frame.setVisible(true);
 
                 mainPanel.drawTank(p1);
+                sidePanel.add(score);
                 frame.add(mainPanel, BorderLayout.CENTER);
                 frame.add(sidePanel, BorderLayout.EAST);
-                //frame = new JFrame("Swanky Tanky");
-                //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
         });
         startButton.setFont(new Font("Arial", Font.BOLD, 50));
@@ -81,7 +84,7 @@ public class TankProgram implements ActionListener {
         titleFrame.setResizable(false);
 
         //create new JFrame for end screen with a button to restart the game
-        endFrame = new JFrame("Swanky Tank");
+        endFrame = new JFrame("Janky Tank");
         endFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         endFrame.setSize(600, 600);
         endFrame.setLocationRelativeTo(null);
@@ -98,11 +101,19 @@ public class TankProgram implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 endFrame.setVisible(false);
                 init();
-                frame=new JFrame("Swanky Tank");
+                frame=new JFrame("Janky Tank");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                frame.setSize(1000, 1000);
                 frame.setVisible(true);
                 mainPanel.drawTank(p1);
                 frame.add(mainPanel, BorderLayout.CENTER);
                 frame.add(sidePanel, BorderLayout.EAST);
+                timer.restart();
+                gameTimer = (100 * Settings.GAME_SECONDS) + 100;
+                enemyNumber = 10;
+                addBulletTimer = 0;
+                gameScore = 0;
             }
         });
         restartButton.setFont(new Font("Arial", Font.BOLD, 50));
@@ -116,7 +127,7 @@ public class TankProgram implements ActionListener {
         endFrame.setVisible(false);
         //create new JFrame for pause screen with a button to resume the game
 
-        pauseFrame = new JFrame("Swanky Tanky");
+        pauseFrame = new JFrame("Janky Tank");
         pauseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pauseFrame.setSize(600, 600);
         pauseFrame.setLocationRelativeTo(null);
@@ -240,7 +251,17 @@ public class TankProgram implements ActionListener {
         if(!(mainReloading)){
             sidePanel.drawBigBullet();
         }
-        addBullet();
+        addBulletTimer++;
+        if(addBulletTimer % Settings.BULLET_ADD_RATE == 0){
+            addBullet();
+        }
+        if(addBulletTimer > 100){
+            addBulletTimer = 0;
+        }
+        score.setText("Score: " + gameScore);
+        sidePanel.add(score);
+
+
 
         Point mousePoint = mainPanel.getMousePosition();
         if(mousePoint != null){
@@ -295,8 +316,15 @@ public class TankProgram implements ActionListener {
         reloadMain();
 
         if(getRandRange(1, 100) < 5){
-            addEnemy(enemyNumber);
-            enemyNumber++;
+            if(getRandRange(1, 8) == 3){
+                addEnemy(enemyNumber, true);
+                enemyNumber++;
+            }
+            else{
+                addEnemy(enemyNumber, false);
+                enemyNumber++;
+            }
+
         }
         for (int e = 0; e < enemies.size();e++){
             Enemy enemy = enemies.get(e);
@@ -305,6 +333,7 @@ public class TankProgram implements ActionListener {
                 mainPanel.drawEnemy(enemy);
             }
             else{
+                gameScore++;
                 enemies.remove(e);
                 e--;
             }
@@ -347,6 +376,13 @@ public class TankProgram implements ActionListener {
                 }
             }
         }
+        gameTimer-=2;
+        gameTimerLabel.setText("Time Left: " + gameTimer/100);
+        sidePanel.add(gameTimerLabel);
+        if(gameTimer <= 0){
+            frame.setVisible(false);
+            endFrame.setVisible(true);
+        }
 
 
     }
@@ -356,8 +392,9 @@ public class TankProgram implements ActionListener {
         sidePanel = new SidePanel();
 
         p1 = new Tank(300, 300, 30, 30, 50);
-        ArrayList<Bullet>bullets= new ArrayList<Bullet>();
-        ArrayList<BigBullet> bigBullets = new ArrayList<>();
+        bullets= new ArrayList<Bullet>();
+        bigBullets = new ArrayList<>();
+        enemies = new ArrayList<>();
 
         //frame = new JFrame("Tank Program");
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -365,6 +402,10 @@ public class TankProgram implements ActionListener {
 
         mainAmmo = new JLabel();
         mainAmmo.setText("Ready to Fire!");
+        score = new JLabel();
+        score.setText("Score: " + gameScore);
+        gameTimerLabel = new JLabel();
+        gameTimerLabel.setText("Time Left: " + gameTimer/200);
 
 
         timer = new Timer(10, this);
@@ -493,30 +534,30 @@ public class TankProgram implements ActionListener {
 
 
     }
-    public void addEnemy(int num){
+    public void addEnemy(int num, boolean b){
         //add them in four sections
         int randSection = getRandRange(1, 4);
         if(randSection == 1){//top rectangle
             int eX = getRandRange(Enemy.w, 600 - Enemy.w);
             int eY = getRandRange(Enemy.h, 60 - Enemy.h);
-            enemies.add(new Enemy(eX, eY, num));
+            enemies.add(new Enemy(eX, eY, num, b));
 
         }
         else if (randSection == 2){// bottom rectangle
             int eX = getRandRange(Enemy.w, 600 - Enemy.w);
             int eY = getRandRange(540 - Enemy.h, 600 - Enemy.h);
-            enemies.add(new Enemy(eX, eY, num));
+            enemies.add(new Enemy(eX, eY, num, b));
 
         }
         else if (randSection == 3){//left rectangle
             int eX = getRandRange(Enemy.w, 60 - Enemy.w);
             int eY = getRandRange(Enemy.h, 600 - Enemy.h);
-            enemies.add(new Enemy(eX, eY, num));
+            enemies.add(new Enemy(eX, eY, num, b));
         }
         else if (randSection == 4){
             int eX = getRandRange(540 - Enemy.w, 600 - Enemy.w);
             int eY = getRandRange(Enemy.h, 600 - Enemy.h);
-            enemies.add(new Enemy(eX, eY, num));
+            enemies.add(new Enemy(eX, eY, num, b));
 
         }
     }
@@ -524,6 +565,12 @@ public class TankProgram implements ActionListener {
         //get bigbullet x, y
         for(int e = 0; e < enemies.size(); e++){
                 if(mainPanel.enemyMat[b.getX()][b.getY()] == enemies.get(e).getNumber()){
+                    if(enemies.get(e).isMega()){
+                        gameScore+= 10;
+                    }
+                    else{
+                        gameScore++;
+                    }
                     enemies.remove(e);
                     e--;
                 }
