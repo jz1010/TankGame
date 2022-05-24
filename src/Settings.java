@@ -34,6 +34,7 @@ public class Settings {
     public static final int PLAYER_MOVE_LEFT = 65;
     public static final int PLAYER_MOVE_UP = 87;
     public static final int PLAYER_MOVE_DOWN = 83;
+    public static final int ESCAPE= 27;//Escape key
 
     public static final int BASE_SECOND_AMMO = 80;
     public static final int RELOAD_TIME_SECONDS = 3;

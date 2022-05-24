@@ -4,12 +4,14 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class TankProgram implements ActionListener {
-    JFrame frame;
+    JFrame frame, titleFrame, endFrame, pauseFrame;
     DrawPanel mainPanel;
     SidePanel sidePanel;
 
     Tank p1;
-    JLabel healthBar, ammoCount, mainAmmo;
+    JLabel healthBar, ammoCount, mainAmmo, title;
+    JPanel titlePanel, pausePanel, endPanel;
+    JButton startButton;
     private boolean secReloading = false;
     private boolean mainReloading = false;
     private boolean alreadyReloading = false;
@@ -26,16 +28,132 @@ public class TankProgram implements ActionListener {
     // This is the PaintProgram constructor which sets up the JFrame and all other components and containers
 
     public TankProgram() {
-        init();
+        //init();
 
 
-        mainPanel.drawTank(p1);
+        //mainPanel.drawTank(p1);
         //sidePanel.add(healthBar);
         //sidePanel.add(ammoCount);
         //sidePanel.add(mainAmmo);
+        frame = new JFrame("Swanky Tank");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.add(mainPanel, BorderLayout.CENTER);
-        frame.add(sidePanel, BorderLayout.EAST);
+
+
+        //create new JFrame for title screen with a button to start the game
+
+        titleFrame = new JFrame("Swanky Tank");
+        titleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        titleFrame.setSize(600, 600);
+        titleFrame.setLocationRelativeTo(null);
+        titleFrame.setLayout(new BorderLayout());
+        title = new JLabel("Swanky Tank");
+        title.setFont(new Font("Arial", Font.BOLD, 50));
+        title.setHorizontalAlignment(JLabel.CENTER);
+        title.setVerticalAlignment(JLabel.CENTER);
+        startButton = new JButton("Start");
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                titleFrame.setVisible(false);
+                init();
+
+                frame.setVisible(true);
+
+                mainPanel.drawTank(p1);
+                frame.add(mainPanel, BorderLayout.CENTER);
+                frame.add(sidePanel, BorderLayout.EAST);
+                //frame = new JFrame("Swanky Tanky");
+                //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }
+        });
+        startButton.setFont(new Font("Arial", Font.BOLD, 50));
+        startButton.setHorizontalAlignment(JLabel.CENTER);
+        startButton.setVerticalAlignment(JLabel.CENTER);
+        titlePanel = new JPanel();
+        titlePanel.setLayout(new GridLayout(2, 1));
+        titlePanel.add(title);
+        titlePanel.add(startButton);
+        titleFrame.add(titlePanel, BorderLayout.CENTER);
+
+        titleFrame.setVisible(true);
+        titleFrame.setSize(600, 600);
+        titleFrame.setResizable(false);
+
+        //create new JFrame for end screen with a button to restart the game
+        endFrame = new JFrame("Swanky Tank");
+        endFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        endFrame.setSize(600, 600);
+        endFrame.setLocationRelativeTo(null);
+        endFrame.setResizable(false);
+        endFrame.setLayout(new BorderLayout());
+
+        JLabel endLabel = new JLabel("Game Over");
+        endLabel.setFont(new Font("Arial", Font.BOLD, 50));
+        endLabel.setHorizontalAlignment(JLabel.CENTER);
+        endLabel.setVerticalAlignment(JLabel.CENTER);
+        JButton restartButton = new JButton("Restart");
+        restartButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                endFrame.setVisible(false);
+                init();
+                frame=new JFrame("Swanky Tank");
+                frame.setVisible(true);
+                mainPanel.drawTank(p1);
+                frame.add(mainPanel, BorderLayout.CENTER);
+                frame.add(sidePanel, BorderLayout.EAST);
+            }
+        });
+        restartButton.setFont(new Font("Arial", Font.BOLD, 50));
+        restartButton.setHorizontalAlignment(JLabel.CENTER);
+        restartButton.setVerticalAlignment(JLabel.CENTER);
+        endPanel = new JPanel();
+        endPanel.setLayout(new GridLayout(2, 1));
+        endPanel.add(endLabel);
+        endPanel.add(restartButton);
+        endFrame.add(endPanel, BorderLayout.CENTER);
+        endFrame.setVisible(false);
+        //create new JFrame for pause screen with a button to resume the game
+
+        pauseFrame = new JFrame("Swanky Tanky");
+        pauseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pauseFrame.setSize(600, 600);
+        pauseFrame.setLocationRelativeTo(null);
+        pauseFrame.setResizable(false);
+        pauseFrame.setLayout(new BorderLayout());
+        JLabel pauseLabel = new JLabel("Paused");
+        pauseLabel.setFont(new Font("Arial", Font.BOLD, 50));
+        pauseLabel.setHorizontalAlignment(JLabel.CENTER);
+        pauseLabel.setVerticalAlignment(JLabel.CENTER);
+        JButton resumeButton = new JButton("Resume");
+        resumeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pauseFrame.setVisible(false);
+                timer.restart();
+                //frame.setVisible(true);
+//                mainPanel.drawTank(p1);
+//                frame.add(mainPanel, BorderLayout.CENTER);
+//                frame.add(sidePanel, BorderLayout.EAST);
+//                frame = new JFrame("Swanky Tanky");
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }
+        }) ;
+        resumeButton.setFont(new Font("Arial", Font.BOLD, 50));
+        resumeButton.setHorizontalAlignment(JLabel.CENTER);
+        resumeButton.setVerticalAlignment(JLabel.CENTER);
+        pausePanel = new JPanel();
+        pausePanel.setLayout(new GridLayout(2, 1));
+        pausePanel.add(pauseLabel);
+        pausePanel.add(resumeButton);
+        pauseFrame.add(pausePanel, BorderLayout.CENTER);
+        pauseFrame.setVisible(false);
+        //create new JFrame for win screen with a button to restart the game
+
+
+
+
 
 
         frame.addMouseListener(new MouseListener() {
@@ -90,6 +208,11 @@ public class TankProgram implements ActionListener {
                 else if (e.getKeyCode() == Settings.PLAYER_MOVE_DOWN){ // down arrow
                     p1.moveTank("d");
                 }
+                else if (e.getKeyCode()==Settings.ESCAPE){
+                    //frame.setVisible(false);
+                    timer.stop();
+                    pauseFrame.setVisible(true);
+                }
 
 
             }
@@ -100,7 +223,10 @@ public class TankProgram implements ActionListener {
         });
 
         frame.pack();
-        frame.setVisible(true);
+        frame.setVisible(false);
+//        titleFrame.pack();
+//        titleFrame.setVisible(true);
+
 
 
     }
@@ -233,8 +359,8 @@ public class TankProgram implements ActionListener {
         ArrayList<Bullet>bullets= new ArrayList<Bullet>();
         ArrayList<BigBullet> bigBullets = new ArrayList<>();
 
-        frame = new JFrame("Tank Program");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame = new JFrame("Tank Program");
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
         mainAmmo = new JLabel();
