@@ -105,14 +105,18 @@ public class TankProgram implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 endFrame.setVisible(false);
-                init();
+
+
+                //frame.setVisible(true);
                 frame=new JFrame("Janky Tank");
+                init();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
                 frame.setSize(1000, 1000);
                 frame.setVisible(true);
+
                 mainPanel.drawTank(p1);
-                frame.add(mainPanel, BorderLayout.CENTER); //setting up tanks and adding panels
+                frame.add(mainPanel, BorderLayout.CENTER);
                 frame.add(sidePanel, BorderLayout.EAST);
                 timer.restart();
                 resetAllTimers(); // restarted timers
@@ -168,7 +172,7 @@ public class TankProgram implements ActionListener {
                             p1.moveTank("d");
                         }
                         else if (e.getKeyCode()==Settings.ESCAPE){ // pauses the game
-                            frame.setVisible(false);
+                            //frame.setVisible(false);
                             pauseFrame.setVisible(true);
                         }
 
@@ -237,7 +241,7 @@ public class TankProgram implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 pauseFrame.setVisible(false);
                 timer.restart();
-                frame.setVisible(true);
+                //frame.setVisible(true);
             }
         }) ;
         //adding button and font to panel

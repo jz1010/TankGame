@@ -4,8 +4,8 @@ import java.util.ArrayList;
 public class BigBullet{
     private int x, y;
     private int damageRadius = Settings.BIG_BULLET_DAMAGE_RADIUS;
-    private int speed = 4;
-    private int vXSpeed = 2, vYSpeed = 4, hXSpeed = 3, hYSpeed = 3;
+    private int speed = 8;
+    private int hXSpeed = 8, hYSpeed = 8;
     private String direction = "r";
     private final Color bulletColor = Settings.BIG_BULLET_COLOR;
     public static final int BULLET_H = 6;
