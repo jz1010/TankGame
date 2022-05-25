@@ -47,10 +47,14 @@ public class TankProgram implements ActionListener {
         titleFrame.setSize(600, 600);
         titleFrame.setLocationRelativeTo(null);
         titleFrame.setLayout(new BorderLayout());
+
+        //Adding fancy stuff
         title = new JLabel("Janky Tank");
         title.setFont(new Font("Arial", Font.BOLD, 50));
         title.setHorizontalAlignment(JLabel.CENTER);
         title.setVerticalAlignment(JLabel.CENTER);
+
+        //starting the game on start button
         startButton = new JButton("Start");
         startButton.addActionListener(new ActionListener() {
             @Override
@@ -67,6 +71,8 @@ public class TankProgram implements ActionListener {
                 frame.add(sidePanel, BorderLayout.EAST);
             }
         });
+
+        // more font stuff
         startButton.setFont(new Font("Arial", Font.BOLD, 50));
         startButton.setHorizontalAlignment(JLabel.CENTER);
         startButton.setVerticalAlignment(JLabel.CENTER);
@@ -87,12 +93,13 @@ public class TankProgram implements ActionListener {
         endFrame.setLocationRelativeTo(null);
         endFrame.setResizable(false);
         endFrame.setLayout(new BorderLayout());
-
+        // new labels and fonts for score
         JLabel endLabel = new JLabel("Game Over");
         endLabel.setFont(new Font("Arial", Font.BOLD, 50));
         endLabel.setHorizontalAlignment(JLabel.CENTER);
         endLabel.setVerticalAlignment(JLabel.CENTER);
 
+        //restarting game on restart click
         JButton restartButton = new JButton("Restart");
         restartButton.addMouseListener(new MouseListener() {
             @Override
@@ -105,14 +112,14 @@ public class TankProgram implements ActionListener {
                 frame.setSize(1000, 1000);
                 frame.setVisible(true);
                 mainPanel.drawTank(p1);
-                frame.add(mainPanel, BorderLayout.CENTER);
+                frame.add(mainPanel, BorderLayout.CENTER); //setting up tanks and adding panels
                 frame.add(sidePanel, BorderLayout.EAST);
                 timer.restart();
-                resetAllTimers();
+                resetAllTimers(); // restarted timers
                 frame.addMouseListener(new MouseListener() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        if(!mainReloading){
+                        if(!mainReloading){ //tells us if the bullet should fire
                             addBigBullet();
                             mainReloading = true;
                         }
@@ -138,7 +145,7 @@ public class TankProgram implements ActionListener {
 
                     }
                 });
-                frame.addKeyListener(new KeyListener() {
+                frame.addKeyListener(new KeyListener() { // listens to keypresses for movement
                     @Override
                     public void keyTyped(KeyEvent e) {
 
@@ -146,7 +153,6 @@ public class TankProgram implements ActionListener {
 
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        // System.out.println(e.getKeyCode());
 
                         //lets do wasd
                         if(e.getKeyCode() == Settings.PLAYER_MOVE_RIGHT){ // right arrow
@@ -161,9 +167,8 @@ public class TankProgram implements ActionListener {
                         else if (e.getKeyCode() == Settings.PLAYER_MOVE_DOWN){ // down arrow
                             p1.moveTank("d");
                         }
-                        else if (e.getKeyCode()==Settings.ESCAPE){
-                            //frame.setVisible(false);
-                            timer.stop();
+                        else if (e.getKeyCode()==Settings.ESCAPE){ // pauses the game
+                            frame.setVisible(false);
                             pauseFrame.setVisible(true);
                         }
 
@@ -196,44 +201,46 @@ public class TankProgram implements ActionListener {
 
             }
         });
+        // adding restart button to a JPanel on the end frame
         restartButton.setFont(new Font("Arial", Font.BOLD, 50));
         restartButton.setHorizontalAlignment(JLabel.CENTER);
         restartButton.setVerticalAlignment(JLabel.CENTER);
         endPanel = new JPanel();
         endPanel.setLayout(new GridLayout(4, 1));
         endPanel.add(endLabel);
+
+        //adding the current score and high score
         endPanel.add(fScore);
         endPanel.add(hScore);
         endPanel.add(restartButton);
 
+        //adding end panel
         endFrame.add(endPanel, BorderLayout.CENTER);
         endFrame.setVisible(false);
-        //create new JFrame for pause screen with a button to resume the game
 
+        //create new JFrame for pause screen with a button to resume the game
         pauseFrame = new JFrame("Janky Tank");
         pauseFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pauseFrame.setSize(600, 600);
         pauseFrame.setLocationRelativeTo(null);
         pauseFrame.setResizable(false);
         pauseFrame.setLayout(new BorderLayout());
+        // font and labels
         JLabel pauseLabel = new JLabel("Paused");
         pauseLabel.setFont(new Font("Arial", Font.BOLD, 50));
         pauseLabel.setHorizontalAlignment(JLabel.CENTER);
         pauseLabel.setVerticalAlignment(JLabel.CENTER);
         JButton resumeButton = new JButton("Resume");
+        //adding resume button
         resumeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pauseFrame.setVisible(false);
                 timer.restart();
-                //frame.setVisible(true);
-//                mainPanel.drawTank(p1);
-//                frame.add(mainPanel, BorderLayout.CENTER);
-//                frame.add(sidePanel, BorderLayout.EAST);
-//                frame = new JFrame("Swanky Tanky");
-//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setVisible(true);
             }
         }) ;
+        //adding button and font to panel
         resumeButton.setFont(new Font("Arial", Font.BOLD, 50));
         resumeButton.setHorizontalAlignment(JLabel.CENTER);
         resumeButton.setVerticalAlignment(JLabel.CENTER);
@@ -243,17 +250,12 @@ public class TankProgram implements ActionListener {
         pausePanel.add(resumeButton);
         pauseFrame.add(pausePanel, BorderLayout.CENTER);
         pauseFrame.setVisible(false);
-        //create new JFrame for win screen with a button to restart the game
 
-
-
-
-
-
+        // we have to re-initialize the mouse listener in case the game wasn't restarted earlier (1st game)
         frame.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!mainReloading){
+                if(!mainReloading){ // same as before w reloading and clicking
                     addBigBullet();
                     mainReloading = true;
                 }
@@ -279,7 +281,7 @@ public class TankProgram implements ActionListener {
 
             }
         });
-        frame.addKeyListener(new KeyListener() {
+        frame.addKeyListener(new KeyListener() { // key listener for tank movement
             @Override
             public void keyTyped(KeyEvent e) {
 
@@ -287,8 +289,6 @@ public class TankProgram implements ActionListener {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                // System.out.println(e.getKeyCode());
-
                 //lets do wasd
                 if(e.getKeyCode() == Settings.PLAYER_MOVE_RIGHT){ // right arrow
                     p1.moveTank("r");
@@ -302,8 +302,7 @@ public class TankProgram implements ActionListener {
                 else if (e.getKeyCode() == Settings.PLAYER_MOVE_DOWN){ // down arrow
                     p1.moveTank("d");
                 }
-                else if (e.getKeyCode()==Settings.ESCAPE){
-                    //frame.setVisible(false);
+                else if (e.getKeyCode()==Settings.ESCAPE){ //pause game
                     timer.stop();
                     pauseFrame.setVisible(true);
                 }
@@ -315,19 +314,19 @@ public class TankProgram implements ActionListener {
 
             }
         });
-
+        //tighten the frame
         frame.pack();
-//        titleFrame.pack();
-//        titleFrame.setVisible(true);
-
-
-
     }
-
     public void actionPerformed(ActionEvent ae) {
+        // this method constantly runs every cycle, around 10 ms per cycle (we try!)
+
+        // runs the game if the tank is alive, the frame is on screen and not paused
         if(p1.getHealth() > 0 && frame.isVisible() && !pauseFrame.isVisible()){
+            //clear panels
             mainPanel.clear();
             sidePanel.clear();
+
+            // drawing border, tank, and ammo on side
             mainPanel.drawBorder();
             mainPanel.drawTank(p1);
             sidePanel.drawAmmo(p1);
@@ -337,7 +336,10 @@ public class TankProgram implements ActionListener {
             else{
                 sidePanel.drawBigBulletRed();
             }
+            //draws HP
             sidePanel.drawHP(p1);
+
+            //updates timer, adds bullet if needed
             addBulletTimer++;
             if(addBulletTimer % Settings.BULLET_ADD_RATE == 0){
                 addBullet();
@@ -345,6 +347,8 @@ public class TankProgram implements ActionListener {
             if(addBulletTimer > 100){
                 addBulletTimer = 0;
             }
+
+            //adding labels to panel
             score.setText("Score: " + gameScore);
             sidePanel.add(score);
             healthBar.setText("Health Left: " + p1.getHealth());
