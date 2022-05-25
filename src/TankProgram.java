@@ -2,49 +2,45 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+//Importing all the necessary utilities for the program
 
 public class TankProgram implements ActionListener {
-    JFrame frame, titleFrame, endFrame, pauseFrame;
+    JFrame frame, titleFrame, endFrame, pauseFrame; // creates different frames and panels for game
     DrawPanel mainPanel;
     SidePanel sidePanel;
 
-    Tank p1;
-    JLabel healthBar, ammoCount, mainAmmo, title, score, hScore = new JLabel(), fScore = new JLabel();
-    JPanel titlePanel, pausePanel, endPanel;
-    JButton startButton;
-    private boolean secReloading = false;
+    Tank p1; // this is the player!
+    JLabel healthBar, mainAmmo, title, score; // some JLabels to display info
+    JLabel hScore = new JLabel(), fScore = new JLabel(); //These need to be initialized as they are called before init
+    JPanel titlePanel, pausePanel, endPanel; // Panels to go on the frames
+    JButton startButton; // Button to start game
+
+    private boolean secReloading = false; //booleans to check reload logic
     private boolean mainReloading = false;
     private boolean alreadyReloading = false;
 
-    int secReloadTimer;
+    int secReloadTimer;// timers for the game, bullet, reloads
     int mainReloadTimer;
-    int enemyNumber = 10;
     int addBulletTimer = 0;
-    int gameScore = 0;
     int gameTimer = (100 * Settings.GAME_SECONDS) + 100;
+
+
+    int enemyNumber = 10; // unique id for each enemy
+    int gameScore = 0; //scores to track current and high
     int highScore = 0;
 
+    // makes arrayLists for bullets and enemies to keep track
     ArrayList<Bullet> bullets = new ArrayList<Bullet>();
     ArrayList<BigBullet> bigBullets = new ArrayList<BigBullet>();
     ArrayList<Enemy> enemies=new ArrayList<Enemy>();
     Timer timer;
 
-    // This is the PaintProgram constructor which sets up the JFrame and all other components and containers
-
+    // This is the TankProgram constructor which sets up the JFrame and all other components and containers
     public TankProgram() {
-        //init();
 
-
-        //mainPanel.drawTank(p1);
-        //sidePanel.add(healthBar);
-        //sidePanel.add(ammoCount);
-        //sidePanel.add(mainAmmo);
+        //Initialize new frames
         frame = new JFrame("Janky Tank");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-
-        //create new JFrame for title screen with a button to start the game
 
         titleFrame = new JFrame("Janky Tank");
         titleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
