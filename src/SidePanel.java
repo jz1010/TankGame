@@ -38,7 +38,7 @@ class SidePanel extends JPanel{
     }
 
     // This is the method that draws everything
-
+    //we basically just draw all the parts of the game that we need
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 

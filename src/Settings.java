@@ -1,22 +1,21 @@
 import java.awt.*;
 
 public class Settings {
-    /*
-    * isPainted Value Correspondence
-    * 0-Empty
-    * 1-Tank + Cannon
-    * 2-Bullet
-    * 3-Border
-    * 4-Big Bullet
-    * 5-Enemy
-    *
-    *
-    * ------ MATS -------
-    * tankMat - 1 is tank + cannon
-    * bulletMat - 1 is bullet, 2 is big bullet
-    * enemyMat - 1 is enemy
-    *
-    * */
+    // * isPainted Value Correspondence
+    // * 0-Empty
+    // * 1-Tank + Cannon
+    // * 2-Bullet
+    // * 3-Border
+    // * 4-Big Bullet
+    // * 5-Enemy
+    // *
+    // *
+    // * ------ MATS -------
+    // * tankMat - 1 is tank + cannon
+    // * bulletMat - 1 is bullet, 2 is big bullet
+    // * enemyMat - 1 is enemy
+    // *
+    // *
 
     public static final Color BORDER_COLOR = Color.GRAY;
     public static final Color PLAYER_COLOR = new Color(96, 115, 94);

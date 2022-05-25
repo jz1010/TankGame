@@ -635,6 +635,7 @@ public class TankProgram implements ActionListener {
             bigBullets.add(new BigBullet(p1.getX() - p1.getW()/2, p1.getY() + p1.getH()/2, p1.getBarrelDirection()));
         }
     }
+    //we intially had reloading mechanic but we got rid of it
     public void reloadMain(){
         if(mainReloading && !alreadyReloading){
             mainReloadTimer = 0;
@@ -685,6 +686,7 @@ public class TankProgram implements ActionListener {
 
         }
     }
+    //ignore this code
     public void bigSplashKill(BigBullet b){
         //get bigbullet x, y
         for(int e = 0; e < enemies.size(); e++){
@@ -707,6 +709,7 @@ public class TankProgram implements ActionListener {
         double y = a[1] - b[1];
         return Math.sqrt((x * x) + (y * y));
     }
+    //This code decides which angle the mouse is pointing at
     public String getClosestPoint(double[] mP){
         //Right,left,up,down,rightUp,leftUp,rightDown,leftDown
         double[] pointDist = new double[8];

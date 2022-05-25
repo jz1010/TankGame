@@ -104,6 +104,7 @@ public class DrawPanel extends JPanel{
                 drawTank(t);
             }
         }
+        //we draw the barrelbased on what direction it is facing
         else if (t.getDirection().equals("d")){
             t.setH(t.getBASE_W());
             t.setW(t.getBASE_H());
@@ -226,6 +227,7 @@ public class DrawPanel extends JPanel{
         }
     }
     public void drawCorners(Tank t){
+        //this draws the anchor points to decide where the barrel should point
         //R
         for(int i = (t.getX() + t.getW()/2) - 3; i < t.getX() + t.getW()/2;i++){
             for(int j = (t.getY()); j < (t.getY()) + 3;j++){
