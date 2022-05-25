@@ -10,7 +10,7 @@ public class Enemy{
     public static final int h = 30;
     private int health = 60;
     private  Color enemyColor = Settings.ENEMY_COLOR;
-    private final int speed = 2;
+    private int speed = 2;
     private String direction="r";
     private int number;
     private int[] randCoords = new int[]{-1, -1};
@@ -25,6 +25,7 @@ public class Enemy{
         this.Mega = meg;
         if(meg){
             this.health *= 3;
+            this.speed += 1;
         }
 
     }

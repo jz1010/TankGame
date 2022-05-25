@@ -99,5 +99,6 @@ public class Tank{
         this.h = h;
     }
     public void setW(int w){this.w = w;}
+    public void decHealthMega(){this.health -= Settings.MEGA_ENEMY_DAMAGE;}
     public void decHealth(){this.health -= Settings.ENEMY_DAMAGE;}
 }

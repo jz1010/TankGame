@@ -9,7 +9,7 @@ public class TankProgram implements ActionListener {
     SidePanel sidePanel;
 
     Tank p1;
-    JLabel healthBar, ammoCount, mainAmmo, title, score, gameTimerLabel;
+    JLabel healthBar, ammoCount, mainAmmo, title, score, hScore = new JLabel(), fScore = new JLabel();
     JPanel titlePanel, pausePanel, endPanel;
     JButton startButton;
     private boolean secReloading = false;
@@ -22,6 +22,7 @@ public class TankProgram implements ActionListener {
     int addBulletTimer = 0;
     int gameScore = 0;
     int gameTimer = (100 * Settings.GAME_SECONDS) + 100;
+    int highScore = 0;
 
     ArrayList<Bullet> bullets = new ArrayList<Bullet>();
     ArrayList<BigBullet> bigBullets = new ArrayList<BigBullet>();
@@ -95,10 +96,11 @@ public class TankProgram implements ActionListener {
         endLabel.setFont(new Font("Arial", Font.BOLD, 50));
         endLabel.setHorizontalAlignment(JLabel.CENTER);
         endLabel.setVerticalAlignment(JLabel.CENTER);
+
         JButton restartButton = new JButton("Restart");
-        restartButton.addActionListener(new ActionListener() {
+        restartButton.addMouseListener(new MouseListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent e) {
                 endFrame.setVisible(false);
                 init();
                 frame=new JFrame("Janky Tank");
@@ -110,19 +112,104 @@ public class TankProgram implements ActionListener {
                 frame.add(mainPanel, BorderLayout.CENTER);
                 frame.add(sidePanel, BorderLayout.EAST);
                 timer.restart();
-                gameTimer = (100 * Settings.GAME_SECONDS) + 100;
-                enemyNumber = 10;
-                addBulletTimer = 0;
-                gameScore = 0;
+                resetAllTimers();
+                frame.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if(!mainReloading){
+                            addBigBullet();
+                            mainReloading = true;
+                        }
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+
+                    }
+                });
+                frame.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        // System.out.println(e.getKeyCode());
+
+                        //lets do wasd
+                        if(e.getKeyCode() == Settings.PLAYER_MOVE_RIGHT){ // right arrow
+                            p1.moveTank("r");
+                        }
+                        else if (e.getKeyCode() == Settings.PLAYER_MOVE_LEFT){ // left arrow
+                            p1.moveTank("l");
+                        }
+                        else if (e.getKeyCode() == Settings.PLAYER_MOVE_UP){ // up arrow
+                            p1.moveTank("u");
+                        }
+                        else if (e.getKeyCode() == Settings.PLAYER_MOVE_DOWN){ // down arrow
+                            p1.moveTank("d");
+                        }
+                        else if (e.getKeyCode()==Settings.ESCAPE){
+                            //frame.setVisible(false);
+                            timer.stop();
+                            pauseFrame.setVisible(true);
+                        }
+
+
+                    }
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
             }
         });
         restartButton.setFont(new Font("Arial", Font.BOLD, 50));
         restartButton.setHorizontalAlignment(JLabel.CENTER);
         restartButton.setVerticalAlignment(JLabel.CENTER);
         endPanel = new JPanel();
-        endPanel.setLayout(new GridLayout(2, 1));
+        endPanel.setLayout(new GridLayout(4, 1));
         endPanel.add(endLabel);
+        endPanel.add(fScore);
+        endPanel.add(hScore);
         endPanel.add(restartButton);
+
         endFrame.add(endPanel, BorderLayout.CENTER);
         endFrame.setVisible(false);
         //create new JFrame for pause screen with a button to resume the game
@@ -234,7 +321,6 @@ public class TankProgram implements ActionListener {
         });
 
         frame.pack();
-        frame.setVisible(false);
 //        titleFrame.pack();
 //        titleFrame.setVisible(true);
 
@@ -243,158 +329,173 @@ public class TankProgram implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent ae) {
-        mainPanel.clear();
-        sidePanel.clear();
-        mainPanel.drawBorder();
-        mainPanel.drawTank(p1);
-        sidePanel.drawAmmo(p1);
-        if(!(mainReloading)){
-            sidePanel.drawBigBullet();
-        }
-        addBulletTimer++;
-        if(addBulletTimer % Settings.BULLET_ADD_RATE == 0){
-            addBullet();
-        }
-        if(addBulletTimer > 100){
-            addBulletTimer = 0;
-        }
-        score.setText("Score: " + gameScore);
-        sidePanel.add(score);
-        healthBar.setText("Health Left: " + p1.getHealth());
-        sidePanel.add(healthBar);
-
-
-        Point mousePoint = mainPanel.getMousePosition();
-        if(mousePoint != null){
-            double mX = mousePoint.getX();
-            double mY = mousePoint.getY();
-            p1.moveBarrel(getClosestPoint(new double[]{mX, mY}));
-        }
-
-        int counter = 0;
-        while(counter < bullets.size()){
-            Bullet bullet = bullets.get(counter);
-            bullet.update();
-            if((bullet.getX() + bullet.getW() >= 600) || (bullet.getX() <=0) ||(bullet.getY() <= 0) || (bullet.getY() +bullet.getH()>=600) || bullet.getX() - bullet.getW() <= 0 || bullet.getY() - bullet.getH() <= 0){
-                bullets.remove(counter);
-                counter--;
+        if(p1.getHealth() > 0 && frame.isVisible() && !pauseFrame.isVisible()){
+            mainPanel.clear();
+            sidePanel.clear();
+            mainPanel.drawBorder();
+            mainPanel.drawTank(p1);
+            sidePanel.drawAmmo(p1);
+            if(!(mainReloading)){
+                sidePanel.drawBigBullet();
             }
             else{
-                mainPanel.drawBullet(bullet);
+                sidePanel.drawBigBulletRed();
+            }
+            sidePanel.drawHP(p1);
+            addBulletTimer++;
+            if(addBulletTimer % Settings.BULLET_ADD_RATE == 0){
+                addBullet();
+            }
+            if(addBulletTimer > 100){
+                addBulletTimer = 0;
+            }
+            score.setText("Score: " + gameScore);
+            sidePanel.add(score);
+            healthBar.setText("Health Left: " + p1.getHealth());
+            sidePanel.add(healthBar);
 
+
+            Point mousePoint = mainPanel.getMousePosition();
+            if(mousePoint != null){
+                double mX = mousePoint.getX();
+                double mY = mousePoint.getY();
+                p1.moveBarrel(getClosestPoint(new double[]{mX, mY}));
             }
 
-            counter ++;
-        }
+            int counter = 0;
+            while(counter < bullets.size()){
+                Bullet bullet = bullets.get(counter);
+                bullet.update();
+                if((bullet.getX() + bullet.getW() >= 600) || (bullet.getX() <=0) ||(bullet.getY() <= 0) || (bullet.getY() +bullet.getH()>=600) || bullet.getX() - bullet.getW() <= 0 || bullet.getY() - bullet.getH() <= 0){
+                    bullets.remove(counter);
+                    counter--;
+                }
+                else{
+                    mainPanel.drawBullet(bullet);
 
-        counter = 0;
-        while(counter < bigBullets.size()){
-            BigBullet bullet = bigBullets.get(counter);
-            bullet.update();
-            if((bullet.getX() + bullet.getW() >= 596) || (bullet.getX() <=5) ||(bullet.getY() <= 5) || (bullet.getY() +bullet.getH()>=595) || bullet.getX() - bullet.getW() <= 5 || bullet.getY() - bullet.getH() <= 5){
-                bigBullets.remove(counter);
-                counter--;
-            }
-            else{
-                mainPanel.drawBigBullet(bullet);
+                }
 
+                counter ++;
             }
-            counter ++;
-        }
+
+            counter = 0;
+            while(counter < bigBullets.size()){
+                BigBullet bullet = bigBullets.get(counter);
+                bullet.update();
+                if((bullet.getX() + bullet.getW() >= 596) || (bullet.getX() <=5) ||(bullet.getY() <= 5) || (bullet.getY() +bullet.getH()>=595) || bullet.getX() - bullet.getW() <= 5 || bullet.getY() - bullet.getH() <= 5){
+                    bigBullets.remove(counter);
+                    counter--;
+                }
+                else{
+                    mainPanel.drawBigBullet(bullet);
+
+                }
+                counter ++;
+            }
 
         /*if(p1.getAmmo() <= 0 && !secReloading){
             secReloadTimer = 0;
             secReloading = true;
         }*/
 
-        if(secReloading && secReloadTimer >= 100 * Settings.RELOAD_TIME_SECONDS) {  // num seconds * 100
-            p1.setAmmo(Settings.BASE_SECOND_AMMO);
-            secReloading = false;
-        }
-        else if(secReloading){
-            secReloadTimer++;
-        }
-        reloadMain();
+            if(secReloading && secReloadTimer >= 100 * Settings.RELOAD_TIME_SECONDS) {  // num seconds * 100
+                p1.setAmmo(Settings.BASE_SECOND_AMMO);
+                secReloading = false;
+            }
+            else if(secReloading){
+                secReloadTimer++;
+            }
+            reloadMain();
 
-        if(!Settings.DEBUG_NO_ENEMY){
-            if(getRandRange(1, 100) < 5){
-                if(getRandRange(1, 8) == 3){
-                    addEnemy(enemyNumber, true);
-                    enemyNumber++;
+            if(!Settings.DEBUG_NO_ENEMY){
+                if(getRandRange(1, 100) < 5){
+                    if(getRandRange(1, 8) == 3){
+                        addEnemy(enemyNumber, true);
+                        enemyNumber++;
+                    }
+                    else{
+                        addEnemy(enemyNumber, false);
+                        enemyNumber++;
+                    }
+
+                }
+            }
+
+            for (int e = 0; e < enemies.size();e++){
+                Enemy enemy = enemies.get(e);
+                enemy.update(p1);
+
+                if(enemy.Contains(p1)){
+                    if(enemy.isMega()){
+                        p1.decHealthMega();
+                    }
+                    enemies.remove(e);
+                    e--;
+                    p1.decHealth();
+                }
+                else if(enemy.getHealth() > 0){
+                    mainPanel.drawEnemy(enemy);
                 }
                 else{
-                    addEnemy(enemyNumber, false);
-                    enemyNumber++;
-                }
-
-            }
-        }
-
-        for (int e = 0; e < enemies.size();e++){
-            Enemy enemy = enemies.get(e);
-            enemy.update(p1);
-
-            if(enemy.Contains(p1)){
-                enemies.remove(e);
-                e--;
-                p1.decHealth();
-            }
-            else if(enemy.getHealth() > 0){
-                mainPanel.drawEnemy(enemy);
-            }
-            else{
-                gameScore++;
-                enemies.remove(e);
-                e--;
-            }
-
-
-        }
-        for(int z = 0; z < bullets.size();z++){
-            Bullet bullet = bullets.get(z);
-            boolean enemyHit = false;
-            for (int e = 0; e < enemies.size();e++){
-                Enemy cE = enemies.get(e);
-                //fix this
-                if(mainPanel.enemyMat[bullet.getX()][bullet.getY()] == cE.getNumber()){
-                    enemies.get(e).takeDamage(Settings.BULLET_DMG);
+                    if(enemies.get(e).isMega()){
+                        gameScore += 10;
+                    }
+                    else{
+                        gameScore ++;
+                    }
+                    enemies.remove(e);
                     e--;
-                    enemyHit = true;
+                }
+
+
+            }
+            for(int z = 0; z < bullets.size();z++){
+                Bullet bullet = bullets.get(z);
+                boolean enemyHit = false;
+                for (int e = 0; e < enemies.size();e++){
+                    Enemy cE = enemies.get(e);
+                    //fix this
+                    if(mainPanel.enemyMat[bullet.getX()][bullet.getY()] == cE.getNumber()){
+                        enemies.get(e).takeDamage(Settings.BULLET_DMG);
+                        e--;
+                        enemyHit = true;
+                    }
+                    if(enemyHit){
+                        break;
+                    }
                 }
                 if(enemyHit){
-                    break;
+                    bullets.remove(z);
+                    z--;
                 }
             }
-            if(enemyHit){
-                bullets.remove(z);
-                z--;
+
+            for(int z = 0; z < bigBullets.size();z++){
+                BigBullet bullet = bigBullets.get(z);
+                boolean enemyHit = false;
+                for (int e = 0; e < enemies.size();e++){
+                    Enemy cE = enemies.get(e);
+                    //fix this
+                    if(mainPanel.enemyMat[bullet.getX()][bullet.getY()] == cE.getNumber()){
+                        bigSplashKill(bullet);
+                        enemyHit = true;
+                    }
+                    if(enemyHit){
+                        break;
+                    }
+                }
             }
         }
 
-        for(int z = 0; z < bigBullets.size();z++){
-            BigBullet bullet = bigBullets.get(z);
-            boolean enemyHit = false;
-            for (int e = 0; e < enemies.size();e++){
-                Enemy cE = enemies.get(e);
-                //fix this
-                if(mainPanel.enemyMat[bullet.getX()][bullet.getY()] == cE.getNumber()){
-                    bigSplashKill(bullet);
-                    enemyHit = true;
-                }
-                if(enemyHit){
-                    break;
-                }
+        else if (p1.getHealth()<=0){
+            if(highScore < gameScore){
+                highScore = gameScore;
             }
-        }
-        gameTimer-=2;
-        gameTimerLabel.setText("Time Left: " + gameTimer/100);
-        sidePanel.add(gameTimerLabel);
-        if(gameTimer <= 0){
+            fScore.setText("Score: " + gameScore);
+            hScore.setText("High Score: " + highScore);
             frame.setVisible(false);
             endFrame.setVisible(true);
         }
-
-
     }
 
     public void init(){
@@ -416,14 +517,21 @@ public class TankProgram implements ActionListener {
         healthBar.setText("Health Left: " + p1.getHealth());
         score = new JLabel();
         score.setText("Score: " + gameScore);
-        gameTimerLabel = new JLabel();
-        gameTimerLabel.setText("Time Left: " + gameTimer/200);
 
 
         timer = new Timer(10, this);
         timer.setInitialDelay(0);
         timer.start();
 
+    }
+    public void resetAllTimers(){
+        secReloading = false;
+        mainReloading = false;
+        alreadyReloading = false;
+        enemyNumber = 10;
+        addBulletTimer = 0;
+        gameScore = 0;
+        gameTimer = (100 * Settings.GAME_SECONDS) + 100;
     }
     public void addBullet(){
         int bH = Bullet.BULLET_H;

@@ -77,5 +77,92 @@ class SidePanel extends JPanel{
             }
         }
     }
+    public void drawBigBulletRed(){
+        for(int i = 50;i<100;i+=1){
+            for(int j = 30;j<60;j++){
+                isPainted[i][j] = true;
+                colors[i][j] = new Color(99, 35, 0);
+            }
+        }
+        for(int j = 40;j<50;j++){
+            for(int i = 100;i<120;i++){
+                isPainted[i][j] = true;
+                colors[i][j] = new Color(99, 35, 0);
+            }
+        }
+    }
+    public void drawHP(Tank t){
+        //Draw HP from 80 - 100
+        for(int i = 50; i < 55; i++){
+            for(int j = 80; j < 100; j++){
+                isPainted[i][j] = true;
+                colors[i][j] = Color.BLACK;
+            }
+        }
+        for(int i = 65; i < 70; i++){
+            for(int j = 80; j < 100; j++){
+                isPainted[i][j] = true;
+                colors[i][j] = Color.BLACK;
+            }
+        }
+        for(int i = 55; i < 65; i++){
+            for(int j = 89; j < 93; j++){
+                isPainted[i][j] = true;
+                colors[i][j] = Color.BLACK;
+            }
+        }
+        for(int i = 73; i < 78; i++){
+            for(int j = 80; j < 100; j++){
+                isPainted[i][j] = true;
+                colors[i][j] = Color.BLACK;
+            }
+        }
+        for(int i = 78; i < 86; i++){
+            for(int j = 80; j < 84; j++){
+                isPainted[i][j] = true;
+                colors[i][j] = Color.BLACK;
+            }
+        }
+
+        for(int i = 78; i < 86; i++){
+            for(int j = 90; j < 94; j++){
+                isPainted[i][j] = true;
+                colors[i][j] = Color.BLACK;
+            }
+        }
+        for(int i = 86; i < 90; i++){
+            for(int j = 80; j < 94d; j++){
+                isPainted[i][j] = true;
+                colors[i][j] = Color.BLACK;
+            }
+        }
+
+
+
+        int numGreenCells = t.getHealth();
+        int i = 50;
+        int k = 120;
+        for(int j = 0; j < 10; j++){
+            //draw a cell for each 1 in the 10
+            for(int x = 0; x < 10; x++){
+                for(int z = i; z < i + 8; z++){
+                    for(int l = k; l < k + 2;l++){
+                        isPainted[z][l] = true;
+                        if((j * 10) + x < t.getHealth()){
+                            colors[z][l] = Color.GREEN;
+                        }
+                        else{
+                            colors[z][l] = Color.RED;
+                        }
+                    }
+
+
+                }
+                k+=2;
+            }
+            i += 10;
+            k = 120;
+        }
+    }
 
 }

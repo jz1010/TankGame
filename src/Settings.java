@@ -19,9 +19,9 @@ public class Settings {
     * */
 
     public static final Color BORDER_COLOR = Color.GRAY;
-    public static final Color PLAYER_COLOR = Color.BLUE;
+    public static final Color PLAYER_COLOR = new Color(96, 115, 94);
     public static final Color ENEMY_COLOR = new Color(0, 255, 0);
-    public static final Color CANNON_COLOR = Color.GREEN;
+    public static final Color CANNON_COLOR = new Color(9, 97, 0);
     public static final Color SMALL_BULLET_COLOR = Color.BLACK;
     public static final Color BIG_BULLET_COLOR = Color.ORANGE;
     public static final Color PLAYER_CORNER_COLOR = Color.RED;//Corners for cannon detection, will only apply is SHOW_CORNERS = true
@@ -42,10 +42,11 @@ public class Settings {
     public static final int PLAYER_STARTING_HEALTH = 100;
     public static final int BIG_BULLET_DAMAGE_RADIUS = 80;
     public static final int BULLET_DMG = 20;
-    public static final double PROBABILITY_PATHFIND = 1;
+    public static final double PROBABILITY_PATHFIND = 0.8;
     public static final int BULLET_ADD_RATE = 5;//lower means more bullets
     public static final int GAME_SECONDS = 60;
-    public static final int ENEMY_DAMAGE = 25;
+    public static final int ENEMY_DAMAGE = 10;
+    public static final int MEGA_ENEMY_DAMAGE = 25;
     public static final boolean DEBUG_NO_ENEMY = false;
 
 
