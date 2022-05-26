@@ -21,9 +21,9 @@ public class Settings {
 
     //KEYCODES
     public static final int PLAYER_MOVE_RIGHT = 68;//D
-    public static final int PLAYER_MOVE_LEFT = 65;
-    public static final int PLAYER_MOVE_UP = 87;
-    public static final int PLAYER_MOVE_DOWN = 83;
+    public static final int PLAYER_MOVE_LEFT = 65;//A
+    public static final int PLAYER_MOVE_UP = 87;//W
+    public static final int PLAYER_MOVE_DOWN = 83;//S
     public static final int ESCAPE= 27;//Escape key
 
     //GRAPHICS
