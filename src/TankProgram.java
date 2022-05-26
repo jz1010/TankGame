@@ -344,6 +344,7 @@ public class TankProgram implements ActionListener {
             sidePanel.drawHP(p1);
 
             //updates timer, adds bullet if needed
+            reloadMain();
             addBulletTimer++;
             if(addBulletTimer % Settings.BULLET_ADD_RATE == 0){
                 addBullet();
@@ -358,14 +359,16 @@ public class TankProgram implements ActionListener {
             healthBar.setText("Health Left: " + p1.getHealth());
             sidePanel.add(healthBar);
 
-
+            // gets mouse position
             Point mousePoint = mainPanel.getMousePosition();
             if(mousePoint != null){
                 double mX = mousePoint.getX();
                 double mY = mousePoint.getY();
+                //moves barrel to closest mouse point
                 p1.moveBarrel(getClosestPoint(new double[]{mX, mY}));
             }
 
+            //goes through bullet list and updates bullets
             int counter = 0;
             while(counter < bullets.size()){
                 Bullet bullet = bullets.get(counter);
@@ -382,6 +385,7 @@ public class TankProgram implements ActionListener {
                 counter ++;
             }
 
+            // same thing with big bullets, goes through list
             counter = 0;
             while(counter < bigBullets.size()){
                 BigBullet bullet = bigBullets.get(counter);
@@ -397,20 +401,7 @@ public class TankProgram implements ActionListener {
                 counter ++;
             }
 
-        /*if(p1.getAmmo() <= 0 && !secReloading){
-            secReloadTimer = 0;
-            secReloading = true;
-        }*/
-
-            if(secReloading && secReloadTimer >= 100 * Settings.RELOAD_TIME_SECONDS) {  // num seconds * 100
-                p1.setAmmo(Settings.BASE_SECOND_AMMO);
-                secReloading = false;
-            }
-            else if(secReloading){
-                secReloadTimer++;
-            }
-            reloadMain();
-
+            // This is to add enemies randomly, but it wont happen if theres no debug setting on
             if(!Settings.DEBUG_NO_ENEMY){
                 if(getRandRange(1, 100) < 5){
                     if(getRandRange(1, 8) == 3){
@@ -425,6 +416,7 @@ public class TankProgram implements ActionListener {
                 }
             }
 
+            // updates, removes, or does damage for each enemy
             for (int e = 0; e < enemies.size();e++){
                 Enemy enemy = enemies.get(e);
                 enemy.update(p1);
@@ -453,6 +445,8 @@ public class TankProgram implements ActionListener {
 
 
             }
+
+            // checks for bullets
             for(int z = 0; z < bullets.size();z++){
                 Bullet bullet = bullets.get(z);
                 boolean enemyHit = false;
@@ -474,12 +468,12 @@ public class TankProgram implements ActionListener {
                 }
             }
 
+            // checks for big bullets
             for(int z = 0; z < bigBullets.size();z++){
                 BigBullet bullet = bigBullets.get(z);
                 boolean enemyHit = false;
                 for (int e = 0; e < enemies.size();e++){
                     Enemy cE = enemies.get(e);
-                    //fix this
                     if(mainPanel.enemyMat[bullet.getX()][bullet.getY()] == cE.getNumber()){
                         bigSplashKill(bullet);
                         enemyHit = true;
@@ -491,30 +485,34 @@ public class TankProgram implements ActionListener {
             }
         }
 
+        // checks if the tank is dead, updates score in end frame
         else if (p1.getHealth()<=0){
             if(highScore < gameScore){
                 highScore = gameScore;
             }
+            // high score and low scores are checked in here
             fScore.setText("Score: " + gameScore);
             hScore.setText("High Score: " + highScore);
+
+            // setting frames true and false
             frame.setVisible(false);
             endFrame.setVisible(true);
         }
     }
 
-    public void init(){
+    public void init(){ //initializing function, resets the frame
         mainPanel = new DrawPanel();
         sidePanel = new SidePanel();
+        // new panels for main and side panels
 
+
+        // new tank and bullets arrays to keep track of information
         p1 = new Tank(300, 300, 30, 30, 50);
         bullets= new ArrayList<Bullet>();
         bigBullets = new ArrayList<>();
         enemies = new ArrayList<>();
 
-        //frame = new JFrame("Tank Program");
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
+        // Sets JLabels for side panel and main panel
         mainAmmo = new JLabel();
         mainAmmo.setText("Ready to Fire!");
         healthBar = new JLabel();
@@ -522,13 +520,14 @@ public class TankProgram implements ActionListener {
         score = new JLabel();
         score.setText("Score: " + gameScore);
 
-
+        // starts internal delay timer, which cycles every 5 ms
         timer = new Timer(10, this);
         timer.setInitialDelay(0);
         timer.start();
 
     }
     public void resetAllTimers(){
+        // resets all timers, both for pausing and ending game
         secReloading = false;
         mainReloading = false;
         alreadyReloading = false;
@@ -537,9 +536,11 @@ public class TankProgram implements ActionListener {
         gameScore = 0;
         gameTimer = (100 * Settings.GAME_SECONDS) + 100;
     }
-    public void addBullet(){
-        int bH = Bullet.BULLET_H;
+    public void addBullet(){//adds bullet based on turret position
+        int bH = Bullet.BULLET_H;//constants
         int bW = Bullet.BULLET_W;
+
+        //checks for each direction and adds bullet for each case
         if(p1.getBarrelDirection().equals("r")){
             if(p1.getDirection().equals("u") || p1.getDirection().equals("d")){
                 bullets.add(new Bullet(p1.getX() + p1.getW(), p1.getY(), bW,bH, p1.getBarrelDirection(), true));
@@ -607,8 +608,7 @@ public class TankProgram implements ActionListener {
 
     }
     public void addBigBullet(){
-        int bH = BigBullet.BULLET_H;
-        int bW = BigBullet.BULLET_W;
+        //same thing as bullet w/ big bullet, adds for different turret direction
         if(p1.getBarrelDirection().equals("r")){
             bigBullets.add(new BigBullet(p1.getX() + p1.getW()/2, p1.getY(), p1.getBarrelDirection()));
         }
@@ -635,7 +635,7 @@ public class TankProgram implements ActionListener {
             bigBullets.add(new BigBullet(p1.getX() - p1.getW()/2, p1.getY() + p1.getH()/2, p1.getBarrelDirection()));
         }
     }
-    //we intially had reloading mechanic but we got rid of it
+    //reloads main bullet functionality, this is called every iteration
     public void reloadMain(){
         if(mainReloading && !alreadyReloading){
             mainReloadTimer = 0;
@@ -659,8 +659,13 @@ public class TankProgram implements ActionListener {
 
 
     }
+    //adds an enemy with an id of num and boolean b
     public void addEnemy(int num, boolean b){
-        //add them in four sections
+
+        //NOTE: the reason each enemy has a unique ID is for collision detection
+        //NOTE cont'd - we need to know which enemy a bullet is hitting, they keep track of their ID
+
+        //add them in one of four sections (borders)
         int randSection = getRandRange(1, 4);
         if(randSection == 1){//top rectangle
             int eX = getRandRange(Enemy.w, 600 - Enemy.w);
@@ -679,16 +684,16 @@ public class TankProgram implements ActionListener {
             int eY = getRandRange(Enemy.h, 600 - Enemy.h);
             enemies.add(new Enemy(eX, eY, num, b));
         }
-        else if (randSection == 4){
+        else if (randSection == 4){//right rectangle
             int eX = getRandRange(540 - Enemy.w, 600 - Enemy.w);
             int eY = getRandRange(Enemy.h, 600 - Enemy.h);
             enemies.add(new Enemy(eX, eY, num, b));
 
         }
     }
-    //ignore this code
     public void bigSplashKill(BigBullet b){
-        //get bigbullet x, y
+        // penetration kill for big bullet, different than a normal bullet
+
         for(int e = 0; e < enemies.size(); e++){
                 if(mainPanel.enemyMat[b.getX()][b.getY()] == enemies.get(e).getNumber()){
                     if(enemies.get(e).isMega()){
@@ -705,6 +710,7 @@ public class TankProgram implements ActionListener {
 
     }
     public static double calcDist(double[] a, double[] b){
+        // static method for distance calculation, used for turret location
         double x = a[0] - b[0];
         double y = a[1] - b[1];
         return Math.sqrt((x * x) + (y * y));
@@ -730,6 +736,7 @@ public class TankProgram implements ActionListener {
         //leftDown
         pointDist[7] = calcDist(mP, new double[]{p1.getX() - (double) p1.getH()/2/1.4, p1.getY() + (double) p1.getH()/2/1.4});
 
+        // gets closest index and returns direction turret should face
         int bestPoint = getIndexofMin(pointDist);
         if(bestPoint == 0) {//R
             return "r";
@@ -758,10 +765,14 @@ public class TankProgram implements ActionListener {
         return "r";
     }
 
-    public static int getRandRange(int min, int max){
+
+    public static int getRandRange(int min, int max){ // VERY useful static function to get random numer
+        //useful for adding stuff in cycles or random spots
         return (int) ((Math.random() * (max - min)) + min + 1);
     }
     public static int getIndexofMin(double[] list){
+        // static function for index of a lowest value
+        //used for turret rotation
         int bestIndex = 0;
         double lowestVal = 10000;
         for(int i = 0; i < list.length; i++){
@@ -772,6 +783,7 @@ public class TankProgram implements ActionListener {
         }
         return bestIndex;
     }
+    //run the program!
     public static void main(String[] args) {
         TankProgram x = new TankProgram();
     }

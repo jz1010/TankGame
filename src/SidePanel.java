@@ -5,23 +5,21 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 class SidePanel extends JPanel{
+    //basic dimensions for file
     private boolean[][] isPainted;
     private Color[][] colors;
     private static final int WIDTH = 300;
     private static final int HEIGHT = 600;
 
     public SidePanel() {
-        // Set background color
         setBackground(Color.WHITE);
 
-        // Add mouse listeners
-        // Initialize instance variables
         isPainted = new boolean[WIDTH][HEIGHT];
         colors = new Color[WIDTH][HEIGHT];
     }
 
     // Can be called to change the current mode of the drawing panel
-    public void clear(){
+    public void clear(){ // clears panel
         for(int i=0;i<isPainted.length;i++){
             for(int j=0;j<isPainted[0].length;j++){
                 isPainted[i][j]=false;
@@ -55,14 +53,12 @@ class SidePanel extends JPanel{
             }
         }
     }
+
+    // this USED to have reloadable ammo in it but its empty right now
     public void drawAmmo(Tank t){
-        /*for(int i = 50;i<(t.getAmmo() * 2) + 50;i+=2){
-            for(int j = 30;j<60;j++){
-                isPainted[i][j] = true;
-                colors[i][j] = Color.BLACK;
-            }
-        }*/
     }
+
+    // this draws an icon in orange for when the big bullet is loaded
     public void drawBigBullet(){
         for(int i = 50;i<100;i+=1){
             for(int j = 30;j<60;j++){
@@ -77,6 +73,9 @@ class SidePanel extends JPanel{
             }
         }
     }
+
+    // same thing but red for when the big bullet is loaded
+    //To be honest we could have used the same function with a color parameter but this works the same
     public void drawBigBulletRed(){
         for(int i = 50;i<100;i+=1){
             for(int j = 30;j<60;j++){
@@ -91,6 +90,9 @@ class SidePanel extends JPanel{
             }
         }
     }
+
+    // Draws the letters H and P, as well as the HP in the form of cells
+    //It actually took rlly long to do this part
     public void drawHP(Tank t){
         //Draw HP from 80 - 100
         for(int i = 50; i < 55; i++){

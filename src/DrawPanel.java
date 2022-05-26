@@ -5,6 +5,7 @@ import java.util.Set;
 
 
 public class DrawPanel extends JPanel{
+    //Basic dims for panel
     private final int WIDTH = Settings.DRAW_PANEL_DIMS;
     private final int HEIGHT = Settings.DRAW_PANEL_DIMS;
     private int[][] isPainted = new int[WIDTH][HEIGHT];
@@ -15,7 +16,7 @@ public class DrawPanel extends JPanel{
     public int[][] bulletMat = new int[WIDTH][HEIGHT];
     public int[][] enemyMat = new int[WIDTH][HEIGHT];
 
-    public void clear(){
+    public void clear(){ // clear the screen every iteration before redrawing
             for(int i=0;i<isPainted.length;i++){
                 for(int j=0;j<isPainted[0].length;j++){
                 isPainted[i][j] = 0;
@@ -32,10 +33,8 @@ public class DrawPanel extends JPanel{
     public Dimension getPreferredSize() {
             return new Dimension(WIDTH, HEIGHT);
             }
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) { // internal update cycle for Swing
             super.paintComponent(g);
-            
-            // Loop through the 2D array and draw a 1x1 rectangle on each pixel that is currently painted
             for (int x = 0; x < WIDTH; x++) {
                 for (int y = 0; y < HEIGHT; y++) {
                     if (isPainted[x][y] != 0) {
@@ -46,8 +45,9 @@ public class DrawPanel extends JPanel{
                 }
             }
     }
-    public void drawTank(Tank t){
+    public void drawTank(Tank t){ // draws the tank with a parameter from TankProgram
 
+        // for each different direction, has a different rotation for turret and tank, so its kinda repetitive and long
         if (t.getDirection().equals("r")){
             t.setH(t.getBASE_H());
             t.setW(t.getBASE_W());
@@ -104,7 +104,6 @@ public class DrawPanel extends JPanel{
                 drawTank(t);
             }
         }
-        //we draw the barrelbased on what direction it is facing
         else if (t.getDirection().equals("d")){
             t.setH(t.getBASE_W());
             t.setW(t.getBASE_H());
@@ -124,6 +123,8 @@ public class DrawPanel extends JPanel{
                 drawTank(t);
             }
         }
+
+        // Barrel direction on tank
         if(t.getBarrelDirection().equals("r")) {
             for (int i = t.getX(); i < t.getX() + t.getW(); i++) {
                 for (int j = t.getY() - 3; j <= t.getY() + 3; j++) {
@@ -208,15 +209,17 @@ public class DrawPanel extends JPanel{
             }
         }
 
+        // Draw the corners of the tank, helps with debugging turret pointing
         if(Settings.SHOW_CORNERS){
             drawCorners(t);
         }
-        repaint();
+        repaint(); // this is important, it is a parent method that updates the screen
 
 
 
     }
-    public void drawEnemy(Enemy e){
+    public void drawEnemy(Enemy e){ // draws an enemy on the pane; for a given enemy
+        // becuase they're squares its kinda easy, same code for all rotations
         for(int i = e.getX() - e.getW()/2; i < e.getX() + e.getW()/2; i++){
             for(int j = e.getY()- e.getH()/2; j < e.getY() + e.getH()/2; j++){
                 isPainted[i][j] = 5;
@@ -288,7 +291,9 @@ public class DrawPanel extends JPanel{
 
         repaint();
     }
-    public void drawBullet(Bullet b){
+    public void drawBullet(Bullet b){ // draws a bullet, similar to tank
+
+        //for each direction there is a unique case, drawing using dimensions
         if(b.getDirection().equals("d") || b.getDirection().equals("l") || b.getDirection().equals("u") || b.getDirection().equals("r")){
             for(int i = b.getX();i<b.getX()+b.getW();i++){
                 for(int j = b.getY();j<b.getY()+b.getH();j++){
@@ -340,9 +345,10 @@ public class DrawPanel extends JPanel{
                 }
             }
         }
-        repaint();
+        repaint(); // again repainting
     }
-    public void drawBigBullet(BigBullet b){
+    public void drawBigBullet(BigBullet b){ // similar to drawBullet
+        //cases for each side
         if(b.getDirection().equals("d") || b.getDirection().equals("l") || b.getDirection().equals("u") || b.getDirection().equals("r")){
             for(int i = b.getX();i<b.getX()+b.getW();i++){
                 for(int j = b.getY();j<b.getY()+b.getH();j++){
@@ -438,9 +444,10 @@ public class DrawPanel extends JPanel{
                 }
             }
         }
-        repaint();
+        repaint(); //same thing
     }
-    public void drawBorder(){
+    public void drawBorder(){ // draws the border, player cannot go past this
+        // this is the first thing we draw, it is least important in order of drawing
         //top
         for(int i = 0; i < 30; i++){
             for(int j = 0; j < 600; j++){

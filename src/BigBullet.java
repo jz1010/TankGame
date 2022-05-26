@@ -2,16 +2,21 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class BigBullet{
+    // basic dims
     private int x, y;
-    private int damageRadius = Settings.BIG_BULLET_DAMAGE_RADIUS;
+    private int w = BULLET_W;
+    private int h = BULLET_H;
+    //important for bullet rotation
+    public static final int BULLET_H = 6;
+    public static final int BULLET_W = 8;
+
+
+    //speed, direction, color
     private int speed = 8;
+    //diagonal movement, we can change the slope of the bullet but m=1 works for now
     private int hXSpeed = 8, hYSpeed = 8;
     private String direction = "r";
     private final Color bulletColor = Settings.BIG_BULLET_COLOR;
-    public static final int BULLET_H = 6;
-    public static final int BULLET_W = 8;
-    private int w = BULLET_W;
-    private int h = BULLET_H;
 
     public BigBullet(int x,int y, String dir){
         this.x = x;
@@ -20,6 +25,7 @@ public class BigBullet{
 
     }
     public void update(){
+        //updates bullet based on direction
         if(getDirection().equals("r")){
             this.x += this.speed;
         }
@@ -52,15 +58,9 @@ public class BigBullet{
 
     }
 
+    //getters
     public Color getBulletColor() {
         return bulletColor;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-    public void setY(int y) {
-        this.y = y;
     }
     public int getX(){return this.x;}
     public int getY(){return this.y;}

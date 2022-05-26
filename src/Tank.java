@@ -3,13 +3,20 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class Tank{
+
+    // dimensions
     private int x;
     private int y;
     private int w;
     private int h;
+    //this is for diagonal for circle, it was just for testing
     private int d;
+
+    // for a rectangle, this is important because we might have to switch H and W for rotation (not for square)
     private final int BASE_W;
     private final int BASE_H;
+
+    // ammo, health, speed all changeable in settings
     private int ammo = Settings.BASE_SECOND_AMMO;
     private int health = Settings.PLAYER_STARTING_HEALTH;
     private final int speed = 14;
@@ -19,6 +26,7 @@ public class Tank{
 
 
     public Tank(int X, int Y, int W, int H, int D){
+        //basic constructor
         this.x = X;
         this.y = Y;
         this.w = W;
@@ -29,6 +37,7 @@ public class Tank{
 
     }
 
+    //moves the tank X and Y based on speed
     public void moveTank(String direction){
         this.direction = direction;
         if(direction.equals("r")){
@@ -68,9 +77,13 @@ public class Tank{
             this.y -= speed;
         }
     }
+
+    //moves barrel based on direction from TankProgram
     public void moveBarrel(String direction) {
         this.barrelDirection = direction;
     }
+
+    // getters + setters
     public int getX(){return this.x;}
     public int getY(){return this.y;}
     public int getW(){return this.w;}

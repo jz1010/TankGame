@@ -6,9 +6,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Bullet{
+    //dims
     private int x, y, w, h;
+    //diagonal rotation
     public static final int BULLET_W = 2;
     public static final int BULLET_H = 2;
+
+    //color, speed, direction
+    //v and h speed is for diagonal, 1.4 is sqrt 2
     private Color bulletColor = Color.BLACK;
     private int speed = 6;
     private int vXSpeed = (int)(6/1.4);
@@ -17,12 +22,15 @@ public class Bullet{
     private int hYSpeed = (int)(6/1.4);
     private final String direction;
     private ArrayList<Integer> center = new ArrayList<>();
+    //only necessary for rectangular tank
     private int rotation = 90;
+    //this is for v and h speed
     private boolean shotVertically = false;
 
 
 
     public Bullet(int X, int Y, int W, int H, String dir, boolean shotVertically){
+        //boring constructor stuff
         this.x = X;
         this.y = Y;
         this.w = W;
@@ -33,6 +41,7 @@ public class Bullet{
     }
 
     public void update(){
+        //updates based on directions
         if(getDirection().equals("r")){
             this.x += this.speed;
         }
@@ -88,18 +97,12 @@ public class Bullet{
 
     }
 
+    //getters
     public Color getBulletColor() {
         return bulletColor;
     }
     public ArrayList<Integer> getCenter() {
         return center;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-    public void setY(int y) {
-        this.y = y;
     }
     public int getRotation(){return rotation;}
     public int getX(){return this.x;}
